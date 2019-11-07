@@ -13,7 +13,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import pro0.battleship.enums.ShipType;
 
@@ -26,8 +25,8 @@ public class Board {
 	@OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Ship> ships = new ArrayList<Ship>();
 	// TODO store spaces data in JPA
-	@Transient
-	private boolean[][] spaces = new boolean[10][10];
+	@OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<BoardRow>spaces = new ArrayList<BoardRow>();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
@@ -39,10 +38,13 @@ public class Board {
 
 	public Board() {
 		createShips();
+		createBoardRows();
 	}
 
 	public Board(User user) {
 		setUser(user);
+		createShips();
+		createBoardRows();
 	}
 	
 	public void addShip(Ship ship) {
@@ -61,6 +63,11 @@ public class Board {
 		addShip(new Ship(ShipType.SUBMARINE, (short) 3));
 		addShip(new Ship(ShipType.DESROYER, (short) 2));
 	}
+	private void createBoardRows() {
+		for (int i = 0; i < 10; i++) {
+			spaces.add(new BoardRow());
+		}
+	}
 
 	public Integer getId() {
 		return id;
@@ -77,10 +84,6 @@ public class Board {
 //	public void setShips(List<Ship> ships) {
 //		this.ships = ships;
 //	}
-
-	public boolean[][] getSpaces() {
-		return spaces;
-	}
 
 	public void setSpace(int x, int y, boolean value) {
 
@@ -100,6 +103,15 @@ public class Board {
 
 	public void setGame(Game game) {
 		this.game = game;
+	}
+	
+	void addBoardRow(BoardRow row) {
+		spaces.add(row);
+		row.setBoard(this);
+	}
+	void removeBoardRow(BoardRow row) {
+		spaces.remove(row);
+		row.setBoard(null);
 	}
 
 	@Override
