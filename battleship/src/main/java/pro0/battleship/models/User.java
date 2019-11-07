@@ -1,0 +1,77 @@
+package pro0.battleship.models;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class User {
+	@Id
+	private String username;
+	private String password;
+	private String imageUrl;
+	private int gamesWon;
+	private int gamesLost;
+	
+	public User() {
+	}
+
+	public User(String username, String password, String imageUrl, int gamesWon, int gamesLost) {
+		this.username = username;
+		this.password = password;
+		this.imageUrl = imageUrl;
+		this.gamesWon = gamesWon;
+		this.gamesLost = gamesLost;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
+
+	public int getGamesWon() {
+		return gamesWon;
+	}
+
+	public void setGamesWon(int gamesWon) {
+		this.gamesWon = gamesWon;
+	}
+
+	public int getGamesLost() {
+		return gamesLost;
+	}
+
+	public void setGamesLost(int gamesLost) {
+		this.gamesLost = gamesLost;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("User [username=").append(username).append(", password=").append(password).append(", imageUrl=")
+				.append(imageUrl).append(", gamesWon=").append(gamesWon).append(", gamesLost=").append(gamesLost)
+				.append("]");
+		return builder.toString();
+	}
+	
+	
+
+}
