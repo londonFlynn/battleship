@@ -1,9 +1,16 @@
 package pro0.battleship.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
-@Entity
+@Entity(name="User")
+@Table(name="user")
 public class User {
 	@Id
 	private String username;
@@ -11,6 +18,10 @@ public class User {
 	private String imageUrl;
 	private int gamesWon;
 	private int gamesLost;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Board> boards = new ArrayList<>();
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Game> games = new ArrayList<>();
 	
 	public User() {
 	}
@@ -61,6 +72,23 @@ public class User {
 
 	public void setGamesLost(int gamesLost) {
 		this.gamesLost = gamesLost;
+	}
+
+	void addBoard(Board board) {
+		boards.add(board);
+		board.setUser(this);
+	}
+	void removeBoard(Board board) {
+		boards.remove(board);
+		board.setUser(null);
+	}
+	public void addGame(Game game) {
+		games.add(game);
+		game.setOwner(this);
+	}
+	public void removeGame(Game game) {
+		games.remove(game);
+		game.setOwner(null);
 	}
 
 	@Override
