@@ -11,35 +11,40 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import pro0.battleship.models.User;
 import pro0.battleship.repositories.UserJpaRepository;
 
 @Controller
-@RequestMapping("/login")
+@RequestMapping(path="/login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	@Autowired
 	private UserJpaRepository userJpaRepo;
 	
-	@RequestMapping(path="", method=RequestMethod.GET)
-	protected void doMainGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession sess = request.getSession();
-		String pageToForwardTo = "/login.jsp";
+	@GetMapping(path="")
+	protected String doMainGet(HttpSession sess) {
+		String targetResource = "login";
 		if(sess.getAttribute("username") != null) {
-			pageToForwardTo = "/";
+			targetResource = "forward:/";
 			sess.setAttribute("msg", "You are already logged in.");
 		}
-		request.getRequestDispatcher(pageToForwardTo).forward(request, response);
+		return targetResource;
 	}
 
-	@RequestMapping(path="", method=RequestMethod.POST)
-	protected void doMainPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
+	@PostMapping(path="")
+	protected String doMainPost(
+		@RequestParam(required=true) String username,
+		@RequestParam(required=true) String password,
+		HttpSession sess
+	) {
+		String targetResource = "login";
 		String storedPassword = null;
 		
 		Optional<User> optUser = userJpaRepo.findById(username); 
@@ -47,23 +52,22 @@ public class Login extends HttpServlet {
 			storedPassword = optUser.get().getPassword();
 		}
 		
-		HttpSession sess = request.getSession(true);
 		if(storedPassword != null && password.equals(storedPassword)) {
 			sess.setAttribute("username", username);
-			response.sendRedirect("/");
+			targetResource = "forward:/";
 		} else {
 			sess.setAttribute("msg", "Login Failed");
-			doMainGet(request, response);
 		}
+		
+		return targetResource;
 	}
 	
-	@RequestMapping(path="/logout", method=RequestMethod.GET)
-	protected void doLogOut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession sess = request.getSession();
+	@GetMapping(path="/logout")
+	protected String doLogOut(HttpServletRequest req, HttpSession sess) {
 		sess.invalidate();
-		sess = request.getSession();
+		sess = req.getSession();
 		sess.setAttribute("msg", "You logged out.");
-		doMainGet(request, response);
+		return "login";
 	}
 
 }
