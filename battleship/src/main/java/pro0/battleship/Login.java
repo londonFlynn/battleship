@@ -35,6 +35,7 @@ public class Login extends HttpServlet {
 			targetResource = "forward:/";
 			sess.setAttribute("msg", "You are already logged in.");
 		}
+		
 		return targetResource;
 	}
 
@@ -67,6 +68,7 @@ public class Login extends HttpServlet {
 		sess.invalidate();
 		sess = req.getSession();
 		sess.setAttribute("msg", "You logged out.");
+		
 		return "login";
 	}
 
