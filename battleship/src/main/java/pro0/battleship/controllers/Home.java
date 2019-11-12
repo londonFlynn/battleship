@@ -1,4 +1,4 @@
-package pro0.battleship;
+package pro0.battleship.controllers;
 
 import javax.servlet.http.HttpServlet;
 import org.springframework.stereotype.Controller;
