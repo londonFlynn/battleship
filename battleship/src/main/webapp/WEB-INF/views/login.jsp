@@ -51,7 +51,10 @@ body {
 <title>Battleship! - Login</title>
 </head>
 <body>
-	<button>Home</button>
+	<!-- button >Home</button> -->
+	<header>
+		<a id='homelink' href='/'>Battleship</a>
+	</header>
 
 	<div class="split left">
 		<div class="centered">
