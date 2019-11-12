@@ -26,6 +26,9 @@ public class BoardRow {
 	private List<Boolean> cells = new ArrayList<Boolean>();
 	
 	public BoardRow() {
+		for (int i = 0; i < Board.boardSize; i++) {
+			cells.add(false);
+		}
 	}
 
 	public Integer getId() {

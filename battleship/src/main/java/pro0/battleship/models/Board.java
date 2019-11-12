@@ -13,12 +13,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import pro0.battleship.controllers.ShipPlacementController;
 import pro0.battleship.enums.ShipType;
 
 @Entity(name = "Board")
 @Table(name = "board")
 public class Board {
+	@Transient
+	public static final short boardSize = 10;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
@@ -57,18 +61,17 @@ public class Board {
 	}
 
 	private void createShips() {
-		addShip(new Ship(ShipType.AIRCRAFT_CARRIER, (short) 5));
-		addShip(new Ship(ShipType.BATTLESHIP, (short) 4));
-		addShip(new Ship(ShipType.CRUSER, (short) 3));
-		addShip(new Ship(ShipType.SUBMARINE, (short) 3));
-		addShip(new Ship(ShipType.DESROYER, (short) 2));
+		addShip(new Ship(ShipType.AIRCRAFT_CARRIER, ShipPlacementController.getShipLengthFromType(ShipType.AIRCRAFT_CARRIER)));
+		addShip(new Ship(ShipType.BATTLESHIP, ShipPlacementController.getShipLengthFromType(ShipType.BATTLESHIP)));
+		addShip(new Ship(ShipType.CRUSER, ShipPlacementController.getShipLengthFromType(ShipType.CRUSER)));
+		addShip(new Ship(ShipType.SUBMARINE, ShipPlacementController.getShipLengthFromType(ShipType.SUBMARINE)));
+		addShip(new Ship(ShipType.DESROYER, ShipPlacementController.getShipLengthFromType(ShipType.DESROYER)));
 	}
 	private void createBoardRows() {
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < boardSize; i++) {
 			spaces.add(new BoardRow());
 		}
 	}
-
 	public Integer getId() {
 		return id;
 	}
@@ -77,9 +80,9 @@ public class Board {
 		this.id = id;
 	}
 
-//	public List<Ship> getShips() {
-//		return ships;
-//	}
+	public List<Ship> getShips() {
+		return ships;
+	}
 //
 //	public void setShips(List<Ship> ships) {
 //		this.ships = ships;
@@ -112,6 +115,17 @@ public class Board {
 	void removeBoardRow(BoardRow row) {
 		spaces.remove(row);
 		row.setBoard(null);
+	}
+	
+	public static boolean spaceIsOnBoard(short xPos, short yPos) {
+		return xPos > 0 && yPos > 0 && xPos <= Board.boardSize && yPos <= Board.boardSize;
+	}
+	public boolean spaceIsOpen(short xPos, short yPos) {
+		//TODO logic to determine if a ship is in a space;
+		return false;
+	}
+	public boolean shipIsCoveringSpace(Ship ship, short xPos, short yPos) {
+		return false;
 	}
 
 	@Override
