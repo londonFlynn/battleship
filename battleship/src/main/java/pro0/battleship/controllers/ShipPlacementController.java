@@ -74,8 +74,6 @@ public class ShipPlacementController {
 		}
 		return valid;
 	}
-	
-	
 	public static short getShipLengthFromType(ShipType shipType) {
 		short length;
 		switch (shipType) {

@@ -110,6 +110,26 @@ public class Ship {
 	public void setBoard(Board board) {
 		this.board = board;
 	}
+	
+	public int[] getSpaceCoords(int cellOfShip) {
+		if (direction != null && cellOfShip >= 0 && cellOfShip < length) {
+			int[] coords = new int[2];
+			coords[0] = xPos;
+			coords[1] = yPos;
+			if (direction.equals(Direction.NORTH)) {
+				coords[1] = coords[1] - cellOfShip;
+			} else if (direction.equals(Direction.SOUTH)) {
+				coords[1] = coords[1] + cellOfShip;
+			} else if (direction.equals(Direction.EAST)) {
+				coords[0] = coords[0] + cellOfShip;
+			} else if (direction.equals(Direction.WEST)) {
+				coords[0] = coords[0] - cellOfShip;
+			}
+			return coords;
+		} else {
+			return null;
+		}
+	}
 
 	@Override
 	public String toString() {

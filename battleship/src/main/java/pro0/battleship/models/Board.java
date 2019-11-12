@@ -85,9 +85,13 @@ public class Board {
 //	public void setShips(List<Ship> ships) {
 //		this.ships = ships;
 //	}
+	
+	public boolean hasSpaceBeenTargeted(int xPos, int yPos) {
+		return spaces.get(yPos-1).hasSpaceBeenTargeted(xPos);
+	}
 
-	public void setSpace(int x, int y, boolean value) {
-
+	public void targetSpace(int xPos, int yPos) {
+		spaces.get(yPos-1);
 	}
 
 	public User getUser() {
@@ -119,17 +123,16 @@ public class Board {
 		if (ship != null && ship.getXPos() != 0 && ship.getYPos() != 0 && ship.getDirection() != null && ship.getLength() > 0) {
 			if (ship.getXPos() == xPos) {
 				if (ship.getDirection().equals(Direction.NORTH)) {
-					
+					covering = ship.getYPos() >= yPos && ship.getYPos() - ship.getLength() <= yPos;
 				} else if (ship.getDirection().equals(Direction.SOUTH)) {
-					
+					covering = ship.getYPos() <= yPos && ship.getYPos() + ship.getLength() >= yPos;
 				}
 			} else if (ship.getYPos() == yPos) {
 				if (ship.getDirection().equals(Direction.EAST)) {
-					
+					covering = ship.getXPos() <= xPos && ship.getXPos() + ship.getLength() >= xPos;
 				} else if (ship.getDirection().equals(Direction.WEST)) {
-					
+					covering = ship.getXPos() >= xPos && ship.getXPos() - ship.getLength() <= xPos;
 				}
-				
 			}
 		}
 		return covering;

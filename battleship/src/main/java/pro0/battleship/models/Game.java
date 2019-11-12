@@ -22,10 +22,23 @@ public class Game {
 	@OneToMany(orphanRemoval = true)
 	private List<Board> boards = new ArrayList<Board>();
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "user")
 	private User user;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private User otherUser;
 
 	public Game() {
+	}
+	
+	public Game(User user, User otherUser) {
+		setUser(user);
+		setOtherUser(otherUser);
+		setupBoards();
+	}
+	private void setupBoards() {
+		boards = new ArrayList<Board>();
+		boards.add(new Board(user));
+		boards.add(new Board(otherUser));
 	}
 		
 	public Integer getId() {
@@ -36,12 +49,37 @@ public class Game {
 		this.id = id;
 	}
 
-	public User getOwner() {
+	public User getUser() {
 		return user;
 	}
 
-	public void setOwner(User owner) {
+	public void setUser(User owner) {
 		this.user = owner;
+	}
+	public User getOtherUser(User user) {
+		if (user.equals(this.user)) {
+			return otherUser;
+		} else if (user.equals(otherUser)) {
+			return this.user;
+		} else {
+			return null;
+		}
+	}
+	public User getOtherUser() {
+		return otherUser;
+	}
+	public void setOtherUser(User other) {
+		this.otherUser = other;
+	}
+	
+	public Board getUsersBoard(User user) {
+		Board result = null;
+		for (Board board : boards) {
+			if(board.getUser().equals(user)) {
+				result = board;
+			}
+		}
+		return result;
 	}
 
 	@Override
