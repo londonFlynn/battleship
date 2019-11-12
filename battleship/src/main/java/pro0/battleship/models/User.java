@@ -20,8 +20,8 @@ public class User {
 	private int gamesLost;
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Board> boards = new ArrayList<>();
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Game> games = new ArrayList<>();
+//	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+//	private List<Game> games = new ArrayList<>();
 	
 	public User() {
 	}
@@ -82,14 +82,14 @@ public class User {
 		boards.remove(board);
 		board.setUser(null);
 	}
-	public void addGame(Game game) {
-		games.add(game);
-		game.setOwner(this);
-	}
-	public void removeGame(Game game) {
-		games.remove(game);
-		game.setOwner(null);
-	}
+//	public void addGame(Game game) {
+//		games.add(game);
+//		game.setOwner(this);
+//	}
+//	public void removeGame(Game game) {
+//		games.remove(game);
+//		game.setOwner(null);
+//	}
 
 	@Override
 	public String toString() {

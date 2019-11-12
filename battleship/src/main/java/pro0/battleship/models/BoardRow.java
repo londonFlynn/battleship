@@ -23,7 +23,7 @@ public class BoardRow {
 	@JoinColumn(name = "board_id")
 	private Board board;
 	
-	private List<Boolean> cells = new ArrayList<Boolean>();
+//	private List<Boolean> cells = new ArrayList<Boolean>();
 	
 	public BoardRow() {
 		for (int i = 0; i < Board.boardSize; i++) {
@@ -47,13 +47,14 @@ public class BoardRow {
 		this.board = board;
 	}
 
-	List<Boolean> getCells() {
-		return cells;
-	}
-
-	void setCells(List<Boolean> cells) {
-		this.cells = cells;
-	}
+//	List<Boolean> getCells() {
+//		return cells;
+//	}
+//
+//	void setCells(List<Boolean> cells) {
+//		this.cells = cells;
+//	}
+	
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
