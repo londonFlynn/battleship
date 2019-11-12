@@ -29,3 +29,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Different SQL credentials
+src/main/resources/application.properties
