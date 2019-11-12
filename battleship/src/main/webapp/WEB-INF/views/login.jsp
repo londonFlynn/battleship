@@ -51,9 +51,10 @@ body {
 <title>Battleship! - Login</title>
 </head>
 <body>
-	<button>Home</button>
+	<!-- button >Home</button> -->
 
 	<div class="split left">
+	<p><a href="/">Battleship</a></p>
 		<div class="centered">
 			<h1>Login</h1>
 			<h2>Username</h2>
