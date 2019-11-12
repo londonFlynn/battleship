@@ -22,8 +22,9 @@ public class Game {
 	@OneToMany(orphanRemoval = true)
 	private List<Board> boards = new ArrayList<Board>();
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "user")
 	private User user;
+	@ManyToOne(fetch = FetchType.LAZY)
 	private User otherUser;
 
 	public Game() {
