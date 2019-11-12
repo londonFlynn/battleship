@@ -32,13 +32,15 @@ public class BoardRow {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-//	List<Boolean> getCells() {
-//		return cells;
-//	}
-//
-//	void setCells(List<Boolean> cells) {
-//		this.cells = cells;
-//	}
+	boolean hasSpaceBeenTargeted(int xPos) {
+		return cells.get(xPos-1).getTargeted();
+	}
+
+	void targetSpace(int xPos) {
+		if (!hasSpaceBeenTargeted(xPos)) {
+			cells.get(xPos-1).setTargeted(true);;
+		}
+	}
 	
 	@Override
 	public boolean equals(Object o) {

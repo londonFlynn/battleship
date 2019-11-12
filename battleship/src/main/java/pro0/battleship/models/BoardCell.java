@@ -14,7 +14,7 @@ public class BoardCell  {
 	@GeneratedValue( strategy= GenerationType.AUTO )
 	private Integer id;
 	
-	Boolean targeted = false;
+	private Boolean targeted = false;
 
 	public Boolean getTargeted() {
 		return targeted;
