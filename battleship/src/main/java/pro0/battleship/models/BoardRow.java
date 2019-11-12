@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity(name="BoardRow")
@@ -18,16 +16,12 @@ public class BoardRow {
 	@Id
 	@GeneratedValue( strategy= GenerationType.AUTO )
 	private Integer id;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "board_id")
-	private Board board;
-	
-//	private List<Boolean> cells = new ArrayList<Boolean>();
+	@OneToMany
+	private List<BoardCell> cells = new ArrayList<BoardCell>();
 	
 	public BoardRow() {
 		for (int i = 0; i < Board.boardSize; i++) {
-			cells.add(false);
+			cells.add(new BoardCell());
 		}
 	}
 
@@ -38,15 +32,6 @@ public class BoardRow {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	public Board getBoard() {
-		return board;
-	}
-
-	public void setBoard(Board board) {
-		this.board = board;
-	}
-
 //	List<Boolean> getCells() {
 //		return cells;
 //	}

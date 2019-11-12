@@ -20,8 +20,8 @@ public class User {
 	private int gamesLost;
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Board> boards = new ArrayList<>();
-//	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-//	private List<Game> games = new ArrayList<>();
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Game> games = new ArrayList<>();
 	
 	public User() {
 	}

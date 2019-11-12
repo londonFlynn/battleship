@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import pro0.battleship.controllers.ShipPlacementController;
+import pro0.battleship.enums.Direction;
 import pro0.battleship.enums.ShipType;
 
 @Entity(name = "Board")
@@ -29,15 +30,12 @@ public class Board {
 	@OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Ship> ships = new ArrayList<Ship>();
 	// TODO store spaces data in JPA
-	@OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(orphanRemoval = true)
 	private List<BoardRow>spaces = new ArrayList<BoardRow>();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "game_id")
-	private Game game;
 	
 
 	public Board() {
@@ -99,33 +97,42 @@ public class Board {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
-	public Game getGame() {
-		return game;
-	}
-
-	public void setGame(Game game) {
-		this.game = game;
-	}
-	
 	void addBoardRow(BoardRow row) {
 		spaces.add(row);
-		row.setBoard(this);
 	}
 	void removeBoardRow(BoardRow row) {
 		spaces.remove(row);
-		row.setBoard(null);
 	}
 	
 	public static boolean spaceIsOnBoard(short xPos, short yPos) {
 		return xPos > 0 && yPos > 0 && xPos <= Board.boardSize && yPos <= Board.boardSize;
 	}
 	public boolean spaceIsOpen(short xPos, short yPos) {
-		//TODO logic to determine if a ship is in a space;
-		return false;
+		boolean open = true;
+		for (Ship ship : ships) {
+			open = open && !shipIsCoveringSpace(ship, xPos, yPos);
+		}
+		return open;
 	}
 	public boolean shipIsCoveringSpace(Ship ship, short xPos, short yPos) {
-		return false;
+		boolean covering = false;
+		if (ship != null && ship.getXPos() != 0 && ship.getYPos() != 0 && ship.getDirection() != null && ship.getLength() > 0) {
+			if (ship.getXPos() == xPos) {
+				if (ship.getDirection().equals(Direction.NORTH)) {
+					
+				} else if (ship.getDirection().equals(Direction.SOUTH)) {
+					
+				}
+			} else if (ship.getYPos() == yPos) {
+				if (ship.getDirection().equals(Direction.EAST)) {
+					
+				} else if (ship.getDirection().equals(Direction.WEST)) {
+					
+				}
+				
+			}
+		}
+		return covering;
 	}
 
 	@Override
