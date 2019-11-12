@@ -24,8 +24,8 @@ public class Ship {
 	@Enumerated(EnumType.STRING)
 	private Direction direction;
 	private short length;
-	private short startRow;
-	private short startColumn;
+	private short xPos;
+	private short yPos;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "board_id")
 	private Board board;
@@ -33,24 +33,24 @@ public class Ship {
 	public Ship() {
 	}
 
-	public Ship(ShipType shipType, Direction direction, short length, short startRow, short startColumn) {
+	public Ship(ShipType shipType, Direction direction, short length, short xPos, short yPos) {
 		this.shipType = shipType;
 		this.direction = direction;
 		this.length = length;
-		this.startRow = startRow;
-		this.startColumn = startColumn;
+		this.xPos = xPos;
+		this.yPos = yPos;
 	}
 
 	public Ship(ShipType shipType, short length) {
 		this.shipType = shipType;
 		this.direction = null;
 		this.length = length;
-		this.startRow = 0;
-		this.startColumn = 0;
+		this.xPos = 0;
+		this.yPos = 0;
 	}
-	public void placeShip(short startRow, short startColumn, Direction direction) {
-		setStartRow(startRow);
-		setStartColumn(startColumn);
+	public void placeShip(short xPos, short yPos, Direction direction) {
+		setXPos(xPos);
+		setYPos(yPos);
 		setDirection(direction);
 	}
 
@@ -86,20 +86,20 @@ public class Ship {
 		this.length = length;
 	}
 
-	public short getStartRow() {
-		return startRow;
+	public short getXPos() {
+		return xPos;
 	}
 
-	public void setStartRow(short startRow) {
-		this.startRow = startRow;
+	public void setXPos(short xPos) {
+		this.xPos = xPos;
 	}
 
-	public short getStartColumn() {
-		return startColumn;
+	public short getYPos() {
+		return yPos;
 	}
 
-	public void setStartColumn(short startColumn) {
-		this.startColumn = startColumn;
+	public void setYPos(short yPos) {
+		this.yPos = yPos;
 	}
 	
 
@@ -115,8 +115,8 @@ public class Ship {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Ship [id=").append(id).append(", shipType=").append(shipType).append(", direction=")
-				.append(direction).append(", length=").append(length).append(", startRow=").append(startRow)
-				.append(", startColumn=").append(startColumn).append("]");
+				.append(direction).append(", length=").append(length).append(", startRow=").append(xPos)
+				.append(", startColumn=").append(yPos).append("]");
 		return builder.toString();
 	}
 	@Override

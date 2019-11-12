@@ -3,7 +3,6 @@ package pro0.battleship.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,11 +19,11 @@ public class Game {
 	@Id
 	@GeneratedValue( strategy= GenerationType.AUTO )
 	private Integer id;
-	@OneToMany(mappedBy = "game", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(orphanRemoval = true)
 	private List<Board> boards = new ArrayList<Board>();
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
-	private User owner;
+	private User user;
 
 	public Game() {
 	}
@@ -38,11 +37,11 @@ public class Game {
 	}
 
 	public User getOwner() {
-		return owner;
+		return user;
 	}
 
 	public void setOwner(User owner) {
-		this.owner = owner;
+		this.user = owner;
 	}
 
 	@Override
