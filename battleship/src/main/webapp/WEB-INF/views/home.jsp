@@ -7,7 +7,7 @@
 <html>
 <head>
 <style>
-body  {background-color: powderblue;}
+body  {background-image: url("battleship.jpg"); background-size: cover;}
 h1    {font-size: 150px; padding: 15px; margin: 15px; text-align: center;}
 .header{background-color: #000; display: inline-block; width: 100%; height: 100px;}
 .gameplaySection {background-color: #222; color: #fff; width: 400px; height: 230px;}
@@ -18,9 +18,9 @@ h1    {font-size: 150px; padding: 15px; margin: 15px; text-align: center;}
 #gametitle {height: 500px}
 </style>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Battleship!</title>
 </head>
-<body background="wallpapersden.com_world-of-warships-mogador-destroyer_1920x1080.jpg">
+<body>
 	<header class='header'><!--display: block-->
       <a id='homelink' href='/'>Battleship</a>
       <a id='login' href='/login'>Login</a>
