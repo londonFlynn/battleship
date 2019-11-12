@@ -13,27 +13,29 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import pro0.battleship.controllers.ShipPlacementController;
+import pro0.battleship.enums.Direction;
 import pro0.battleship.enums.ShipType;
 
 @Entity(name = "Board")
 @Table(name = "board")
 public class Board {
+	@Transient
+	public static final short boardSize = 10;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	@OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Ship> ships = new ArrayList<Ship>();
 	// TODO store spaces data in JPA
-	@OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(orphanRemoval = true)
 	private List<BoardRow>spaces = new ArrayList<BoardRow>();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
 	private User user;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "game_id")
-	private Game game;
 	
 
 	public Board() {
@@ -57,18 +59,17 @@ public class Board {
 	}
 
 	private void createShips() {
-		addShip(new Ship(ShipType.AIRCRAFT_CARRIER, (short) 5));
-		addShip(new Ship(ShipType.BATTLESHIP, (short) 4));
-		addShip(new Ship(ShipType.CRUSER, (short) 3));
-		addShip(new Ship(ShipType.SUBMARINE, (short) 3));
-		addShip(new Ship(ShipType.DESROYER, (short) 2));
+		addShip(new Ship(ShipType.AIRCRAFT_CARRIER, ShipPlacementController.getShipLengthFromType(ShipType.AIRCRAFT_CARRIER)));
+		addShip(new Ship(ShipType.BATTLESHIP, ShipPlacementController.getShipLengthFromType(ShipType.BATTLESHIP)));
+		addShip(new Ship(ShipType.CRUSER, ShipPlacementController.getShipLengthFromType(ShipType.CRUSER)));
+		addShip(new Ship(ShipType.SUBMARINE, ShipPlacementController.getShipLengthFromType(ShipType.SUBMARINE)));
+		addShip(new Ship(ShipType.DESROYER, ShipPlacementController.getShipLengthFromType(ShipType.DESROYER)));
 	}
 	private void createBoardRows() {
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < boardSize; i++) {
 			spaces.add(new BoardRow());
 		}
 	}
-
 	public Integer getId() {
 		return id;
 	}
@@ -77,9 +78,9 @@ public class Board {
 		this.id = id;
 	}
 
-//	public List<Ship> getShips() {
-//		return ships;
-//	}
+	public List<Ship> getShips() {
+		return ships;
+	}
 //
 //	public void setShips(List<Ship> ships) {
 //		this.ships = ships;
@@ -96,22 +97,42 @@ public class Board {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
-	public Game getGame() {
-		return game;
-	}
-
-	public void setGame(Game game) {
-		this.game = game;
-	}
-	
 	void addBoardRow(BoardRow row) {
 		spaces.add(row);
-		row.setBoard(this);
 	}
 	void removeBoardRow(BoardRow row) {
 		spaces.remove(row);
-		row.setBoard(null);
+	}
+	
+	public static boolean spaceIsOnBoard(short xPos, short yPos) {
+		return xPos > 0 && yPos > 0 && xPos <= Board.boardSize && yPos <= Board.boardSize;
+	}
+	public boolean spaceIsOpen(short xPos, short yPos) {
+		boolean open = true;
+		for (Ship ship : ships) {
+			open = open && !shipIsCoveringSpace(ship, xPos, yPos);
+		}
+		return open;
+	}
+	public boolean shipIsCoveringSpace(Ship ship, short xPos, short yPos) {
+		boolean covering = false;
+		if (ship != null && ship.getXPos() != 0 && ship.getYPos() != 0 && ship.getDirection() != null && ship.getLength() > 0) {
+			if (ship.getXPos() == xPos) {
+				if (ship.getDirection().equals(Direction.NORTH)) {
+					
+				} else if (ship.getDirection().equals(Direction.SOUTH)) {
+					
+				}
+			} else if (ship.getYPos() == yPos) {
+				if (ship.getDirection().equals(Direction.EAST)) {
+					
+				} else if (ship.getDirection().equals(Direction.WEST)) {
+					
+				}
+				
+			}
+		}
+		return covering;
 	}
 
 	@Override
