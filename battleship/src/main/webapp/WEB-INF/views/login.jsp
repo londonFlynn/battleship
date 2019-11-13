@@ -56,17 +56,19 @@ body {
 	<div class="split left">
 	<p><a href="/">Battleship</a></p>
 		<div class="centered">
-			<h1>Login</h1>
-			<h2>Username</h2>
-			<input style="border-color: black;" type="text" name="username" />
-			<h2>Password</h2>
-			<input style="border-color: black;" type="password" name="password" />
-			<br> 
-			<input type="submit" name="login" value="Login" />
-			<% if(error != null) { %>
-					<div style="color:red"><%= error %></div>
-				<% session.removeAttribute("msg");				
-			}%>
+			<form method="POST" action="/login/submit">
+				<h1>Login</h1>
+				<h2>Username</h2>
+				<input style="border-color: black;" type="text" name="username" />
+				<h2>Password</h2>
+				<input style="border-color: black;" type="password" name="password" />
+				<br> 
+				<input type="submit" name="login" value="Login" />
+				<% if(error != null) { %>
+						<div style="color:red"><%= error %></div>
+					<% session.removeAttribute("msg");				
+				}%>
+			</form>
 		</div>
 	</div>
 
@@ -74,17 +76,19 @@ body {
 
 	<div class="split right">
 		<div class="centered">
-			<h1>Create Account</h1>
-			<h2>Username</h2>
-			<input style="border-color: black;" type="text" name="username" />
-			<h2>Password</h2>
-			<input style="border-color: black;" type="text" name="password" /> 
-			<input type="submit" name="create" value="Create Account" />
-			<% if(createError != null) {
-				%>
-					<div style="color:red"><%= createError %></div>
-				<% session.removeAttribute("createMsg");
-				}%>
+			<form method="POST" action="/login/signup">
+				<h1>Create Account</h1>
+				<h2>Username</h2>
+				<input style="border-color: black;" type="text" name="username" />
+				<h2>Password</h2>
+				<input style="border-color: black;" type="text" name="password" /> 
+				<input type="submit" name="create" value="Create Account" />
+				<% if(createError != null) {
+					%>
+						<div style="color:red"><%= createError %></div>
+					<% session.removeAttribute("createMsg");
+					}%>
+			</form>
 		</div>
 	</div>
 </body>
