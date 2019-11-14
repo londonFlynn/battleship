@@ -22,7 +22,7 @@ public class User {
 	private List<Board> boards = new ArrayList<>();
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Game> games = new ArrayList<>();
-	
+
 	public User() {
 	}
 
@@ -74,6 +74,10 @@ public class User {
 		this.gamesLost = gamesLost;
 	}
 
+	public List<Game> getGames() {
+		return games;
+	}
+	
 	void addBoard(Board board) {
 		boards.add(board);
 		board.setUser(this);

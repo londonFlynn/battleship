@@ -102,11 +102,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		
 		try {
 			http.authorizeRequests()
-				.antMatchers(HttpMethod.GET, "/").permitAll()
-				.antMatchers(HttpMethod.GET, "/login").permitAll()
-				.antMatchers(HttpMethod.GET, "/login/*").permitAll()
-				.antMatchers(HttpMethod.POST, "/login").permitAll()
-				.antMatchers(HttpMethod.POST, "/login/*").permitAll()
+				.antMatchers("/**").permitAll()
+//				.antMatchers(HttpMethod.GET, "/").permitAll()
+//				.antMatchers(HttpMethod.GET, "/login").permitAll()
+//				.antMatchers(HttpMethod.GET, "/login/*").permitAll()
+//				.antMatchers(HttpMethod.POST, "/login").permitAll()
+//				.antMatchers(HttpMethod.POST, "/login/*").permitAll()
 				
 				.anyRequest().authenticated()
 				
