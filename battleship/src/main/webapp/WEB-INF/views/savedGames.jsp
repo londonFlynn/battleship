@@ -3,8 +3,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
-<% 	
-	List<Game> ownedGames =  new List<Game>();%>
+<% 	List<Game> games = (List<Game>)request.getAttribute("games");
+	%>
 <!DOCTYPE html>
 <html>
 <head>
