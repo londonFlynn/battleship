@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%
-
+	boolean loggedIn = (boolean)request.getAttribute("loggedIn");
 %>
 <!DOCTYPE html>
 <html>
@@ -44,7 +44,11 @@ h1 {font-size: 150px;
 <body>
 	<header class='header'><!--display: block-->
       <a id='homelink' href='/'>Battleship</a>
-      <a id='login' href='/login'>Login</a>
+      <a id='login' href='/login'>
+     <%if(!loggedIn) { %>
+      Login <%} 
+      else { %>
+      Log out <%} %></a>
     </header>
     <div id='gametitle'>
     	<h1>Battleship</h1>
