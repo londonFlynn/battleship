@@ -21,7 +21,8 @@ function connect() {
         setConnected(true);
         console.log('Connected: ' + frame);
         stompClient.subscribe('/tojs/game', function (game) {
-            showGame(JSON.parse(game.body));
+            // showGame(JSON.parse(game.body));
+            sendGame(game);
         });
     });
 }
