@@ -1,0 +1,40 @@
+package pro0.battleship.controllers;
+
+import java.security.Principal;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import pro0.battleship.models.User;
+import pro0.battleship.repositories.UserJpaRepository;
+
+@Controller
+@RequestMapping(path="/dock")
+public class Dock {
+
+	@Autowired
+	UserJpaRepository userRepo;
+	
+	@GetMapping(path="")
+	protected String doMainGet(Principal prn, Model model) {
+		String targetResource = "forward:/";
+		Optional<User> optUser = userRepo.findById(((UserDetails) prn).getUsername());
+		
+		if(optUser.isPresent()) {
+			User user = optUser.get();
+			model.addAttribute("username", user.getUsername());
+			model.addAttribute("gamesWon", user.getGamesWon());
+			model.addAttribute("gamesLost", user.getGamesLost());
+			model.addAttribute("games", user.getGames());
+			model.addAttribute("imgUrl", user.getImageUrl());
+			targetResource = "dock";
+		}
+		
+		return targetResource;
+	}
+}
