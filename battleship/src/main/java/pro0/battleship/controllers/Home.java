@@ -5,6 +5,7 @@ import java.security.Principal;
 import javax.servlet.http.HttpServlet;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -13,16 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class Home {
 
 	@GetMapping(path="")
-	protected String doMainGet(Principal principal) {
-		String targetResource = "home";
-		if(principal != null)
-		{
-			targetResource = "loggedInHome";
-		}
+	protected String doMainGet(Principal principal, Model model) {
+		boolean loggedIn = false;
+		if(principal != null) loggedIn = true;
+		
+		model.addAttribute("loggedIn", loggedIn);
 		// For JS requests eventually
 //		((UserDetails) principal).getUsername()
 		
-		return targetResource;
+		return "home";
 	}
 
 }
