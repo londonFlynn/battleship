@@ -1,14 +1,20 @@
 package pro0.battleship.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
 import pro0.battleship.models.Game;
+import pro0.battleship.repositories.GameJpaRepository;
+
 
 
 @Controller
 public class GameObjectServlet {
+	
+	@Autowired
+	GameJpaRepository gameJpaRepository;
 	
 	@MessageMapping("/game")
     @SendTo("/tojs/game")

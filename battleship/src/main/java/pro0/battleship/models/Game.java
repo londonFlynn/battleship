@@ -30,6 +30,7 @@ public class Game {
 	private User currentTurn;
 
 	public Game() {
+		setupBoards();
 	}
 	
 	public Game(User user, User otherUser) {
@@ -99,9 +100,10 @@ public class Game {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Game [id=").append(id).append(", boards=").append(boards).append(", user=").append(user)
-				.append(", otherUser=").append(otherUser).append("]");
+				.append(", otherUser=").append(otherUser).append(", currentTurn=").append(currentTurn).append("]");
 		return builder.toString();
 	}
+
 	
 
 }
