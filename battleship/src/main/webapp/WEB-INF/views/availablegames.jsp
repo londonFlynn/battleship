@@ -28,7 +28,7 @@ body {
     position: static;
 }
 
-.savedgame {
+.availablegame {
   border: 2px solid #ccc;
   background-color: #eee;
   border-radius: 5px;
@@ -45,7 +45,7 @@ body {
 	height: 100%;
 }
 
-.savedgame span {
+.availablegame span {
   font-size: 20px;
   margin-right: 15px;
 }
@@ -57,14 +57,14 @@ hr {
 }
 
 </style>
-<title>Battleship! - Saved Games</title>
+<title>Battleship! - Games</title>
 </head>
 <body>
 
 <div class="split left">
-<h2>Saved Games</h2>
+<h2>Available Games</h2>
 
-<div class="savedgame">
+<div class="availablegame">
   <p><span>Chris Fox.</span> CEO at Mighty Schools.</p>
   <p>John Doe saved us from a web disaster.</p>
 </div>
@@ -94,7 +94,6 @@ hr {
     <input type="submit" name="Create">
 
 </div>
-
 
 
 </body>

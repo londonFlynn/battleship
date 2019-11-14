@@ -7,7 +7,7 @@
 <html>
 <head>
 <style>
-body  {background-image: url("battleship.jpg"); background-size: cover;}
+body  {background-image: url("battleship.jpg"); background-size: cover; background-repeat: no-repeat;}
 h1    {font-size: 150px; padding: 15px; margin: 15px; text-align: center;}
 .header{background-color: #000; display: inline-block; width: 100%; height: 100px;}
 .gameplaySection {background-color: #222; color: #fff; width: 400px; height: 230px;}
