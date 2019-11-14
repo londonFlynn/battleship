@@ -27,11 +27,5 @@ public class Home {
 		
 		return targetResource;
 	}
-	
-	@GetMapping(path="/savedgames")
-	protected String doSavedGamesGet() {
-		
-		return "savedgames";
-	}
 
 }
