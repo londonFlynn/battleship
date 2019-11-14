@@ -20,9 +20,7 @@ public class BoardRow {
 	private List<BoardCell> cells = new ArrayList<BoardCell>();
 	
 	public BoardRow() {
-		for (int i = 0; i < Board.boardSize; i++) {
-			cells.add(new BoardCell());
-		}
+		
 	}
 
 	public Integer getId() {
@@ -42,6 +40,16 @@ public class BoardRow {
 		}
 	}
 	
+	
+	
+	public List<BoardCell> getCells() {
+		return cells;
+	}
+
+	public void setCells(List<BoardCell> cells) {
+		this.cells = cells;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

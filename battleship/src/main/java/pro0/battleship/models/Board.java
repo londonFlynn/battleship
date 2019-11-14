@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,9 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import pro0.battleship.controllers.ShipPlacementController;
 import pro0.battleship.enums.Direction;
-import pro0.battleship.enums.ShipType;
 
 @Entity(name = "Board")
 @Table(name = "board")
@@ -31,7 +30,8 @@ public class Board {
 	private List<Ship> ships = new ArrayList<Ship>();
 	// TODO store spaces data in JPA
 	@OneToMany(orphanRemoval = true)
-	private List<BoardRow>spaces = new ArrayList<BoardRow>();
+	@Column(name = "rows")
+	private List<BoardRow> rows = new ArrayList<BoardRow>();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
@@ -39,14 +39,10 @@ public class Board {
 	
 
 	public Board() {
-		createShips();
-		createBoardRows();
 	}
 
 	public Board(User user) {
 		setUser(user);
-		createShips();
-		createBoardRows();
 	}
 	
 	public void addShip(Ship ship) {
@@ -56,19 +52,6 @@ public class Board {
 	public void removeShip(Ship ship) {
 		ships.remove(ship);
 		ship.setBoard(null);
-	}
-
-	private void createShips() {
-		addShip(new Ship(ShipType.AIRCRAFT_CARRIER, ShipPlacementController.getShipLengthFromType(ShipType.AIRCRAFT_CARRIER)));
-		addShip(new Ship(ShipType.BATTLESHIP, ShipPlacementController.getShipLengthFromType(ShipType.BATTLESHIP)));
-		addShip(new Ship(ShipType.CRUSER, ShipPlacementController.getShipLengthFromType(ShipType.CRUSER)));
-		addShip(new Ship(ShipType.SUBMARINE, ShipPlacementController.getShipLengthFromType(ShipType.SUBMARINE)));
-		addShip(new Ship(ShipType.DESROYER, ShipPlacementController.getShipLengthFromType(ShipType.DESROYER)));
-	}
-	private void createBoardRows() {
-		for (int i = 0; i < boardSize; i++) {
-			spaces.add(new BoardRow());
-		}
 	}
 	public Integer getId() {
 		return id;
@@ -87,11 +70,11 @@ public class Board {
 //	}
 	
 	public boolean hasSpaceBeenTargeted(int xPos, int yPos) {
-		return spaces.get(yPos-1).hasSpaceBeenTargeted(xPos);
+		return  rows.get(yPos-1).hasSpaceBeenTargeted(xPos);
 	}
 
 	public void targetSpace(int xPos, int yPos) {
-		spaces.get(yPos-1);
+		 rows.get(yPos-1);
 	}
 
 	public User getUser() {
@@ -102,12 +85,25 @@ public class Board {
 		this.user = user;
 	}
 	void addBoardRow(BoardRow row) {
-		spaces.add(row);
+		 rows.add(row);
 	}
 	void removeBoardRow(BoardRow row) {
-		spaces.remove(row);
+		 rows.remove(row);
 	}
 	
+	
+	public List<BoardRow> getRows() {
+		return  rows;
+	}
+
+	public void setRows(List<BoardRow> spaces) {
+		this. rows = spaces;
+	}
+
+	public void setShips(List<Ship> ships) {
+		this.ships = ships;
+	}
+
 	public static boolean spaceIsOnBoard(short xPos, short yPos) {
 		return xPos > 0 && yPos > 0 && xPos <= Board.boardSize && yPos <= Board.boardSize;
 	}

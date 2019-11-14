@@ -30,19 +30,19 @@ public class Game {
 	private User currentTurn;
 
 	public Game() {
-		setupBoards();
+//		setupBoards();
 	}
 	
 	public Game(User user, User otherUser) {
 		setUser(user);
 		setOtherUser(otherUser);
-		setupBoards();
+//		setupBoards();
 	}
-	private void setupBoards() {
-		boards = new ArrayList<Board>();
-		boards.add(new Board(user));
-		boards.add(new Board(otherUser));
-	}
+//	public void setupBoards() {
+//		boards = new ArrayList<Board>();
+//		boards.add(new Board(user));
+//		boards.add(new Board(otherUser));
+//	}
 		
 	public Integer getId() {
 		return id;
@@ -83,6 +83,22 @@ public class Game {
 			}
 		}
 		return result;
+	}
+
+	public List<Board> getBoards() {
+		return boards;
+	}
+
+	public void setBoards(List<Board> boards) {
+		this.boards = boards;
+	}
+
+	public User getCurrentTurn() {
+		return currentTurn;
+	}
+
+	public void setCurrentTurn(User currentTurn) {
+		this.currentTurn = currentTurn;
 	}
 
 	@Override

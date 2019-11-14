@@ -17,7 +17,7 @@ function connect() {
         setConnected(true);
         console.log('Connected: ' + frame);
         stompClient.subscribe('/tojs/game', function (game) {
-            showGame(game.body);
+            showGame(JSON.parse(game.body));
         });
         test();
     });
@@ -38,6 +38,13 @@ function sendGame(game) {
 
 function showGame(game) {
     console.log("Recived Game "+game);
+    game.boards.forEach( function(board) {
+        board.rows.forEach (function(row) {
+            row.cells.forEach(function(cell){
+                console.log(cell.targeted);
+            });
+        });
+    });
 }
 
 function test() {
