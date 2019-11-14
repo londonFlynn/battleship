@@ -29,16 +29,28 @@ body {
   margin-right: 15px;
 }
 
+#dock {
+	float: right;
+	background-color: #ff751a;
+	border: 10px solid #ff751a;
+}
+
 </style>
 <title>Battleship! - Saved Games</title>
 </head>
 <body>
+<a id='dock' href='/dock'>Dock</a>
 <h1>Saved Games</h1>
 
+	<% if (games != null) { 
+		for (Game game : games) {
+	%>
 <div class="savedgame">
-  <p><span>You vs uName</span></p>
-  <p>Images of board status</p>
+  <p><span>You vs <%=game.getOtherUser().getUsername() %></span></p>
+  <p></p>
 </div>
+  <%	}
+	} %>
 
 </body>
 </html>

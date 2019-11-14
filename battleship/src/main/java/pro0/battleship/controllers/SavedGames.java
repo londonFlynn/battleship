@@ -28,7 +28,9 @@ public class SavedGames {
 //		if(userRepo.findById(username).isPresent()) {
 //			User user = userRepo.findById(username).get();
 			User user = new User("kathy", "test", "/hello", 0, 1);
+			User user2 = new User("riley", "testing", "/hey", 1, 0);
 			user.getGames().add(new Game(user, user));
+			user.getGames().add(new Game(user, user2));
 			model.addAttribute("games", user.getGames());
 			targetResource = "savedGames";
 //		}
