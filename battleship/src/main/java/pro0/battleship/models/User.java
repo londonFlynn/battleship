@@ -15,7 +15,7 @@ public class User {
 	@Id
 	private String username;
 	private String password;
-	private String imageUrl;
+	private String imageUrl = "./babyduck.jpg";
 	private int gamesWon;
 	private int gamesLost;
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)

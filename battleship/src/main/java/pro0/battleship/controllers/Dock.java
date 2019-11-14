@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import pro0.battleship.models.Game;
 import pro0.battleship.models.User;
 import pro0.battleship.repositories.UserJpaRepository;
 
@@ -23,17 +24,19 @@ public class Dock {
 	@GetMapping(path="")
 	protected String doMainGet(Principal prn, Model model) {
 		String targetResource = "forward:/";
-		Optional<User> optUser = userRepo.findById(((UserDetails) prn).getUsername());
-		
-		if(optUser.isPresent()) {
-			User user = optUser.get();
+//		Optional<User> optUser = userRepo.findById(((UserDetails) prn).getUsername());
+//		
+//		if(optUser.isPresent()) {
+//			User user = optUser.get();
+		User user = new User("kathy", "test", "./babyduck.jpg", 0, 1);
+		user.getGames().add(new Game(user, user));
 			model.addAttribute("username", user.getUsername());
 			model.addAttribute("gamesWon", user.getGamesWon());
 			model.addAttribute("gamesLost", user.getGamesLost());
 			model.addAttribute("games", user.getGames());
 			model.addAttribute("imgUrl", user.getImageUrl());
 			targetResource = "dock";
-		}
+//		}
 		
 		return targetResource;
 	}
