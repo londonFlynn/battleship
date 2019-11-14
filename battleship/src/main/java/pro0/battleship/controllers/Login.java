@@ -18,8 +18,7 @@ import pro0.battleship.repositories.UserJpaRepository;
 
 @Controller
 @RequestMapping(path="/login")
-public class Login extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+public class Login {
     
 	@Autowired
 	private UserJpaRepository userRepo;
