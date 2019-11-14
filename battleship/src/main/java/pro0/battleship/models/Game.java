@@ -26,6 +26,8 @@ public class Game {
 	private User user;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User otherUser;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private User currentTurn;
 
 	public Game() {
 	}
@@ -92,5 +94,14 @@ public class Game {
 	public int hashCode() {
 		return 31;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Game [id=").append(id).append(", boards=").append(boards).append(", user=").append(user)
+				.append(", otherUser=").append(otherUser).append("]");
+		return builder.toString();
+	}
+	
 
 }

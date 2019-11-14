@@ -13,6 +13,7 @@ public class GameObjectServlet {
 	@MessageMapping("/game")
     @SendTo("/tojs/game")
     public Game game(Game game) throws Exception {
+		System.out.println(game);
         //TODO: Alter game before returning it.
         return game;
     }

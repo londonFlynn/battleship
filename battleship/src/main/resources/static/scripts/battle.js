@@ -1,6 +1,8 @@
 var stompClient = null;
 
-window.onload = connect;
+window.onload = function() {
+    this.connect();
+};
 
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
@@ -21,9 +23,9 @@ function connect() {
         setConnected(true);
         console.log('Connected: ' + frame);
         stompClient.subscribe('/tojs/game', function (game) {
-            // showGame(JSON.parse(game.body));
-            sendGame(game);
+            showGame(game.body);
         });
+        test();
     });
 }
 
@@ -35,20 +37,23 @@ function disconnect() {
     console.log("Disconnected");
 }
 
-function sendGame() {
-    stompClient.send("/fromjs/game", {}, JSON.stringify({'name': $("#name").val()}));
+function sendGame(game) {
+    console.log("sending game " + game);
+    stompClient.send("/fromjs/game",{},JSON.stringify(game));
 }
 
 function showGame(game) {
-    console.log(game);
+    console.log("Recived Game "+game);
 }
 
-$(function () {
-    $("form").on('submit', function (e) {
-        e.preventDefault();
-    });
-    // $( "#connect" ).click(function() { connect(); });
-    // $( "#disconnect" ).click(function() { disconnect(); });
-    $( "#send" ).click(function() { sendGame(); });
-});
+function test() {
+    sendGame(Game);
+}
 
+var Game = {
+    id: 1,
+    boards: null,
+    user: null,
+    currentTurn: null,
+    otherUser: null
+}
