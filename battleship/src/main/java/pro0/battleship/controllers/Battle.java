@@ -45,7 +45,7 @@ public class Battle {
 		Game game = null;
 		
 		if(user.isPresent()) {
-			game = gameRepo.save(Game.newGame(user.get(), boardRepo, boardRowRepo, boardCellRepo));
+			game = gameRepo.save(Game.newGame(user.get(), gameRepo, boardRepo, boardRowRepo, boardCellRepo));
 			targetResource = "forward:/battle/" + game.getId();
 		}
 		else resp.setStatus(500);
