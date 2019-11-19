@@ -1,11 +1,11 @@
-var playerShips {
+var playerShips = {
 	aircraft = getElementById('playerAircraft'),
 	battleship = getElementById('playerBattleship'),
 	cruiser = getElementById('playerCruser'),
 	destroyer = getElementById('playerDestroyer'),
 	submarine = getElementById('playerSubmarine')
 }
-var opponentShips {
+var opponentShips = {
 	aircraft = getElementById('opponentAircraft'),
 	battleship = getElementById('opponentBattleship'),
 	cruiser = getElementById('opponentCruser'),
