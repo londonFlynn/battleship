@@ -10,6 +10,7 @@ var pcruiser = document.getElementById('pcruiser');
 var pdestroyer = document.getElementById('pdestroyer');
 var psubmarine = document.getElementById('psubmarine');
 var opponentBoard = document.getElementById('opponentBoard');
+console.log(opponentBoard);
 
 var stompClient = null;
 var gameId;
@@ -30,7 +31,7 @@ function sendShipPlacementRequest(xPos, yPos, direction, shipType) {
 }
 
 function sendTargetCellRequest(xPos, yPos) {
-    tompClient.send("/fromjs/targetCell/"+gameId,{}, {"xPos":xPos, "yPos":yPos});
+    stompClient.send("/fromjs/targetCell/"+gameId,{}, {"xPos":xPos, "yPos":yPos});
 }
 
 function connect(id) {
@@ -80,21 +81,21 @@ var Game = {
 function determineClick() {
 	console.log('determine click');
 	console.log(event);
-	console.log(event.target);
 }
 
-//function determineClick() {
-//	var row = document.getElementById('opponentBoard').rows;
-//	
-//	for(var i=0;i<row.length;i++) {
-//		for(var j=0;j<row[i].cells.length;j++) {
-//			
-//			row[i].cells[j].addEventListener('click', doneClick());
-//		}
-//	}
-//}
-
-opponentBoard.addEventListener("click", determineClick());
+opponentBoard.addEventListener("click", event => {
+	var index = event.target.id.substring(0, 1) + "," + event.target.id.substring(1);
+	index.split(",");
+	var xPos = index[0].charCodeAt(0) - 49;
+	
+	var yPos = event.target.id.substring(1);
+	var y = parseInt(yPos, 10)
+	y = y-1;
+	
+	console.log("X: " + String.fromCharCode(xPos) +"; Y: "+ y);
+	
+	sendTargetCellRequest(String.fromCharCode(xPos), y);
+});
 
 
 

@@ -12,7 +12,6 @@
 <script src="/webjars/jquery/jquery.min.js"></script>
 <script src="/webjars/sockjs-client/sockjs.min.js"></script>
 <script src="/webjars/stomp-websocket/stomp.min.js"></script>
-<script src="/scripts/battle.js"></script>
 <script type="application/javascript">
 window.onload = function() {
 	  setGameId(<%=gameID%>);
@@ -24,7 +23,7 @@ window.onload = function() {
 <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
     enabled. Please enable
     Javascript and reload this page!</h2></noscript>
-    <table id='opponentBoard'  class='board'>
+    <table id="opponentBoard" class="board">
 	<tbody><tr>
 		<th class='titleTile'></th>
 		<td class='titleTile'>A</td>
@@ -42,8 +41,8 @@ window.onload = function() {
 	<tr>
 		<th><%=i%></th>
 			<%for(int j=0;j<10;j++){ %>
-			<td id='<%=""+let+i%>' class='otiles'></td>
-			<%let++;} %>
+				<td id='<%=""+let+""+i%>' class='otiles'></td>
+				<%let++;}%>
 	</tr>
 	<% let='a';} %>
 	</tbody>
@@ -89,6 +88,7 @@ window.onload = function() {
 		<div id='pdestroyer' class='ships'><span class="tooltiptext">Destroyer</span></div>
 		<div id='psubmarine' class='ships'><span class="tooltiptext">Submarine</span></div>
 	</div>
+	<script src='scripts/battle.js'></script>
 </body>
 </html>
 
