@@ -6,38 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-body {background-image: url("./battleship.jpg");
-	background-size: cover;}
-h1 {font-size: 150px;
-	 padding: 15px;
-	 margin: 15px;
-	 text-align: center;}
-.header {background-color: #000;
-	display: inline-block;
-	width: 100%;
-	height: 100px;}
-.gameplaySection {background-color: #222;
-	color: #fff;
-	width: 400px;
-	height: 230px;}
-#login {float: right;
-	background-color: #fff;
-	margin: 25px;
-	border: 10px solid white;}
-#homelink {float: left;
-	font-size: 38px;
-	margin: 25px;}
-#dockPreview{position: absolute;
-	bottom: 0;
-	right: 0;
-	margin: 35px;}
-#multiplayerPreview{position: absolute;
-	bottom: 0;
-	left: 0;
-	margin: 35px;}
-#gametitle {height: 500px}
-</style>
+<link href='css/Home.css' rel='stylesheet' />
 <meta charset="ISO-8859-1">
 <title>Battleship!</title>
 </head>
