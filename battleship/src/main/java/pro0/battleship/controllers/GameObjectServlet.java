@@ -45,7 +45,7 @@ public class GameObjectServlet {
 	@SendTo("/tojs/game/{id}")
 	public Game recieveGameStateRequst(@DestinationVariable("id") int id) {
 		
-		return null;
+		return gameJpaRepository.findById(id).orElse(null);
 	}
 	
 	

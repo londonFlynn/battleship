@@ -73,9 +73,9 @@ public class Game {
 				boards.add(board);
 			}
 			Game game = new Game();
-			game.getBoards().get(0).setUser(user);
 			game.setUser(user);
 			game.setBoards(boards);
+			game.getBoards().get(0).setUser(user);
 			Game returnGame = gameJpaRepository.save(game);
 			return returnGame;
 	}
