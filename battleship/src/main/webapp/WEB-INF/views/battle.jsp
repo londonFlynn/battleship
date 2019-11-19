@@ -65,6 +65,11 @@
 <script src="/webjars/sockjs-client/sockjs.min.js"></script>
 <script src="/webjars/stomp-websocket/stomp.min.js"></script>
 <script src="/scripts/battle.js"></script>
+<script type="application/javascript">
+window.onload = function() {
+	  setGameId();
+};
+</script>
 <title>Battle!</title>
 </head>
 <body>
