@@ -40,27 +40,27 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 					
 					@Override
 					public boolean isEnabled() {
-						return true;
+						return !getUsername().isEmpty() ? true : false;
 					}
 					
 					@Override
 					public boolean isCredentialsNonExpired() {
-						return true;
+						return !getUsername().isEmpty() ? true : false;
 					}
 					
 					@Override
 					public boolean isAccountNonLocked() {
-						return true;
+						return !getUsername().isEmpty() ? true : false;
 					}
 					
 					@Override
 					public boolean isAccountNonExpired() {
-						return true;
+						return !getUsername().isEmpty() ? true : false;
 					}
 					
 					@Override
 					public String getUsername() {
-						String nameInDB = null;
+						String nameInDB = "";
 						if(userRepo.findById(username).isPresent()) nameInDB = userRepo.findById(username).get().getUsername();
 						
 						return nameInDB;
@@ -68,7 +68,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 					
 					@Override
 					public String getPassword() {
-						String passInDB = null;
+						String passInDB = "";
 						if(userRepo.findById(username).isPresent()) passInDB = "{noop}" + userRepo.findById(username).get().getPassword();
 						
 						return passInDB;
@@ -82,7 +82,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		
 								@Override
 								public String getAuthority() {
-									return "User";
+									return !getUsername().isEmpty() ? "User" : "";
 								}
 							}
 						);
@@ -133,7 +133,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				
 				.and()
 					.csrf().disable()
-					.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+					.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
 		} catch(Exception e) {
 			
 		}
