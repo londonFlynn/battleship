@@ -12,24 +12,26 @@ var psubmarine = document.getElementById('psubmarine');
 var opponentBoard = document.getElementById('opponentBoard');
 
 var stompClient = null;
+var gameId;
 
-window.onload = function() {
-    this.connect();
-};
+function setGameId(id) {
+    gameId = id;
+    this.connect(id);
+}
 
 function setConnected(connected) {
     if (!connected ) {
-    //Notify user that they lost their connection
+        //Notify user that they lost their connection
     }
 }
 
-function connect() {
+function connect(id) {
     var socket = new SockJS('/gs-battleship-websocket');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/tojs/game', function (game) {
+        stompClient.subscribe('/tojs/game/'+id, function (game) {
             showGame(JSON.parse(game.body));
         });
         test();
