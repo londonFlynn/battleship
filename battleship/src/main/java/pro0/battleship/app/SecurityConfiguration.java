@@ -113,18 +113,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				
 				.and()
 					.formLogin()
+					
+					// Default end point is "/login" but does not use our controller unless specified.
 					.loginPage("/login")
-					.loginProcessingUrl("/login/submit")
+					
 					.defaultSuccessUrl("/dock", true)
-					.failureUrl("/login")
-					.usernameParameter("username")
-					.passwordParameter("password")
 					.permitAll()
 					
 				.and()
 					.logout()
-					.logoutUrl("/login/logout")
-					.logoutSuccessUrl("/login")
 					.clearAuthentication(true)
 					
 				.and()

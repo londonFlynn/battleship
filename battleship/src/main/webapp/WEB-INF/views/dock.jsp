@@ -3,8 +3,9 @@
     
 <%
 	String username = (String)request.getAttribute("username");
-	int won = (Integer)request.getAttribute("gamesWon");
-	int lost = (Integer)request.getAttribute("gamesLost");
+	int won = (int) request.getAttribute("gamesWon");
+	int lost = (int) request.getAttribute("gamesLost");
+	int total = won + lost;
 	String imgUrl = (String)request.getAttribute("imgUrl");
 %>
 <!DOCTYPE html>
@@ -23,7 +24,7 @@
 	<p><%=username%></p>
     <p>Stats</p>
     <p>Rank</p>
-    <p>Average: <%=(won)/(won+lost) %></p>
+    <p>Average: <% if(total > 0) out.print(won/total); else out.print("N/A"); %></p>
     <p>Wins: <%=won%></p>
     <p>Loses: <%=lost%></p>
 </div>
