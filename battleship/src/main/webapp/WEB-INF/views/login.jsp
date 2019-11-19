@@ -66,8 +66,7 @@ body {
 				<input type="submit" name="login" value="Login" />
 				<% if(loginMsg != null) { %>
 						<div style="color:red"><%= loginMsg %></div>
-					<% session.removeAttribute("loginMsg");				
-				}%>
+				<% } %>
 			</form>
 		</div>
 	</div>
@@ -83,11 +82,9 @@ body {
 				<h2>Password</h2>
 				<input style="border-color: black;" type="password" name="password" /> 
 				<input type="submit" name="create" value="Create Account" />
-				<% if(signupMsg != null) {
-					%>
+				<% if(signupMsg != null) { %>
 						<div style="color:red"><%= signupMsg %></div>
-					<% session.removeAttribute("signupMsg");
-					}%>
+				<% } %>
 			</form>
 		</div>
 	</div>

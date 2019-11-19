@@ -14,14 +14,20 @@
 	<header class='header'><!--display: block-->
       <a id='homelink' href='/'>Battleship</a>
       <a id='login'
-     <%if(!loggedIn) { %>
-      href='/login'> Login <%} 
-      else { %>
-      href='/logout'> Log out <%} %></a>
+	      <% if(!loggedIn) { %>
+	      	href='/login'> Login
+	      	
+	      <% } else { %>
+	      	href='/logout'> Log out
+	      	
+	      <% } %>
+      </a>
     </header>
+    
     <div id='gametitle'>
     	<h1>Battleship</h1>
     </div>
+    
     <footer id='preview'>
       <div id='multiplayerPreview' class='gameplaySection'>
           <h2 style='text-align: center'>Two Player Gameplay</h2>
