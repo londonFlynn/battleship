@@ -6,6 +6,8 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,19 +40,20 @@ public class Battle {
 	BoardCellJpaRepository boardCellRepo;
 	
 	@GetMapping(path="")
-	protected String doMainGet(Principal prn, HttpServletResponse resp) {
+	protected ResponseEntity<String> doMainGet(Principal prn) {
 		String targetResource = "error";
+		HttpStatus httpStat = HttpStatus.OK;
 		Optional<User> user = userRepo.findById(prn.getName());
-		System.out.println(prn.getName());
+
 		Game game = null;
 		
 		if(user.isPresent()) {
 			game = gameRepo.save(Game.newGame(user.get(), gameRepo, boardRepo, boardRowRepo, boardCellRepo));
 			targetResource = "redirect:/battle/" + game.getId();
 		}
-		else resp.setStatus(500);
+		else httpStat = HttpStatus.INTERNAL_SERVER_ERROR;
 		
-		return targetResource;
+		return new ResponseEntity<String>(targetResource, httpStat);
 	}
 	
 	@GetMapping(path="/{gameID}")
