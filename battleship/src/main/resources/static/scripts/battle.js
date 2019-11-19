@@ -21,10 +21,6 @@ function setGameId(id) {
     this.connect(id);
 }
 
-window.onload = function() {
-    this.connect();
-};
-
 function setConnected(connected) {
     if (!connected ) {
         //Notify user that they lost their connection
