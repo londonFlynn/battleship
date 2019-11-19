@@ -6,6 +6,8 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +24,9 @@ public class Dock {
 	UserJpaRepository userRepo;
 	
 	@GetMapping(path="")
-	protected String doMainGet(HttpServletResponse resp, Principal prn, Model model) {
+	protected ResponseEntity<String> doMainGet(Principal prn, Model model) {
 		String targetResource = "dock";
+		HttpStatus httpStat = HttpStatus.OK;
 		Optional<User> optUser = userRepo.findById(prn.getName());
 
 		if(optUser.isPresent()) {
@@ -33,12 +36,11 @@ public class Dock {
 			model.addAttribute("gamesLost", user.getGamesLost());
 			model.addAttribute("games", user.getGames());
 			model.addAttribute("imgUrl", user.getImageUrl());
-			targetResource = "dock";
 		} else {
-			resp.setStatus(500);
 			targetResource = "error";
+			httpStat = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		
-		return targetResource;
+		return new ResponseEntity<String>(targetResource, httpStat);
 	}
 }

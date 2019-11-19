@@ -5,6 +5,8 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,13 +41,13 @@ public class Login {
 	}
 	
 	@PostMapping(path="/signup")
-	protected String doSignUp(
-		HttpServletResponse resp,
+	protected ResponseEntity<String> doSignUp(
 		Model model,
 		@RequestParam String username,
 		@RequestParam String password
 	) {
 		String targetResource = "redirect:/login";
+		HttpStatus httpStat = HttpStatus.OK;
 		Optional<User> optUser = userRepo.findById(username);
 		String signupMsg = null;
 		
@@ -56,14 +58,14 @@ public class Login {
 			User user = userRepo.save(new User(username, password, null, 0, 0));
 			if(user != null) signupMsg = "A user was successfully made for you.";
 			else {
-				resp.setStatus(500);
+				httpStat = HttpStatus.INTERNAL_SERVER_ERROR;
 				targetResource = "error";
 			}
 		}
 		
 		if(signupMsg != null) model.addAttribute("signupMsg", signupMsg);
 		
-		return targetResource;
+		return new ResponseEntity<String>(targetResource, httpStat);
 	}
 
 }
