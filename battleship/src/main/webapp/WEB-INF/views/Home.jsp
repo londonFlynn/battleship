@@ -7,7 +7,7 @@
 <html>
 <head>
 <style>
-body {background-image: url("./battleship.jpg");
+body {background: url("./battleship.jpg") no-repeat center center fixed;
 	background-size: cover;}
 h1 {font-size: 150px;
 	 padding: 15px;

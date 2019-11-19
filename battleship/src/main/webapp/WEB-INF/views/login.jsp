@@ -81,7 +81,7 @@ body {
 				<h2>Username</h2>
 				<input style="border-color: black;" type="text" name="username" />
 				<h2>Password</h2>
-				<input style="border-color: black;" type="text" name="password" /> 
+				<input style="border-color: black;" type="password" name="password" /> 
 				<input type="submit" name="create" value="Create Account" />
 				<% if(createError != null) {
 					%>
