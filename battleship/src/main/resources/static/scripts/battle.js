@@ -1,3 +1,18 @@
+var playerShips {
+	aircraft = getElementById('playerAircraft'),
+	battleship = getElementById('playerBattleship'),
+	cruiser = getElementById('playerCruser'),
+	destroyer = getElementById('playerDestroyer'),
+	submarine = getElementById('playerSubmarine')
+}
+var opponentShips {
+	aircraft = getElementById('opponentAircraft'),
+	battleship = getElementById('opponentBattleship'),
+	cruiser = getElementById('opponentCruser'),
+	destroyer = getElementById('opponentDestroyer'),
+	submarine = getElementById('opponentSubmarine')
+}
+
 var stompClient = null;
 var gameId;
 
