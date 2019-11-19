@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%char let = 'a'; %>
+
+<% int gameID = (int) request.getAttribute("gameID"); %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,7 +70,7 @@
 <script src="/scripts/battle.js"></script>
 <script type="application/javascript">
 window.onload = function() {
-	  setGameId();
+	  setGameId(<%=gameID%>);
 };
 </script>
 <title>Battle!</title>
