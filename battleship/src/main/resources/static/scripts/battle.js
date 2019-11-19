@@ -79,10 +79,22 @@ var Game = {
 
 function determineClick() {
 	console.log('determine click');
+	console.log(event);
 	console.log(event.target);
 }
 
-opponentBoard.addEventListener("click", determineClick);
+//function determineClick() {
+//	var row = document.getElementById('opponentBoard').rows;
+//	
+//	for(var i=0;i<row.length;i++) {
+//		for(var j=0;j<row[i].cells.length;j++) {
+//			
+//			row[i].cells[j].addEventListener('click', doneClick());
+//		}
+//	}
+//}
+
+opponentBoard.addEventListener("click", determineClick());
 
 
 
