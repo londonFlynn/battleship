@@ -17,6 +17,7 @@ import pro0.battleship.repositories.BoardCellJpaRepository;
 import pro0.battleship.repositories.BoardJpaRepository;
 import pro0.battleship.repositories.BoardRowJpaRepository;
 import pro0.battleship.repositories.GameJpaRepository;
+import pro0.battleship.repositories.UserJpaRepository;
 
 
 
@@ -31,6 +32,8 @@ public class GameObjectServlet {
 	BoardRowJpaRepository boardRowJpaRepository;
 	@Autowired
 	BoardCellJpaRepository boardCellJpaRepository;
+	@Autowired
+	UserJpaRepository userJpaRepository;
 	
 //	@MessageMapping("/game")
 //    @SendTo("/tojs/game")
@@ -44,16 +47,15 @@ public class GameObjectServlet {
 	@MessageMapping("/gameState/{id}")
 	@SendTo("/tojs/game/{id}")
 	public Game recieveGameStateRequst(@DestinationVariable("id") int id) {
-		
 		return gameJpaRepository.findById(id).orElse(null);
 	}
-	
 	
 	@MessageMapping("/placeShip/{id}")
 	@SendTo("/tojs/game/{id}")
 	public Game recieveShipPlacementRequest(@DestinationVariable("id") int id, Principal prn, @RequestBody ShipPlacementRequest request) {
 		UserDetails userDetails = (UserDetails) prn;
 		userDetails.getUsername();
+		
 		//TODO: Alter game before returning it.
 		return null;
 	}

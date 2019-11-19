@@ -70,11 +70,3 @@ function showGame(game) {
 function setupGameFromServer() {
     stompClient.send("/fromjs/gameState/"+gameId,{});
 }
-
-var Game = {
-    id: 1,
-    boards: null,
-    user: null,
-    currentTurn: null,
-    otherUser: null
-}
