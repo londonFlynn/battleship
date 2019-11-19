@@ -65,6 +65,9 @@
 <script src="/webjars/sockjs-client/sockjs.min.js"></script>
 <script src="/webjars/stomp-websocket/stomp.min.js"></script>
 <script src="/scripts/battle.js"></script>
+<script type="application/javascript">
+
+</script>
 <title>Battle!</title>
 </head>
 <body>
