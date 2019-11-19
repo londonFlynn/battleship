@@ -6,7 +6,7 @@ window.onload = function() {
 
 function setConnected(connected) {
     if (!connected ) {
-    //Notify user that they lost their connection
+        //Notify user that they lost their connection
     }
 }
 
