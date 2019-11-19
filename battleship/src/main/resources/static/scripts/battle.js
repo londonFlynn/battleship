@@ -1,4 +1,10 @@
 var stompClient = null;
+var gameId;
+
+function setGameId(id) {
+    gameId = id;
+    this.connect(id);
+}
 
 window.onload = function() {
     this.connect();
@@ -10,13 +16,13 @@ function setConnected(connected) {
     }
 }
 
-function connect() {
+function connect(id) {
     var socket = new SockJS('/gs-battleship-websocket');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/tojs/game', function (game) {
+        stompClient.subscribe('/tojs/game/'+id, function (game) {
             showGame(JSON.parse(game.body));
         });
         test();
