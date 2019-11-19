@@ -5,62 +5,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<style>
-.otiles {
-	width: 55px;
-	height: 55px;
-	background-image: url(./sync.gif);
-	color: #fff;
-	padding: 1px;
-	margin: 5px;
-	opacity: 0.90;
-}
-.otiles:hover{
-	opacity: 0.5;
-}
-.tile {
-	width: 45px;
-	height: 45px;
-	background-image: url(./still.jpg);
-	color: #fff;
-	padding: 1px;
-	margin: 5px;
-	opacity: 0.90;
-}
-.titleTile {
-	width: 45px;
-	height: 45px;
-	padding: 1px;
-	margin: 5px;
-}
-.ships {
-	height: 55px;
-	width: 55px;
-	background-color: #abc;
-	border-radius: 50%;
-	border: 5px solid #1B3E40;
-	display: inline-block;
-	margin: 5px;
-}
-.shipsAvaliable {
-	width: 400px;
-	height: 85px;
-	background-color: #18C3CC;
-	margin: 25px 0px;
-}
-#opponentBoard{
-	margin: 15px;
-}
-#playerBoard{
-	margin: 15px;
-}
-#currentPlayerTurn {
-	width: 400px;
-	height: 75px;
-	background-color: #18C3CC;
-	border: 5px solid #fff;
-}
-</style>
+<link href='css/battle.css' rel='stylesheet' />
 <script src="/webjars/jquery/jquery.min.js"></script>
 <script src="/webjars/sockjs-client/sockjs.min.js"></script>
 <script src="/webjars/stomp-websocket/stomp.min.js"></script>
@@ -119,22 +64,22 @@
 		<% let='a';} %>
 	</tbody>
 	</table>
-	<div id='currentPlayerTurn'>
-		<h1>Turn: username</h1>
+	<div>
+		<h1 id='currentPlayerTurn'>Turn: username</h1>
 	</div>
 	<div id='opponentShips' class='shipsAvaliable'>
-		<div id='opponentAircraft' class='ships'></div>
-		<div id='opponentBattleship' class='ships'></div>
-		<div id='opponentCruser' class='ships'></div>
-		<div id='opponentDestroyer' class='ships'></div>
-		<div id='opponentSubmarine' class='ships'></div>
+		<div id='oaircraft'class='ships'><span class="tooltiptext">Aircraft</span></div>
+		<div id='obattleship'class='ships'><span class="tooltiptext">Battleship</span></div>
+		<div id='ocruiser'class='ships'><span class="tooltiptext">Cruiser</span></div>
+		<div id='odestroyer'class='ships'><span class="tooltiptext">Destroyer</span></div>
+		<div id='osubmarine'class='ships'><span class="tooltiptext">Submarine</span></div>
 	</div>
 	<div id='playerShips' class='shipsAvaliable'>
-		<div id='playerAircraft' class='ships'></div>
-		<div id='playerBattleship' class='ships'></div>
-		<div id='playerCruser' class='ships'></div>
-		<div id='playerDestroyer' class='ships'></div>
-		<div id='playerSubmarine' class='ships'></div>
+		<div id='paircraft' class='ships'><span class="tooltiptext">Aircraft</span></div>
+		<div id='pbattleship' class='ships'><span class="tooltiptext">Battleship</span></div>
+		<div id='pcruiser' class='ships'><span class="tooltiptext">Cruiser</span></div>
+		<div id='pdestroyer' class='ships'><span class="tooltiptext">Destroyer</span></div>
+		<div id='psubmarine' class='ships'><span class="tooltiptext">Submarine</span></div>
 	</div>
 </body>
 </html>

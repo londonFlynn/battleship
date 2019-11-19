@@ -1,17 +1,15 @@
-var playerShips {
-	aircraft = getElementById('playerAircraft'),
-	battleship = getElementById('playerBattleship'),
-	cruiser = getElementById('playerCruser'),
-	destroyer = getElementById('playerDestroyer'),
-	submarine = getElementById('playerSubmarine')
-}
-var opponentShips {
-	aircraft = getElementById('opponentAircraft'),
-	battleship = getElementById('opponentBattleship'),
-	cruiser = getElementById('opponentCruser'),
-	destroyer = getElementById('opponentDestroyer'),
-	submarine = getElementById('opponentSubmarine')
-}
+var currentPlayer = document.getElementById('currentPlayerTurn');
+var oaircraft = document.getElementById('oaircraft');
+var obattleship = document.getElementById('obattleship');
+var ocruiser = document.getElementById('ocruiser');
+var odestroyer = document.getElementById('odestroyer');
+var osubmarine = document.getElementById('osubmarine');
+var paircraft = document.getElementById('paircraft');
+var pbattleship = document.getElementById('pbattleship');
+var pcruiser = document.getElementById('pcruiser');
+var pdestroyer = document.getElementById('pdestroyer');
+var psubmarine = document.getElementById('psubmarine');
+var opponentBoard = document.getElementById('opponentBoard');
 
 var stompClient = null;
 
@@ -73,3 +71,20 @@ var Game = {
     currentTurn: null,
     otherUser: null
 }
+
+function determineClick() {
+	console.log('determine click');
+	console.log(event.target);
+}
+
+opponentBoard.addEventListener("click", determineClick);
+
+
+
+
+
+
+
+
+
+
