@@ -39,14 +39,14 @@ public class Battle {
 	
 	@GetMapping(path="")
 	protected String doMainGet(Principal prn, HttpServletResponse resp) {
-		String targetResource = "forward:/error";
+		String targetResource = "error";
 		Optional<User> user = userRepo.findById(prn.getName());
 		System.out.println(prn.getName());
 		Game game = null;
 		
 		if(user.isPresent()) {
-			game = gameRepo.save(Game.newGame(user.get(), boardRepo, boardRowRepo, boardCellRepo));
-			targetResource = "forward:/battle/" + game.getId();
+			game = gameRepo.save(Game.newGame(user.get(), gameRepo, boardRepo, boardRowRepo, boardCellRepo));
+			targetResource = "redirect:/battle/" + game.getId();
 		}
 		else resp.setStatus(500);
 		

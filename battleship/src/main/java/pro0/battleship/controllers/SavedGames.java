@@ -1,15 +1,16 @@
 package pro0.battleship.controllers;
 
 import java.security.Principal;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import pro0.battleship.models.Game;
 import pro0.battleship.models.User;
 import pro0.battleship.repositories.UserJpaRepository;
 
@@ -21,19 +22,17 @@ public class SavedGames {
 	UserJpaRepository userRepo;
 	
 	@GetMapping(path="")
-	protected String doMainGet(Principal prn, Model model) {
-		String targetResource = "forward:/";
-//		String username = ((UserDetails) prn).getUsername();
+	protected String doMainGet(HttpServletResponse resp, Principal prn, Model model) {
+		String targetResource = "savedGames";
+		Optional<User> optUser = userRepo.findById(prn.getName());
 		
-//		if(userRepo.findById(username).isPresent()) {
-//			User user = userRepo.findById(username).get();
-			User user = new User("kathy", "test", "/hello", 0, 1);
-			User user2 = new User("riley", "testing", "/hey", 1, 0);
-			user.getGames().add(new Game(user, user));
-			user.getGames().add(new Game(user, user2));
+		if(optUser.isPresent()) {
+			User user = optUser.get();
 			model.addAttribute("games", user.getGames());
-			targetResource = "savedGames";
-//		}
+		} else {
+			resp.setStatus(500);
+			targetResource = "error";
+		}
 		
 		return targetResource;
 	}

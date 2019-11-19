@@ -44,11 +44,11 @@ h1 {font-size: 150px;
 <body>
 	<header class='header'><!--display: block-->
       <a id='homelink' href='/'>Battleship</a>
-      <a id='login' href='/login'>
+      <a id='login'
      <%if(!loggedIn) { %>
-      Login <%} 
+      href='/login'> Login <%} 
       else { %>
-      Log out <%} %></a>
+      href='/logout'> Log out <%} %></a>
     </header>
     <div id='gametitle'>
     	<h1>Battleship</h1>

@@ -53,8 +53,7 @@ public class GameObjectServlet {
 	@MessageMapping("/placeShip/{id}")
 	@SendTo("/tojs/game/{id}")
 	public Game recieveShipPlacementRequest(@DestinationVariable("id") int id, Principal prn, @RequestBody ShipPlacementRequest request) {
-		UserDetails userDetails = (UserDetails) prn;
-		userDetails.getUsername();
+		prn.getName();
 		
 		//TODO: Alter game before returning it.
 		return null;
@@ -62,8 +61,8 @@ public class GameObjectServlet {
 	@MessageMapping("/targetCell/{id}")
 	@SendTo("/tojs/game/{id}")
 	public Game recieveTargetCellRequest(@DestinationVariable("id") int id, Principal prn, @RequestBody TargetCellRequest request) {
-		UserDetails userDetails = (UserDetails) prn;
-		userDetails.getUsername();
+		prn.getName();
+		
 		//TODO: Alter game before returning it.
 		return null;
 	}

@@ -1,7 +1,12 @@
 package pro0.battleship.controllers;
 
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,59 +23,47 @@ public class Login {
 	private UserJpaRepository userRepo;
 	
 	@GetMapping(path="")
-	protected String doMainGet() {
+	protected String doMainGet(
+			Model model,
+			@RequestParam(required=false) String error,
+			@RequestParam(required=false) String logout
+	) {
 		String targetResource = "login";
-//		if(sess.getAttribute("username") != null) {
-//			targetResource = "forward:/";
-//			sess.setAttribute("msg", "You are already logged in.");
-//		}
+		String loginMsg = null;
+		
+		if(error != null) loginMsg = "You have not been logged in.";
+		if(logout != null) loginMsg = "You have been logged out.";
+		if(loginMsg != null) model.addAttribute("loginMsg", loginMsg);
 		
 		return targetResource;
 	}
 	
 	@PostMapping(path="/signup")
 	protected String doSignUp(
-		@RequestParam(required=true) String username,
-		@RequestParam(required=true) String password
+		HttpServletResponse resp,
+		Model model,
+		@RequestParam String username,
+		@RequestParam String password
 	) {
-		if(!userRepo.findById(username).isPresent() && username.length() > 0 && password.length() > 0) {
-			userRepo.save(new User(username, password, null, 0, 0));
+		String targetResource = "redirect:/login";
+		Optional<User> optUser = userRepo.findById(username);
+		String signupMsg = null;
+		
+		if(optUser.isPresent())	signupMsg = "That username has already been claimed.";
+		else if(username.length() <= 0) signupMsg = "A username must be at least one character in length.";
+		else if(password.length() <= 0) signupMsg = "A password must be at least one character in length.";
+		else {
+			User user = userRepo.save(new User(username, password, null, 0, 0));
+			if(user != null) signupMsg = "A user was successfully made for you.";
+			else {
+				resp.setStatus(500);
+				targetResource = "error";
+			}
 		}
 		
-		return "login";
+		if(signupMsg != null) model.addAttribute("signupMsg", signupMsg);
+		
+		return targetResource;
 	}
-
-//	@PostMapping(path="")
-//	protected String doMainPost(
-//		@RequestParam(required=true) String username,
-//		@RequestParam(required=true) String password,
-//		HttpSession sess
-//	) {
-//		String targetResource = "login";
-//		String storedPassword = null;
-//		
-//		Optional<User> optUser = userJpaRepo.findById(username); 
-//		if(optUser.isPresent()) {
-//			storedPassword = optUser.get().getPassword();
-//		}
-//		
-//		if(storedPassword != null && password.equals(storedPassword)) {
-//			sess.setAttribute("username", username);
-//			targetResource = "forward:/";
-//		} else {
-//			sess.setAttribute("msg", "Login Failed");
-//		}
-//		
-//		return targetResource;
-//	}
-	
-//	@GetMapping(path="/logout")
-//	protected String doLogOut(HttpServletRequest req, HttpSession sess) {
-//		sess.invalidate();
-//		sess = req.getSession();
-//		sess.setAttribute("msg", "You logged out.");
-//		
-//		return "login";
-//	}
 
 }
