@@ -30,18 +30,19 @@ public class Game {
 	private User currentTurn;
 
 	public Game() {
+//		setupBoards();
 	}
 	
 	public Game(User user, User otherUser) {
 		setUser(user);
 		setOtherUser(otherUser);
-		setupBoards();
+//		setupBoards();
 	}
-	private void setupBoards() {
-		boards = new ArrayList<Board>();
-		boards.add(new Board(user));
-		boards.add(new Board(otherUser));
-	}
+//	public void setupBoards() {
+//		boards = new ArrayList<Board>();
+//		boards.add(new Board(user));
+//		boards.add(new Board(otherUser));
+//	}
 		
 	public Integer getId() {
 		return id;
@@ -84,6 +85,22 @@ public class Game {
 		return result;
 	}
 
+	public List<Board> getBoards() {
+		return boards;
+	}
+
+	public void setBoards(List<Board> boards) {
+		this.boards = boards;
+	}
+
+	public User getCurrentTurn() {
+		return currentTurn;
+	}
+
+	public void setCurrentTurn(User currentTurn) {
+		this.currentTurn = currentTurn;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -99,9 +116,10 @@ public class Game {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Game [id=").append(id).append(", boards=").append(boards).append(", user=").append(user)
-				.append(", otherUser=").append(otherUser).append("]");
+				.append(", otherUser=").append(otherUser).append(", currentTurn=").append(currentTurn).append("]");
 		return builder.toString();
 	}
+
 	
 
 }

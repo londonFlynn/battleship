@@ -2,8 +2,8 @@
 	pageEncoding="ISO-8859-1"%>
 	
 <%
-	String error = (String) session.getAttribute("msg");
-	String createError = (String) session.getAttribute("createMsg");
+	String error = (String)request.getAttribute("msg");
+	String createError = (String)request.getAttribute("createMsg");
 %>
 <!DOCTYPE html>
 <html>
