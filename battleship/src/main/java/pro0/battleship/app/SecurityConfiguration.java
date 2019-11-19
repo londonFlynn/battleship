@@ -102,12 +102,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		
 		try {
 			http.authorizeRequests()
-				.antMatchers("/**").permitAll()
-//				.antMatchers(HttpMethod.GET, "/").permitAll()
-//				.antMatchers(HttpMethod.GET, "/login").permitAll()
-//				.antMatchers(HttpMethod.GET, "/login/*").permitAll()
-//				.antMatchers(HttpMethod.POST, "/login").permitAll()
-//				.antMatchers(HttpMethod.POST, "/login/*").permitAll()
+//				.antMatchers("/**").permitAll()
+				.antMatchers(HttpMethod.GET, "/").permitAll()
+				.antMatchers(HttpMethod.GET, "/login").permitAll()
+				.antMatchers(HttpMethod.GET, "/login/*").permitAll()
+				.antMatchers(HttpMethod.POST, "/login").permitAll()
+				.antMatchers(HttpMethod.POST, "/login/*").permitAll()
 				
 				.anyRequest().authenticated()
 				
@@ -135,7 +135,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 					.csrf().disable()
 					.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
 		} catch(Exception e) {
-			
+			e.printStackTrace(System.out);
 		}
 	}
 }
