@@ -25,6 +25,14 @@ function setConnected(connected) {
     }
 }
 
+function sendShipPlacementRequest(xPos, yPos, direction, shipType) {
+    stompClient.send("/fromjs/placeShip/"+gameId,{}, {"xPos":xPos, "yPos":yPos, "direction":direction, "shipType": shipType});
+}
+
+function sendTargetCellRequest(xPos, yPos) {
+    tompClient.send("/fromjs/targetCell/"+gameId,{}, {"xPos":xPos, "yPos":yPos});
+}
+
 function connect(id) {
     var socket = new SockJS('/gs-battleship-websocket');
     stompClient = Stomp.over(socket);
@@ -34,7 +42,7 @@ function connect(id) {
         stompClient.subscribe('/tojs/game/'+id, function (game) {
             showGame(JSON.parse(game.body));
         });
-        test();
+        setupGameFromServer();
     });
 }
 
@@ -44,11 +52,6 @@ function disconnect() {
     }
     setConnected(false);
     console.log("Disconnected");
-}
-
-function sendGame(game) {
-    console.log("sending game " + game);
-    stompClient.send("/fromjs/game",{},JSON.stringify(game));
 }
 
 function showGame(game) {
@@ -62,8 +65,8 @@ function showGame(game) {
     });
 }
 
-function test() {
-    sendGame(Game);
+function setupGameFromServer() {
+    stompClient.send("/fromjs/gameState/"+gameId,{});
 }
 
 var Game = {
