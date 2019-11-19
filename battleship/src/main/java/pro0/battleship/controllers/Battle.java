@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import pro0.battleship.models.Game;
 import pro0.battleship.models.User;
+import pro0.battleship.repositories.BoardCellJpaRepository;
+import pro0.battleship.repositories.BoardJpaRepository;
+import pro0.battleship.repositories.BoardRowJpaRepository;
 import pro0.battleship.repositories.GameJpaRepository;
 import pro0.battleship.repositories.UserJpaRepository;
 
@@ -27,14 +30,22 @@ public class Battle {
 	@Autowired
 	GameJpaRepository gameRepo;
 	
+	@Autowired
+	BoardJpaRepository boardRepo;
+	@Autowired
+	BoardRowJpaRepository boardRowRepo;
+	@Autowired
+	BoardCellJpaRepository boardCellRepo;
+	
 	@GetMapping(path="")
 	protected String doMainGet(Principal prn, HttpServletResponse resp) {
 		String targetResource = "forward:/error";
 		Optional<User> user = userRepo.findById(prn.getName());
+		System.out.println(prn.getName());
 		Game game = null;
 		
 		if(user.isPresent()) {
-			game = gameRepo.save(Game.newGame(user.get()));
+			game = gameRepo.save(Game.newGame(user.get(), boardRepo, boardRowRepo, boardCellRepo));
 			targetResource = "forward:/battle/" + game.getId();
 		}
 		else resp.setStatus(500);

@@ -13,10 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import pro0.battleship.repositories.BoardCellJpaRepository;
 import pro0.battleship.repositories.BoardJpaRepository;
 import pro0.battleship.repositories.BoardRowJpaRepository;
@@ -25,18 +21,6 @@ import pro0.battleship.repositories.GameJpaRepository;
 @Entity(name="Game")
 @Table(name="game")
 public class Game {
-	@Autowired
-	@JsonIgnore
-	private static GameJpaRepository gameJpaRepository;
-	@Autowired
-	@JsonIgnore
-	private static BoardJpaRepository boardJpaRepository;
-	@Autowired
-	@JsonIgnore
-	private static BoardRowJpaRepository boardRowJpaRepository;
-	@Autowired
-	@JsonIgnore
-	private static BoardCellJpaRepository boardCellJpaRepository;
 	
 	@Id
 	@GeneratedValue( strategy= GenerationType.AUTO )
@@ -51,7 +35,7 @@ public class Game {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User currentTurn;
 	
-	public static Game newGame(User user) {
+	public static Game newGame(User user, GameJpaRepository gameJpaRepository, BoardJpaRepository boardJpaRepository, BoardRowJpaRepository boardRowJpaRepository, BoardCellJpaRepository boardCellJpaRepository) {
 			List<Board> boards = new ArrayList<>();
 			for (int i = 0; i < 2; i++) {
 				List<BoardRow> boardRows = new ArrayList<>();
@@ -59,18 +43,18 @@ public class Game {
 					List<BoardCell> boardCells = new ArrayList<>();
 					for (int k = 0; k < 10; k++) {
 						BoardCell cell = new BoardCell();
-						boardCellJpaRepository.save(cell);
-						boardCells.add(cell);
+						BoardCell newCell = boardCellJpaRepository.save(cell);
+						boardCells.add(newCell);
 					}
 					BoardRow row = new BoardRow();
 					row.setCells(boardCells);
-					boardRowJpaRepository.save(row);
-					boardRows.add(row);
+					BoardRow newRow = boardRowJpaRepository.save(row);
+					boardRows.add(newRow);
 				}
 				Board board = new Board();
 				board.setRows(boardRows);
-				boardJpaRepository.save(board);
-				boards.add(board);
+				Board newBoard = boardJpaRepository.save(board);
+				boards.add(newBoard);
 			}
 			Game game = new Game();
 			game.setUser(user);
