@@ -2,8 +2,8 @@
 	pageEncoding="ISO-8859-1"%>
 	
 <%
-	String error = (String)request.getAttribute("msg");
-	String createError = (String)request.getAttribute("createMsg");
+	String loginMsg = (String)request.getAttribute("loginMsg");
+	String signupMsg = (String)request.getAttribute("signupMsg");
 %>
 <!DOCTYPE html>
 <html>
@@ -56,7 +56,7 @@ body {
 	<div class="split left">
 	<p><a href="/">Battleship</a></p>
 		<div class="centered">
-			<form method="POST" action="/login/submit">
+			<form method="POST" action="/login">
 				<h1>Login</h1>
 				<h2>Username</h2>
 				<input style="border-color: black;" type="text" name="username" />
@@ -64,9 +64,9 @@ body {
 				<input style="border-color: black;" type="password" name="password" />
 				<br> 
 				<input type="submit" name="login" value="Login" />
-				<% if(error != null) { %>
-						<div style="color:red"><%= error %></div>
-					<% session.removeAttribute("msg");				
+				<% if(loginMsg != null) { %>
+						<div style="color:red"><%= loginMsg %></div>
+					<% session.removeAttribute("loginMsg");				
 				}%>
 			</form>
 		</div>
@@ -81,12 +81,12 @@ body {
 				<h2>Username</h2>
 				<input style="border-color: black;" type="text" name="username" />
 				<h2>Password</h2>
-				<input style="border-color: black;" type="text" name="password" /> 
+				<input style="border-color: black;" type="password" name="password" /> 
 				<input type="submit" name="create" value="Create Account" />
-				<% if(createError != null) {
+				<% if(signupMsg != null) {
 					%>
-						<div style="color:red"><%= createError %></div>
-					<% session.removeAttribute("createMsg");
+						<div style="color:red"><%= signupMsg %></div>
+					<% session.removeAttribute("signupMsg");
 					}%>
 			</form>
 		</div>

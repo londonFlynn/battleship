@@ -1,0 +1,79 @@
+@charset "ISO-8859-1";
+
+.otiles {
+	width: 55px;
+	height: 55px;
+	background-image: url(/sync.gif);
+	color: #fff;
+	padding: 1px;
+	margin: 5px;
+	opacity: 0.90;
+}
+.otiles:hover{
+	opacity: 0.5;
+}
+.tile {
+	width: 45px;
+	height: 45px;
+	background-image: url(/still.jpg);
+	color: #fff;
+	padding: 1px;
+	margin: 5px;
+	opacity: 0.90;
+}
+.titleTile {
+	width: 45px;
+	height: 45px;
+	padding: 1px;
+	margin: 5px;
+}
+.ships {
+	height: 55px;
+	width: 55px;
+	background-color: #abc;
+	border-radius: 50%;
+	border: 5px solid #1B3E40;
+	display: inline-block;
+	margin: 5px;
+}
+.shipsAvaliable {
+	width: 400px;
+	height: 85px;
+	background-color: #18C3CC;
+	margin: 25px 0px;
+}
+#opponentBoard{
+	margin: 15px;
+}
+#playerBoard{
+	margin: 15px;
+}
+#currentPlayerTurn {
+	width: 400px;
+	height: 75px;
+	background-color: #18C3CC;
+	border: 5px solid #fff;
+}
+
+.ships {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+}
+
+.ships .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  z-index: 1;
+}
+
+.ships:hover .tooltiptext {
+  visibility: visible;
+}

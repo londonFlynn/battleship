@@ -1,18 +1,16 @@
-// var playerShips = {
-// 	aircraft = getElementById('playerAircraft'),
-// 	battleship = getElementById('playerBattleship'),
-// 	cruiser = getElementById('playerCruser'),
-// 	destroyer = getElementById('playerDestroyer'),
-// 	submarine = getElementById('playerSubmarine')
-// }
-// var opponentShips = {
-// 	aircraft = getElementById('opponentAircraft'),
-// 	battleship = getElementById('opponentBattleship'),
-// 	cruiser = getElementById('opponentCruser'),
-// 	destroyer = getElementById('opponentDestroyer'),
-// 	submarine = getElementById('opponentSubmarine')
-// }
-
+var currentPlayer = document.getElementById('currentPlayerTurn');
+var oaircraft = document.getElementById('oaircraft');
+var obattleship = document.getElementById('obattleship');
+var ocruiser = document.getElementById('ocruiser');
+var odestroyer = document.getElementById('odestroyer');
+var osubmarine = document.getElementById('osubmarine');
+var paircraft = document.getElementById('paircraft');
+var pbattleship = document.getElementById('pbattleship');
+var pcruiser = document.getElementById('pcruiser');
+var pdestroyer = document.getElementById('pdestroyer');
+var psubmarine = document.getElementById('psubmarine');
+var opponentBoard = document.getElementById('opponentBoard');
+console.log(opponentBoard);
 
 function showUsersBoard(board) {
     //TODO populate the board
@@ -183,3 +181,40 @@ function reciveGameOverNotification(gameOverNotification) {
 function setupGameFromServer() {
     
 }
+
+var Game = {
+    id: 1,
+    boards: null,
+    user: null,
+    currentTurn: null,
+    otherUser: null
+}
+
+function determineClick() {
+	console.log('determine click');
+	console.log(event);
+}
+
+opponentBoard.addEventListener("click", event => {
+	var index = event.target.id.substring(0, 1) + "," + event.target.id.substring(1);
+	index.split(",");
+	var xPos = index[0].charCodeAt(0) - 49;
+	
+	var yPos = event.target.id.substring(1);
+	var y = parseInt(yPos, 10)
+	y = y-1;
+	
+	console.log("X: " + String.fromCharCode(xPos) +"; Y: "+ y);
+	
+	sendTargetCellRequest(String.fromCharCode(xPos), y);
+});
+
+
+
+
+
+
+
+
+
+
