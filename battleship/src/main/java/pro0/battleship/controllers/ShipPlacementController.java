@@ -5,6 +5,7 @@ import java.util.List;
 import pro0.battleship.enums.Direction;
 import pro0.battleship.enums.ShipType;
 import pro0.battleship.models.Board;
+import pro0.battleship.models.BoardPosition;
 import pro0.battleship.models.Ship;
 
 public class ShipPlacementController {
@@ -22,7 +23,7 @@ public class ShipPlacementController {
 	public void setBoard(Board board) {
 		this.board = board;
 	}
-	public boolean attemptPlacement(ShipType shipType, short xPos, short yPos, Direction direction) {
+	public boolean attemptPlacement(ShipType shipType, BoardPosition position, Direction direction) {
 		Ship selectedShip = null;
 		List<Ship> ships = board.getShips();
 		for (Ship ship : ships) {
@@ -31,9 +32,9 @@ public class ShipPlacementController {
 				break;
 			}
 		}
-		return attemptPlacement(selectedShip, xPos, yPos, direction);
+		return attemptPlacement(selectedShip, position, direction);
 	}
-	public boolean attemptPlacement(Ship ship, short xPos, short yPos, Direction direction) {
+	public boolean attemptPlacement(Ship ship, BoardPosition position, Direction direction) {
 		unplaceShip(ship);
 		int xIncriment = 0;
 		int yIncriment = 0;
@@ -51,23 +52,26 @@ public class ShipPlacementController {
 			xIncriment = -1;
 			break;
 		}
-		boolean valid = incrimentedPlacementCheck(getShipLengthFromType(ship.getShipType()), xPos, yPos, xIncriment, yIncriment);
+		boolean valid = incrimentedPlacementCheck(getShipLengthFromType(ship.getShipType()), position, xIncriment, yIncriment);
 		if (valid) {
-			ship.placeShip(xPos, yPos, direction);
+			ship.placeShip(position, direction);
 		}
 		return valid;
 	}
 	private void unplaceShip(Ship ship) {
-		ship.placeShip((short)0, (short)0, null);
+		ship.setPosition(null);
 	}
 	
-	private boolean incrimentedPlacementCheck(int length, short xPos, short yPos, int xIncriment, int yIncriment) {
+	private boolean incrimentedPlacementCheck(int length, BoardPosition position, int xIncriment, int yIncriment) {
+		BoardPosition incrimentedPosition = new BoardPosition();
+		incrimentedPosition.setxPos(position.getxPos());
+		incrimentedPosition.setyPos(position.getyPos());
 		boolean valid = true;
 		for (int i = 0; i < length && valid; i++) {
-			if (Board.spaceIsOnBoard(xPos, yPos) && valid) {
-				valid = valid && board.spaceIsOpen(xPos, yPos);
-				yPos += yIncriment;
-				xPos += xIncriment;
+			if (Board.spaceIsOnBoard(incrimentedPosition) && valid) {
+				valid = valid && board.spaceIsOpen(incrimentedPosition);
+				incrimentedPosition.setxPos(incrimentedPosition.getxPos() + xIncriment);
+				incrimentedPosition.setyPos(incrimentedPosition.getyPos() + yIncriment);
 			} else {
 				valid = false;
 			}
@@ -83,7 +87,7 @@ public class ShipPlacementController {
 		case BATTLESHIP:
 			length = (short) 4;
 			break;
-		case CRUSER:
+		case CRUISER:
 			length = (short) 3;
 			break;
 		case SUBMARINE:

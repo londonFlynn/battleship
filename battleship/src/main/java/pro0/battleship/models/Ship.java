@@ -7,9 +7,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import pro0.battleship.enums.Direction;
 import pro0.battleship.enums.ShipType;
@@ -22,35 +24,32 @@ public class Ship {
 	@Enumerated(EnumType.STRING)
 	private ShipType shipType;
 	@Enumerated(EnumType.STRING)
-	private Direction direction;
+	private Direction direction = null;
 	private short length;
-	private short xPos;
-	private short yPos;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "board_id")
+	@OneToOne(fetch = FetchType.EAGER)
+	private BoardPosition position;
+	@ManyToOne
+	@JsonIgnore
+//	@JoinColumn(name = "board")
 	private Board board;
 	
 	public Ship() {
 	}
 
-	public Ship(ShipType shipType, Direction direction, short length, short xPos, short yPos) {
+	public Ship(ShipType shipType, Direction direction, short length, BoardPosition position) {
 		this.shipType = shipType;
 		this.direction = direction;
 		this.length = length;
-		this.xPos = xPos;
-		this.yPos = yPos;
+		this.position = position;
 	}
 
 	public Ship(ShipType shipType, short length) {
 		this.shipType = shipType;
 		this.direction = null;
 		this.length = length;
-		this.xPos = 0;
-		this.yPos = 0;
 	}
-	public void placeShip(short xPos, short yPos, Direction direction) {
-		setXPos(xPos);
-		setYPos(yPos);
+	public void placeShip(BoardPosition position, Direction direction) {
+		setPosition(position);
 		setDirection(direction);
 	}
 
@@ -86,22 +85,15 @@ public class Ship {
 		this.length = length;
 	}
 
-	public short getXPos() {
-		return xPos;
-	}
-
-	public void setXPos(short xPos) {
-		this.xPos = xPos;
-	}
-
-	public short getYPos() {
-		return yPos;
-	}
-
-	public void setYPos(short yPos) {
-		this.yPos = yPos;
-	}
 	
+
+	public BoardPosition getPosition() {
+		return position;
+	}
+
+	public void setPosition(BoardPosition position) {
+		this.position = position;
+	}
 
 	public Board getBoard() {
 		return board;
@@ -111,34 +103,27 @@ public class Ship {
 		this.board = board;
 	}
 	
-	public int[] getSpaceCoords(int cellOfShip) {
+	public BoardPosition getSpaceCoords(int cellOfShip) {
 		if (direction != null && cellOfShip >= 0 && cellOfShip < length) {
-			int[] coords = new int[2];
-			coords[0] = xPos;
-			coords[1] = yPos;
+			BoardPosition position = new BoardPosition();
+			position.setxPos(this.position.getxPos());
+			position.setyPos(this.position.getyPos());
 			if (direction.equals(Direction.NORTH)) {
-				coords[1] = coords[1] - cellOfShip;
+				position.setyPos(position.getyPos() - cellOfShip);
 			} else if (direction.equals(Direction.SOUTH)) {
-				coords[1] = coords[1] + cellOfShip;
+				position.setyPos(position.getyPos() + cellOfShip);
 			} else if (direction.equals(Direction.EAST)) {
-				coords[0] = coords[0] + cellOfShip;
+				position.setxPos(position.getxPos() + cellOfShip);
 			} else if (direction.equals(Direction.WEST)) {
-				coords[0] = coords[0] - cellOfShip;
+				position.setxPos(position.getxPos() - cellOfShip);
 			}
-			return coords;
+			return position;
 		} else {
 			return null;
 		}
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Ship [id=").append(id).append(", shipType=").append(shipType).append(", direction=")
-				.append(direction).append(", length=").append(length).append(", startRow=").append(xPos)
-				.append(", startColumn=").append(yPos).append("]");
-		return builder.toString();
-	}
+	
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

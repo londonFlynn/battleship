@@ -3,6 +3,7 @@
 <%char let = 'a'; %>
 
 <% int gameID = (int) request.getAttribute("gameID"); %>
+<% String username = (String) request.getAttribute("username"); %>
 
 <!DOCTYPE html>
 <html>
@@ -68,14 +69,11 @@
 <script src="/webjars/sockjs-client/sockjs.min.js"></script>
 <script src="/webjars/stomp-websocket/stomp.min.js"></script>
 <script src="/scripts/battle.js"></script>
-<script type="application/javascript">
-window.onload = function() {
-	  setGameId(<%=gameID%>);
-};
-</script>
 <title>Battle!</title>
 </head>
 <body>
+<div id="battleId" style="display: none"><%=gameID%></div>
+<div id="username" style="display: none"><%=username%></div>
 <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
     enabled. Please enable
     Javascript and reload this page!</h2></noscript>

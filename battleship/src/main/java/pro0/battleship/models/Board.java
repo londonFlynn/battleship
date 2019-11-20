@@ -6,7 +6,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import pro0.battleship.enums.Direction;
 
@@ -27,13 +28,15 @@ public class Board {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	@OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnore
 	private List<Ship> ships = new ArrayList<Ship>();
 	// TODO store spaces data in JPA
 	@OneToMany(orphanRemoval = true)
 	@Column(name = "rows")
+	@JsonIgnore
 	private List<BoardRow> rows = new ArrayList<BoardRow>();
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
 	
@@ -69,12 +72,12 @@ public class Board {
 //		this.ships = ships;
 //	}
 	
-	public boolean hasSpaceBeenTargeted(int xPos, int yPos) {
-		return  rows.get(yPos-1).hasSpaceBeenTargeted(xPos);
+	public boolean hasSpaceBeenTargeted(BoardPosition position) {
+		return  rows.get(position.getyPos()).hasSpaceBeenTargeted(position.getxPos());
 	}
 
-	public void targetSpace(int xPos, int yPos) {
-		 rows.get(yPos-1);
+	public void targetSpace(BoardPosition position) {
+		 rows.get(position.getyPos()).targetSpace(position.getxPos());
 	}
 
 	public User getUser() {
@@ -104,30 +107,30 @@ public class Board {
 		this.ships = ships;
 	}
 
-	public static boolean spaceIsOnBoard(short xPos, short yPos) {
-		return xPos > 0 && yPos > 0 && xPos <= Board.boardSize && yPos <= Board.boardSize;
+	public static boolean spaceIsOnBoard(BoardPosition position) {
+		return position.getxPos() >= 0 && position.getyPos() >= 0 && position.getxPos() < Board.boardSize && position.getyPos() < Board.boardSize;
 	}
-	public boolean spaceIsOpen(short xPos, short yPos) {
+	public boolean spaceIsOpen(BoardPosition position) {
 		boolean open = true;
 		for (Ship ship : ships) {
-			open = open && !shipIsCoveringSpace(ship, xPos, yPos);
+			open = open && !shipIsCoveringSpace(ship, position);
 		}
 		return open;
 	}
-	public boolean shipIsCoveringSpace(Ship ship, short xPos, short yPos) {
+	public boolean shipIsCoveringSpace(Ship ship, BoardPosition position) {
 		boolean covering = false;
-		if (ship != null && ship.getXPos() != 0 && ship.getYPos() != 0 && ship.getDirection() != null && ship.getLength() > 0) {
-			if (ship.getXPos() == xPos) {
+		if (ship != null && ship.getPosition() != null && ship.getDirection() != null && ship.getLength() > 0) {
+			if (ship.getPosition().getxPos() == position.getxPos()) {
 				if (ship.getDirection().equals(Direction.NORTH)) {
-					covering = ship.getYPos() >= yPos && ship.getYPos() - ship.getLength() <= yPos;
+					covering = ship.getPosition().getyPos() >= position.getyPos() && ship.getPosition().getyPos() - ship.getLength() <= position.getyPos();
 				} else if (ship.getDirection().equals(Direction.SOUTH)) {
-					covering = ship.getYPos() <= yPos && ship.getYPos() + ship.getLength() >= yPos;
+					covering = ship.getPosition().getyPos() <= position.getyPos() && ship.getPosition().getyPos() + ship.getLength() >= position.getyPos();
 				}
-			} else if (ship.getYPos() == yPos) {
+			} else if (ship.getPosition().getyPos() == position.getyPos()) {
 				if (ship.getDirection().equals(Direction.EAST)) {
-					covering = ship.getXPos() <= xPos && ship.getXPos() + ship.getLength() >= xPos;
+					covering = ship.getPosition().getxPos() <= position.getxPos() && ship.getPosition().getxPos() + ship.getLength() >= position.getxPos();
 				} else if (ship.getDirection().equals(Direction.WEST)) {
-					covering = ship.getXPos() >= xPos && ship.getXPos() - ship.getLength() <= xPos;
+					covering = ship.getPosition().getxPos() >= position.getxPos() && ship.getPosition().getxPos() - ship.getLength() <= position.getxPos();
 				}
 			}
 		}
