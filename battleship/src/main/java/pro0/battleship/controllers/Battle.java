@@ -20,6 +20,7 @@ import pro0.battleship.repositories.BoardCellJpaRepository;
 import pro0.battleship.repositories.BoardJpaRepository;
 import pro0.battleship.repositories.BoardRowJpaRepository;
 import pro0.battleship.repositories.GameJpaRepository;
+import pro0.battleship.repositories.ShipJpaRepository;
 import pro0.battleship.repositories.UserJpaRepository;
 
 @Controller
@@ -28,16 +29,17 @@ public class Battle {
 
 	@Autowired
 	UserJpaRepository userRepo;
-	
 	@Autowired
 	GameJpaRepository gameRepo;
-	
 	@Autowired
 	BoardJpaRepository boardRepo;
 	@Autowired
 	BoardRowJpaRepository boardRowRepo;
 	@Autowired
 	BoardCellJpaRepository boardCellRepo;
+	@Autowired
+	ShipJpaRepository shipRepo;
+	
 	
 	@GetMapping(path="")
 	protected ResponseEntity<String> doMainGet(Principal prn) {
@@ -48,7 +50,7 @@ public class Battle {
 		Game game = null;
 		
 		if(user.isPresent()) {
-			game = gameRepo.save(Game.newGame(user.get(), gameRepo, boardRepo, boardRowRepo, boardCellRepo));
+			game = gameRepo.save(Game.newGame(user.get(), gameRepo, boardRepo, boardRowRepo, boardCellRepo, shipRepo));
 			targetResource = "redirect:/battle/" + game.getId();
 		}
 		else httpStat = HttpStatus.INTERNAL_SERVER_ERROR;
@@ -59,10 +61,10 @@ public class Battle {
 	@GetMapping(path="/{gameID}")
 	protected String doGetBattle(
 			@PathVariable int gameID,
-			Model model
+			Model model, Principal prn
 	) {
 		model.addAttribute("gameID", gameID);
-		
+		model.addAttribute("username", prn.getName());
 		return "battle";
 	}
 }

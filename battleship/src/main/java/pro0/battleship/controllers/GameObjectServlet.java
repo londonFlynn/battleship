@@ -1,27 +1,28 @@
 package pro0.battleship.controllers;
 
-import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import pro0.battleship.models.Board;
+import pro0.battleship.models.BoardRow;
 import pro0.battleship.models.Game;
-import pro0.battleship.models.ShipPlacementRequest;
-import pro0.battleship.models.TargetCellRequest;
+import pro0.battleship.models.Ship;
 import pro0.battleship.repositories.BoardCellJpaRepository;
 import pro0.battleship.repositories.BoardJpaRepository;
 import pro0.battleship.repositories.BoardRowJpaRepository;
 import pro0.battleship.repositories.GameJpaRepository;
+import pro0.battleship.repositories.ShipJpaRepository;
 import pro0.battleship.repositories.UserJpaRepository;
 
 
 
 @Controller
+@RequestMapping("/gamestate")
 public class GameObjectServlet {
 	
 	@Autowired
@@ -34,6 +35,8 @@ public class GameObjectServlet {
 	BoardCellJpaRepository boardCellJpaRepository;
 	@Autowired
 	UserJpaRepository userJpaRepository;
+	@Autowired
+	ShipJpaRepository shipJpaRepository;
 	
 //	@MessageMapping("/game")
 //    @SendTo("/tojs/game")
@@ -42,29 +45,28 @@ public class GameObjectServlet {
 //		gameJpaRepository.save(game);
 //        return setupGame();
 //    }
-	
-	
-	@MessageMapping("/gameState/{id}")
-	@SendTo("/tojs/game/{id}")
-	public Game recieveGameStateRequst(@DestinationVariable("id") int id) {
-		return gameJpaRepository.findById(id).orElse(null);
+
+	@RequestMapping(path="/game/{gameId}", method=RequestMethod.GET)
+	public Game sendGameState(@PathVariable int gameId) {
+		Game game =gameJpaRepository.findById(gameId).orElse(null);
+		return game;
 	}
-	
-	@MessageMapping("/placeShip/{id}")
-	@SendTo("/tojs/game/{id}")
-	public Game recieveShipPlacementRequest(@DestinationVariable("id") int id, Principal prn, @RequestBody ShipPlacementRequest request) {
-		prn.getName();
-		
-		//TODO: Alter game before returning it.
+	@RequestMapping(path="/myBoard/{gameId}", method=RequestMethod.GET)
+	public Board sendUsersBoard(int gameId) {
 		return null;
 	}
-	@MessageMapping("/targetCell/{id}")
-	@SendTo("/tojs/game/{id}")
-	public Game recieveTargetCellRequest(@DestinationVariable("id") int id, Principal prn, @RequestBody TargetCellRequest request) {
-		prn.getName();
-		
-		//TODO: Alter game before returning it.
+	@RequestMapping(path="/opponentBoard/{gameId}", method=RequestMethod.GET)
+	public Board sendOpponentBoard(int gameId) {
 		return null;
 	}
+	@RequestMapping(path="/row/{gameId}/{row}", method=RequestMethod.GET)
+	public BoardRow sendBoardRow(int gameId, int row) {
+		return null;
+	}
+	@RequestMapping(path="/ships/{gameId}", method=RequestMethod.GET)
+	public List<Ship> sendUsersShips(int gameId) {
+		return null;
+	}
+	
 	
 }
