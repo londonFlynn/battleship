@@ -1,16 +1,26 @@
 var currentPlayer = document.getElementById('currentPlayerTurn');
-var oaircraft = document.getElementById('oaircraft');
-var obattleship = document.getElementById('obattleship');
-var ocruiser = document.getElementById('ocruiser');
-var odestroyer = document.getElementById('odestroyer');
-var osubmarine = document.getElementById('osubmarine');
-var paircraft = document.getElementById('paircraft');
-var pbattleship = document.getElementById('pbattleship');
-var pcruiser = document.getElementById('pcruiser');
-var pdestroyer = document.getElementById('pdestroyer');
-var psubmarine = document.getElementById('psubmarine');
+var opponentShipsLife = [
+		oaircraft = document.getElementById('oaircraft'),
+		obattleship = document.getElementById('obattleship'),
+		ocruiser = document.getElementById('ocruiser'),
+		odestroyer = document.getElementById('odestroyer'),
+		osubmarine = document.getElementById('osubmarine')
+]
+var userShipsLife = [
+		paircraft = document.getElementById('paircraft'),
+		pbattleship = document.getElementById('pbattleship'),
+		pcruiser = document.getElementById('pcruiser'),
+		pdestroyer = document.getElementById('pdestroyer'),
+		psubmarine = document.getElementById('psubmarine')
+]
+var wonGame = document.getElementById('winner');
+var lostGame = document.getElementById('loser');
+var game = document.getElementById('game');
 var opponentBoard = document.getElementById('opponentBoard');
+
 console.log(opponentBoard);
+wonGame.style.display = "none";
+lostGame.style.display = "none";
 
 function determineClick() {
 	console.log('determine click');
@@ -64,28 +74,50 @@ function notifyInvalidAttack() {
 }
 function userGotHit(position) {
     //TODO display the hit
+	//get coordinate and relate it to user board
+	//change background image to /hit.gif
 }
 function userWasMissed(position) {
     //TODO display the miss
+	//get coordinate and relate it to user board
+	//change background image to /miss.gif
 }
 function userMissed(position) {
     //TODO display the miss
+	//get coordinate and relate it to opponent board
+	//change background image to /miss.gif
 }
 function userHit(position) {
     //TODO display the hit
+	//get coordinate and relate it to opponent board
+	//change background image to /hit.gif
 }
 function usersShipWasSunk(shipType) {
-    //TODO display the saddness
+	var count = 0;
+	for (const property in ShipType) {
+		if(shipType == property){
+			userShipsLife[count].style.backgroundColor = "#E84948";
+		}
+		count++;
+	}
 }
 function userSunkAShip(shipType) {
-    //TODO display the success
+	var count = 0;
+	for (const property in ShipType) {
+		if(shipType == property){
+			opponentShipsLife[count].style.backgroundColor = "#E84948";
+		}
+		count++;
+	}
 }
 
 function userLost() {
-    //TODO display the saddness
+    loser.style.display = "block";
+    game.style.display = "none";
 }
 function userWon() {
-    //TODO display the success
+	winner.style.display = "block";
+    game.style.display = "none";
 }
 function itsYourTurn() {
     //TODO unlock board
@@ -131,7 +163,7 @@ const Direction = {
     WEST: 'WEST'
 }
 
-const ShipType = {
+var ShipType = {
     AIRCRAFT_CARRIER: 'AIRCRAFT_CARRIER',
     BATTLESHIP: 'BATTLESHIP',
     SUBMARINE: 'SUBMARINE',
@@ -153,7 +185,7 @@ window.onload = function() {
 var setGameId = function setGameId(id) {
     gameId = id;
     this.connect(id);
-}
+};
 
 function sendRequest(object, requestPath, requestType, result) {
     var xmlHttp = new XMLHttpRequest();

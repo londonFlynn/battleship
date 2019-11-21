@@ -1,13 +1,23 @@
 @charset "ISO-8859-1";
 
-body {background-image: url("/battleship2.jpg");
+body {background-image: url("/images/battleship2.jpg");
 	background-size: cover;}
 h1 {font-size: 150px;
+	color: #f27405;
 	 padding: 15px;
+	 text-shadow:
+		-1px -1px 0 #000,
+		1px -1px 0 #000,
+		-1px 1px 0 #000,
+		1px 1px 0 #000;
 	 margin: 15px;
 	 text-align: center;}
 a {
 	color: #f2e205;
+	text-decoration: none;
+}
+a:hover {
+  color: #f2b705;
 }
 .header {background-color: #194973;
 	display: inline-block;
@@ -18,10 +28,9 @@ a {
 	width: 400px;
 	height: 230px;}
 #login {float: right;
-	background-color: #000;
-	color: #fff;
+	text-size: 24px;
 	margin: 25px;
-	border: 10px solid white;}
+	border: 10px solid #194973;}
 #homelink {float: left;
 	font-size: 38px;
 	margin: 25px;}
