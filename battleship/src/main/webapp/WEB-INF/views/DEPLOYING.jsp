@@ -8,6 +8,12 @@
 <html>
 <head>
 <style>
+body {
+	height: 100%;
+	background-image: url(/loading.gif);
+	background-size: cover;
+	background-repeat: no-repeat;
+}
 
 </style>
 <meta charset="ISO-8859-1">
@@ -18,7 +24,6 @@
 </head>
 <body>
 <div id="username" style="display: none"><%=username%></div>
-
 
 <script src="/scripts/DEPLOYING.js"></script>
 </body>
