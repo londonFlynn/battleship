@@ -6,15 +6,17 @@
 <meta charset="ISO-8859-1">
 <style>
 body {
-	overflow-y: auto;
+	font-family: Verdana;
+	color: white;
     background-color: #595959;
-    color: white;
+    font-size: 25px;
 }
 
 .split {
 	height: 100%;
-	width: 60%;
-	position: relative;
+	width: 50%;
+	position: absolute;
+	z-index: 1;
 	top: 0;
 	overflow-x: hidden;
 }
@@ -25,76 +27,58 @@ body {
 
 .right {
 	right: 0;
-    position: static;
 }
 
-.availablegame {
-  border: 2px solid #ccc;
-  background-color: #eee;
-  border-radius: 5px;
-  padding: 16px;
-  margin: 16px;
-  color: black;
+.centered {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
 }
 
 .vline {
 	position: absolute;
-	top: 0%;
-	left: 60%;
-	border-right: 4px solid grey;
-	height: 100%;
+	top: 10%;
+	left: 50%;
+	border-right: 9px solid grey;
+	height: 80%;
 }
 
-.availablegame span {
-  font-size: 20px;
-  margin-right: 15px;
-}
-
-hr {
-	border-width: 4px;
-    border-style: solid;
-    border-color: grey;
+img {
+	width: 200px;
 }
 
 </style>
+
 <title>Battleship! - DEPLOY</title>
 </head>
 <body>
+<a href="/dock">Dock</a>
 
 <div class="split left">
-<!-- h2>Available Games</h2>
-
-<div class="availablegame">
-  <p><span>Chris Fox.</span> CEO at Mighty Schools.</p>
-  <p>John Doe saved us from a web disaster.</p>
+  <div class="centered">
+    <h2>Search</h2>
+    <h2>for</h2>
+    <h2>Battle</h2>
+    <form method="POST">
+	    <input type="text" value="Username" name="username"/>
+	    <input type="submit" value="Scour"/>
+    </form>
+  </div>
 </div>
 
-</div>
-
-<div class="vline"></div> -->
+<div class="vline"></div>
 
 <div class="split right">
-
-	<h2>Search Games</h2>
-    <h3>Username</h3>
-    <input type="text">
-    <button>Find</button>
-    
-	<hr>
-    
-    <h2 style="color:white">Create Battle</h2>
-    <label>Private
-    	<input type="radio">
-    </label>
-    <br>
-    <label>Public
-    	<input type="radio">
-    </label>
-    <br>
-    <input type="submit" name="Create">
-
+  <div class="centered">
+    <h2>Create</h2>
+    <div>
+    	<img src="./shipWheel.png" id="createBattle">
+    </div>
+    <h2>Battle</h2>
+  </div>
 </div>
-
-
+<script src="/scripts/DEPLOY.js"></script>
 </body>
 </html>
