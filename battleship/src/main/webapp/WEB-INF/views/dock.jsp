@@ -86,11 +86,11 @@ body{
 	
 	<div class="left">
 		<p class="top"><a href="/savedgames">Saved Games</a></p>
-	    <p class="bottom"><a href="/availablegames">Available Games</a></p>
+	    <p class="bottom"><a href="/DEPLOY">DEPLOY</a></p>
 	</div>
 	
 	<div class="right">
-		<p class="top"><a href="/home">Home</a></p>
+		<p class="top"><a href="/">Home</a></p>
 	    <p class="bottom"><a href="/logout">Logout</a></p>
 	</div>
 </div>
