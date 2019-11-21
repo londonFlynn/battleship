@@ -1,9 +1,11 @@
 package pro0.battleship.controllers;
 
+import java.security.Principal;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,9 +38,25 @@ public class Deploy {
 		
 		if(optScouredOpponent.isPresent()) {
 			User scouredOpponent = optScouredOpponent.get();
-			Game gameToJoin = scouredOpponent.getGames().stream().filter(game -> game.isActive()).findFirst().orElse(null);
+			Optional<Game> optGameToJoin = scouredOpponent.getGames().stream()
+				.filter(game -> game.isActive())
+				.sorted((game1, game2) ->
+					game1.getCreationTimeStamp().compareTo(game2.getCreationTimeStamp()))
+				.findFirst();
+			
+			if(optGameToJoin.isPresent()) {
+				Game gameToJoin = optGameToJoin.get();
+				targetResource = "/battle/" + gameToJoin.getId();
+			}
 		}
 		
 		return targetResource;
+	}
+
+	@GetMapping(path="/DEPLOYING")
+	protected String doCreateBattle(Principal prn, Model model) {
+		model.addAttribute("username", prn.getName());
+		
+		return "DEPLOYING";
 	}
 }
