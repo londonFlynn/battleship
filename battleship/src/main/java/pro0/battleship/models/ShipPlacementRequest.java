@@ -1,21 +1,15 @@
 package pro0.battleship.models;
 
 public class ShipPlacementRequest {
-	private int yPos = 0;
-	private int xPos = 0;
+	private BoardPosition position;
 	private String direction;
 	private String shipType;
-	public int getyPos() {
-		return yPos;
+	
+	public BoardPosition getPosition() {
+		return position;
 	}
-	public void setyPos(int yPos) {
-		this.yPos = yPos;
-	}
-	public int getxPos() {
-		return xPos;
-	}
-	public void setxPos(int xPos) {
-		this.xPos = xPos;
+	public void setPosition(BoardPosition position) {
+		this.position = position;
 	}
 	public String getDirection() {
 		return direction;

@@ -1,20 +1,18 @@
 package pro0.battleship.models;
 
 public class TargetCellRequest {
-	private int yPos =0;
-	private int xPos = 0;
-	public int getyPos() {
-		return yPos;
+	private BoardPosition position;
+
+	public BoardPosition getPosition() {
+		return position;
 	}
-	public void setyPos(int yPos) {
-		this.yPos = yPos;
+
+	public void setPosition(BoardPosition position) {
+		this.position = position;
 	}
-	public int getxPos() {
-		return xPos;
-	}
-	public void setxPos(int xPos) {
-		this.xPos = xPos;
-	}
+	
+	
+	
 	
 
 }

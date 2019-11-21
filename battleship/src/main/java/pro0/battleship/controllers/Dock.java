@@ -24,9 +24,8 @@ public class Dock {
 	UserJpaRepository userRepo;
 	
 	@GetMapping(path="")
-	protected ResponseEntity<String> doMainGet(Principal prn, Model model) {
+	protected String doMainGet(Principal prn, Model model) {
 		String targetResource = "dock";
-		HttpStatus httpStat = HttpStatus.OK;
 		Optional<User> optUser = userRepo.findById(prn.getName());
 
 		if(optUser.isPresent()) {
@@ -38,9 +37,8 @@ public class Dock {
 			model.addAttribute("imgUrl", user.getImageUrl());
 		} else {
 			targetResource = "error";
-			httpStat = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
 		
-		return new ResponseEntity<String>(targetResource, httpStat);
+		return targetResource;
 	}
 }
