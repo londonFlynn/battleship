@@ -1,8 +1,10 @@
 package pro0.battleship.models;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -39,6 +43,11 @@ public class Game {
 	private User otherUser;
 	@ManyToOne
 	private User currentTurn;
+	@Column(name = "creationTimeStamp", nullable = false, updatable = false)
+	@CreationTimestamp
+    private LocalDateTime creationTimeStamp;
+	
+	private boolean isActive = true;
 	
 	public static Game newGame(User user, GameJpaRepository gameJpaRepository, BoardJpaRepository boardJpaRepository, BoardRowJpaRepository boardRowJpaRepository, BoardCellJpaRepository boardCellJpaRepository, ShipJpaRepository shipJpaRepository) {
 			List<Board> boards = new ArrayList<>();
@@ -81,6 +90,14 @@ public class Game {
 		board.getShips().add(submarine);
 		board.getShips().add(cruser);
 		board.getShips().add(destroyer);
+	}
+
+	public LocalDateTime getCreationTimeStamp() {
+		return creationTimeStamp;
+	}
+
+	public void setCreationTimeStamp(LocalDateTime creationTimeStamp) {
+		this.creationTimeStamp = creationTimeStamp;
 	}
 
 	public Game() {
@@ -153,6 +170,14 @@ public class Game {
 
 	public void setCurrentTurn(User currentTurn) {
 		this.currentTurn = currentTurn;
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 
 	@Override

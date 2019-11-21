@@ -33,7 +33,7 @@
       	<%if(!loggedIn) { %>
           <h2 style='text-align: center'>Two Player Gameplay</h2>
           <%} else { %>
-          <h2 style='text-align: center'><a href='/deploy'>Two Player Gameplay</a></h2>
+          <h2 style='text-align: center'><a href='/DEPLOY'>Two Player Gameplay</a></h2>
           <%} %>
           <ul>
               <li><p>Connect with random players</p></li>
