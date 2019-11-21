@@ -1,14 +1,18 @@
 var currentPlayer = document.getElementById('currentPlayerTurn');
-var oaircraft = document.getElementById('oaircraft');
-var obattleship = document.getElementById('obattleship');
-var ocruiser = document.getElementById('ocruiser');
-var odestroyer = document.getElementById('odestroyer');
-var osubmarine = document.getElementById('osubmarine');
-var paircraft = document.getElementById('paircraft');
-var pbattleship = document.getElementById('pbattleship');
-var pcruiser = document.getElementById('pcruiser');
-var pdestroyer = document.getElementById('pdestroyer');
-var psubmarine = document.getElementById('psubmarine');
+var opponentShipsLife = [
+		oaircraft = document.getElementById('oaircraft'),
+		obattleship = document.getElementById('obattleship'),
+		ocruiser = document.getElementById('ocruiser'),
+		odestroyer = document.getElementById('odestroyer'),
+		osubmarine = document.getElementById('osubmarine')
+]
+var userShipsLife = [
+		paircraft = document.getElementById('paircraft'),
+		pbattleship = document.getElementById('pbattleship'),
+		pcruiser = document.getElementById('pcruiser'),
+		pdestroyer = document.getElementById('pdestroyer'),
+		psubmarine = document.getElementById('psubmarine')
+]
 var opponentBoard = document.getElementById('opponentBoard');
 console.log(opponentBoard);
 
@@ -55,10 +59,22 @@ function userHit(position) {
     //TODO display the hit
 }
 function usersShipWasSunk(shipType) {
-    //TODO display the saddness
+	var count = 0;
+	for (const property in ShipType) {
+		if(shipType == property){
+			userShipsLife[count].style.backgroundColor = "#E84948";
+		}
+		count++;
+	}
 }
 function userSunkAShip(shipType) {
-    //TODO display the success
+	var count = 0;
+	for (const property in ShipType) {
+		if(shipType == property){
+			opponentShipsLife[count].style.backgroundColor = "#E84948";
+		}
+		count++;
+	}
 }
 
 function userLost() {
@@ -99,7 +115,7 @@ const Direction = {
     WEST: 'WEST'
 }
 
-const ShipType = {
+var ShipType = {
     AIRCRAFT_CARRIER: 'AIRCRAFT_CARRIER',
     BATTLESHIP: 'BATTLESHIP',
     SUBMARINE: 'SUBMARINE',
