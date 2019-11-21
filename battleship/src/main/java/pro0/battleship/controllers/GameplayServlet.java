@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import pro0.battleship.enums.ShipType;
 import pro0.battleship.models.AttackResult;
 import pro0.battleship.models.GameOverNotification;
+import pro0.battleship.models.GameStartNotification;
 import pro0.battleship.models.ShipSunkNotification;
 import pro0.battleship.models.TargetCellRequest;
+import pro0.battleship.models.TurnChangeNotification;
 
 @Controller
 public class GameplayServlet {
@@ -30,6 +32,14 @@ public class GameplayServlet {
 	
 	public void sendShipSunkNotification(int gameId, String username, ShipType shipType) {
 		this.template.convertAndSend("/tojs/sunkShip/" + gameId, new ShipSunkNotification(username, shipType));
+	}
+	
+	public void sendGameStartedNotification(int gameId, String username) {
+		this.template.convertAndSend("/tojs/sunkShip/" + gameId, new GameStartNotification(true, new TurnChangeNotification(username)));
+	}
+	
+	public void sendTurnChangeNotification(int gameId, String username) {
+		this.template.convertAndSend("/tojs/sunkShip/" + gameId, new TurnChangeNotification(username));
 	}
 	
 

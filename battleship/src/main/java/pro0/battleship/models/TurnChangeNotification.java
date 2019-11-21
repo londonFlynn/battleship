@@ -3,6 +3,11 @@ package pro0.battleship.models;
 public class TurnChangeNotification {
 	private String playerUsername;
 
+	public TurnChangeNotification(String playerUsername) {
+		super();
+		this.playerUsername = playerUsername;
+	}
+
 	public String getPlayerUsername() {
 		return playerUsername;
 	}

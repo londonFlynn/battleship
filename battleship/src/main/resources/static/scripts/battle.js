@@ -97,8 +97,20 @@ function gameHasStarted() {
     //Notify User
 }
 
+function displayShipInPositions(positions) {
+    positions.forEach(function (position) {
+        //show a ship in that position
+    });
+}
+
 function sendShipPlacementRequest(position, direction, shipType) {
-    
+    var shipPlacementRequest = {
+        "position": position,
+        "direction": direction,
+        "shipType": shipType
+    }
+    var url = "/shipPlacement";
+    sendRequest(shipPlacementRequest, url, "POST", reciveShipPlacementResponse);   
 }
 
 function sendTargetCellRequest(position) {
@@ -143,6 +155,22 @@ var setGameId = function setGameId(id) {
     this.connect(id);
 }
 
+function sendRequest(object, requestPath, requestType, result) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open(requestType, requestPath, true);
+    xmlHttp.setRequestHeader('Content-type', 'application/json');
+    xmlHttp.onreadystatechange = function() {
+        if(this.readyState === XMLHttpRequest.DONE) {
+            result(JSON.parse(this.responseText));
+        }
+    };
+    if (object) {
+        xmlHttp.send(JSON.stringify(object));
+    } else {
+        xmlHttp.send();
+    }
+}
+
 function connect(id) {
     var socket = new SockJS('/gs-battleship-websocket');
     stompClient = Stomp.over(socket);
@@ -174,6 +202,12 @@ function disconnect() {
     }
     setConnected(false);
     console.log("Disconnected");
+}
+
+function reciveShipPlacementResponse(shipPlacementResponse) {
+    if (shipPlacementResponse.success) {
+        displayShipInPositions(shipPlacementResponse.positions);
+    }
 }
 
 function reciveAttackResult(attackResult) {
@@ -239,29 +273,38 @@ function setupGameFromServer() {
 }
 
 function setupYourBoardFromServer() {
+    sendRequest(null, "/gamestate/myBoard/"+gameId, "GET", function(board) {
+
+    });
     // setupBoardRowFromServer():
 }
 
 function setupShipsFromServer() {
+    sendRequest(null, "/gamestate/ships/"+gameId, "GET", function(shipPlacementResponses) {
 
+    });
 }
 
 function setupDestroyedShipsFromServer() {
+    sendRequest(null, "/gamestate/destroyed/"+gameId, "GET", function(shipSunkNotifications) {
 
+    });
 }
 
-function setupTurnFromServer() {
 
-}
+function setupBoardRowFromServer(row, opponent) {
+    sendRequest(null, "/gamestate/row/"+gameId+"/"+row+"/"+opponent, "GET", function(boardRow) {
 
-function setupBoardRowFromServer(row, whoseBoard) {
-
+    });
 }
 
 function setupGameHasStartedFromServer() {
-    // setupTurnFromServer();
+    sendRequest(null, "/gamestate/started/"+gameId, "GET", reciveGameStartedNotification);
 }
 
 function setupOpponentBoardFromServer() {
+    sendRequest(null, "/gamestate/opponentBoard/"+gameId, "GET", function(board) {
+
+    });
     // setupBoardRowFromServer():
 }
