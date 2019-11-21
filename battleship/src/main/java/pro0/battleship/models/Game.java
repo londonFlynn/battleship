@@ -47,6 +47,8 @@ public class Game {
 	@CreationTimestamp
     private LocalDateTime creationTimeStamp;
 	
+	private boolean isActive = true;
+	
 	public static Game newGame(User user, GameJpaRepository gameJpaRepository, BoardJpaRepository boardJpaRepository, BoardRowJpaRepository boardRowJpaRepository, BoardCellJpaRepository boardCellJpaRepository, ShipJpaRepository shipJpaRepository) {
 			List<Board> boards = new ArrayList<>();
 			for (int i = 0; i < 2; i++) {
@@ -168,6 +170,14 @@ public class Game {
 
 	public void setCurrentTurn(User currentTurn) {
 		this.currentTurn = currentTurn;
+	}
+
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 
 	@Override
