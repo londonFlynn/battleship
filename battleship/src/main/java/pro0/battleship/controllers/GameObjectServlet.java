@@ -108,6 +108,7 @@ public class GameObjectServlet {
 	@RequestMapping(path="/started/{gameId}", method=RequestMethod.GET)
 	public GameStartNotification sendGameStarted(@PathVariable int gameId) {
 		String currentTurnUsername = gameJpaRepository.getCurrentTurn(gameId);
+		System.out.println(currentTurnUsername);
 		if (currentTurnUsername != null) {
 			return new GameStartNotification(true, new TurnChangeNotification(currentTurnUsername));
 		} else {
