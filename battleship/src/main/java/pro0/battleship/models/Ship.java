@@ -1,5 +1,8 @@
 package pro0.battleship.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -122,6 +125,14 @@ public class Ship {
 			return null;
 		}
 	}
+	public List<BoardPosition> getSpaceCoords() {
+		List<BoardPosition> positions = new ArrayList<BoardPosition>();
+		for (int i = 0; i < length; i++) {
+			positions.add(getSpaceCoords(i));
+		}
+		return positions;
+	}
+
 
 	
 	@Override
