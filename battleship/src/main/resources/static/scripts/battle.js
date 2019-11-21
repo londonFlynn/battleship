@@ -305,28 +305,31 @@ function setupGameFromServer() {
 }
 
 function setupYourBoardFromServer() {
-    sendRequest(null, "/gamestate/myBoard/"+gameId, "GET", function(board) {
-
-    });
-    // setupBoardRowFromServer():
+    var board = {rows: new Array()};
+    for(var i = 0; i < 10; i++) {
+        setupBoardRowFromServer(board, i, false);
+    }
+    showUsersBoard(board);
 }
 
 function setupShipsFromServer() {
     sendRequest(null, "/gamestate/ships/"+gameId, "GET", function(shipPlacementResponses) {
-
+        shipPlacementResponses.forEach(function(shipPlacementResponse) {
+            displayShipInPositions(shipPlacementResponse.positions);
+        });
     });
 }
 
 function setupDestroyedShipsFromServer() {
     sendRequest(null, "/gamestate/destroyed/"+gameId, "GET", function(shipSunkNotifications) {
-
+        shipSunkNotifications.forEach(reciveShipSunkNotificaiton);
     });
 }
 
 
-function setupBoardRowFromServer(row, opponent) {
+function setupBoardRowFromServer(board, row, opponent) {
     sendRequest(null, "/gamestate/row/"+gameId+"/"+row+"/"+opponent, "GET", function(boardRow) {
-
+        board.rows.push(boardRow);
     });
 }
 
@@ -335,8 +338,9 @@ function setupGameHasStartedFromServer() {
 }
 
 function setupOpponentBoardFromServer() {
-    sendRequest(null, "/gamestate/opponentBoard/"+gameId, "GET", function(board) {
-
-    });
-    // setupBoardRowFromServer():
+    var board = {rows: new Array()};
+    for(var i = 0; i < 10; i++) {
+        setupBoardRowFromServer(board, i, true);
+    }
+    showOpponentBoard(board);
 }
