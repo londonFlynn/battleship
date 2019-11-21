@@ -14,7 +14,7 @@
 <meta charset="ISO-8859-1">
 <style>
 body{
-	background: url("./pier.jpg") no-repeat center center fixed;
+	background: url("/img/pier.jpg") no-repeat center center fixed;
 	background-size: cover;
 }
 
@@ -82,7 +82,7 @@ body{
     <p>Loses: <%=lost%></p>
 </div>
 <div class="signpost">
-	<img src="./signpost4.png">
+	<img src="/img/signpost4.png">
 	
 	<div class="left">
 		<p class="top"><a href="/savedgames">Saved Games</a></p>
