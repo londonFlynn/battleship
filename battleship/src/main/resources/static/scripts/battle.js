@@ -89,18 +89,27 @@ function userMissed(position) {
 }
 function userHit(position) {
     //TODO display the hit
-	opponentBoard
-	position.xPos
+	position.xPos = position.xPos + "";
+	var initialAscii = position.xPos.charCodeAt(0) + 49;
+	var x = String.fromCharCode(initialAscii);
+	var y = position.yPos + 1;
+	
+	var targetId = x + "" + y;
+
+	for (var i = 0, row; row = opponentBoard.rows[i]; i++) {
+	   //iterate through rows
+	   //rows would be accessed using the "row" variable assigned in the for loop
+	   for (var j = 0, col; col = row.cells[j]; j++) {
+		   if(col.id == targetId) {
+			   console.log("Found: " + col.id);
+		   }
+	     //iterate through columns
+	     //columns would be accessed using the "col" variable assigned in the for loop
+	   }  
+	}
+	
 	//get coordinate and relate it to opponent board
 	//change background image to /hit.gif
-	
-	
-	class BoardPosition {
-	    constructor(xPos, yPos) {
-	        this.xPos = xPos;
-	        this.yPos = yPos;
-	    }
-	}
 	
 }
 function usersShipWasSunk(shipType) {
@@ -167,6 +176,7 @@ class BoardPosition {
     }
 }
 
+userHit(new BoardPosition(0, 0));
 const Direction = {
     NORTH: 'NORTH',
     SOUTH: 'SOUTH',

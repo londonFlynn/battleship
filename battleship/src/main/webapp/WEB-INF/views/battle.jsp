@@ -80,18 +80,18 @@
 				<h1 id='currentPlayerTurn'>Turn: <%=username %></h1>
 			</div>
 			<div id='opponentShips' class='shipsAvaliable'>
-				<div id='oaircraft'class='ships'><span class="tooltiptext">Aircraft</span></div>
-				<div id='obattleship'class='ships'><span class="tooltiptext">Battleship</span></div>
-				<div id='ocruiser'class='ships'><span class="tooltiptext">Cruiser</span></div>
-				<div id='odestroyer'class='ships'><span class="tooltiptext">Destroyer</span></div>
-				<div id='osubmarine'class='ships'><span class="tooltiptext">Submarine</span></div>
+				<div id='oaircraft'class='ships'><span class="tooltiptext">Opponent's Aircraft</span></div>
+				<div id='obattleship'class='ships'><span class="tooltiptext">Opponent's Battleship</span></div>
+				<div id='ocruiser'class='ships'><span class="tooltiptext">Opponent's Cruiser</span></div>
+				<div id='odestroyer'class='ships'><span class="tooltiptext">Opponent's Destroyer</span></div>
+				<div id='osubmarine'class='ships'><span class="tooltiptext">Opponent's Submarine</span></div>
 			</div>
 			<div id='playerShips' class='shipsAvaliable'>
-				<div id='paircraft' class='ships'><span class="tooltiptext">Aircraft</span></div>
-				<div id='pbattleship' class='ships'><span class="tooltiptext">Battleship</span></div>
-				<div id='pcruiser' class='ships'><span class="tooltiptext">Cruiser</span></div>
-				<div id='pdestroyer' class='ships'><span class="tooltiptext">Destroyer</span></div>
-				<div id='psubmarine' class='ships'><span class="tooltiptext">Submarine</span></div>
+				<div id='paircraft' class='ships'><span class="tooltiptext">Your Aircraft</span></div>
+				<div id='pbattleship' class='ships'><span class="tooltiptext">Your Battleship</span></div>
+				<div id='pcruiser' class='ships'><span class="tooltiptext">Your Cruiser</span></div>
+				<div id='pdestroyer' class='ships'><span class="tooltiptext">Your Destroyer</span></div>
+				<div id='psubmarine' class='ships'><span class="tooltiptext">Your Submarine</span></div>
 			</div>
 		</div>
 		<div id='winner'>
