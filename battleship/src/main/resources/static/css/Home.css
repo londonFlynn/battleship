@@ -1,6 +1,6 @@
 @charset "ISO-8859-1";
 
-body {background-image: url("/img/battleship2.jpg");
+body {background-image: url("/images/battleship2.jpg");
 	background-size: cover;}
 h1 {font-size: 150px;
 	color: #f27405;
