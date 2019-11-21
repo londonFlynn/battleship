@@ -1,6 +1,6 @@
 @charset "ISO-8859-1";
 
-body {background-image: url("/battleship.jpg");
+body {background-image: url("/battleship2.jpg");
 	background-size: cover;}
 h1 {font-size: 150px;
 	 padding: 15px;
@@ -18,7 +18,8 @@ a {
 	width: 400px;
 	height: 230px;}
 #login {float: right;
-	background-color: #fff;
+	background-color: #000;
+	color: #fff;
 	margin: 25px;
 	border: 10px solid white;}
 #homelink {float: left;
