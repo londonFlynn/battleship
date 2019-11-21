@@ -3,6 +3,7 @@
     
 <%
 	String username = (String) request.getAttribute("username");
+	int gameId = (int) request.getAttribute("gameId");
 %>
 <!DOCTYPE html>
 <html>
@@ -18,8 +19,9 @@
 </head>
 <body>
 <div id="username" style="display: none"><%=username%></div>
+<div id="gameId" style="display: none"><%=gameId%></div>
 
 
-<script src="/scripts/DEPLOYING.js"></script>
+<script src="/js/DEPLOYING.js"></script>
 </body>
 </html>

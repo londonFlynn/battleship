@@ -1,6 +1,7 @@
 
 window.onload() = function () {
 	username = document.getElementById("username").innerText;
+	gameId = document.getElementById("gameId").innerText;
 };
 
 function connect(username) {
@@ -9,7 +10,9 @@ function connect(username) {
 	 stompClient.connect({}, function (frame) {
 		 setConnected(true);
 		 stompClient.subscribe('/tojs/DEPLOY/' + username, function (oppoUsername) {
-			 
-		 })
+			 if(oppoUsername) {
+				 window.location.href = "/battle/" + gameId;
+			 }
+		 });
 	 });
 }

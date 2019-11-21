@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import pro0.battleship.models.Game;
 import pro0.battleship.models.User;
+import pro0.battleship.repositories.BoardCellJpaRepository;
+import pro0.battleship.repositories.BoardJpaRepository;
+import pro0.battleship.repositories.BoardRowJpaRepository;
+import pro0.battleship.repositories.GameJpaRepository;
+import pro0.battleship.repositories.ShipJpaRepository;
 import pro0.battleship.repositories.UserJpaRepository;
 
 @Controller
@@ -21,6 +26,17 @@ public class Deploy {
 
 	@Autowired
 	private UserJpaRepository userRepo;
+	
+	@Autowired
+	private GameJpaRepository gameRepo;
+	@Autowired
+	private BoardJpaRepository boardRepo;
+	@Autowired
+	private BoardRowJpaRepository boardRowRepo;
+	@Autowired
+	private BoardCellJpaRepository boardCellRepo;
+	@Autowired
+	private ShipJpaRepository shipRepo;
 	
 	@GetMapping(path="")
 	protected String doMainGet() {
@@ -56,6 +72,16 @@ public class Deploy {
 	@GetMapping(path="/DEPLOYING")
 	protected String doCreateBattle(Principal prn, Model model) {
 		model.addAttribute("username", prn.getName());
+		
+		Optional<User> optUser = userRepo.findById(prn.getName());
+		
+		if(optUser.isPresent()) {
+			User user = optUser.get();
+			Game game = Game.newGame(user, gameRepo, boardRepo, boardRowRepo, boardCellRepo, shipRepo);
+			model.addAttribute("gameId", game.getId());
+			user.getGames().add(game);
+			userRepo.save(user);
+		}
 		
 		return "DEPLOYING";
 	}
