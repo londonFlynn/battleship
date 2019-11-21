@@ -24,7 +24,11 @@
     </div>
     <footer id='preview'>
       <div id='multiplayerPreview' class='gameplaySection'>
+      	<%if(!loggedIn) { %>
           <h2 style='text-align: center'>Two Player Gameplay</h2>
+          <%} else { %>
+          <h2 style='text-align: center'><a href='/deploy'>Two Player Gameplay</a></h2>
+          <%} %>
           <ul>
               <li><p>Connect with random players</p></li>
               <li><p>Play against friends</p></li>
@@ -32,7 +36,11 @@
           </ul>
       </div>
       <div id='dockPreview' class='gameplaySection'>
+      	<%if(!loggedIn) { %>
           <h2 style='text-align: center'>Visit the Dock</h2>
+          <%} else { %>
+          <h2 style='text-align: center'><a href='/dock'>Visit the Dock</a></h2>
+          <%} %>
           <ul>
               <li><p>See your battle stats</p></li>
               <li><p>Pick your favorite ship</p></li>
