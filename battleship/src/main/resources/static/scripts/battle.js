@@ -13,8 +13,14 @@ var userShipsLife = [
 		pdestroyer = document.getElementById('pdestroyer'),
 		psubmarine = document.getElementById('psubmarine')
 ]
+var wonGame = document.getElementById('winner');
+var lostGame = document.getElementById('loser');
+var game = document.getElementById('game');
 var opponentBoard = document.getElementById('opponentBoard');
+
 console.log(opponentBoard);
+wonGame.style.display = "none";
+lostGame.style.display = "none";
 
 function determineClick() {
 	console.log('determine click');
@@ -68,15 +74,23 @@ function notifyInvalidAttack() {
 }
 function userGotHit(position) {
     //TODO display the hit
+	//get coordinate and relate it to user board
+	//change background image to /hit.gif
 }
 function userWasMissed(position) {
     //TODO display the miss
+	//get coordinate and relate it to user board
+	//change background image to /miss.gif
 }
 function userMissed(position) {
     //TODO display the miss
+	//get coordinate and relate it to opponent board
+	//change background image to /miss.gif
 }
 function userHit(position) {
     //TODO display the hit
+	//get coordinate and relate it to opponent board
+	//change background image to /hit.gif
 }
 function usersShipWasSunk(shipType) {
 	var count = 0;
@@ -98,10 +112,12 @@ function userSunkAShip(shipType) {
 }
 
 function userLost() {
-    //TODO display the saddness
+    loser.style.display = "block";
+    game.style.display = "none";
 }
 function userWon() {
-    //TODO display the success
+	winner.style.display = "block";
+    game.style.display = "none";
 }
 function itsYourTurn() {
     //TODO unlock board

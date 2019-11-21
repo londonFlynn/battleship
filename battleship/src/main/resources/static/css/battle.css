@@ -1,9 +1,18 @@
 @charset "ISO-8859-1";
 
+html {
+	background-color: #333;
+}
+th {
+	color: #fff;
+}
+td {
+	color: #fff;
+}
 .otiles {
-	width: 55px;
-	height: 55px;
-	background-image: url(/sync.gif);
+	width: 50px;
+	height: 50px;
+	background-image: url(/img/sync.gif);
 	color: #fff;
 	padding: 1px;
 	margin: 5px;
@@ -11,11 +20,12 @@
 }
 .otiles:hover{
 	opacity: 0.5;
+	background-image: url(/img/target.gif);
 }
 .tile {
-	width: 45px;
+	width: 35px;
 	height: 45px;
-	background-image: url(/still.jpg);
+	background-image: url(/img/still.jpg);
 	color: #fff;
 	padding: 1px;
 	margin: 5px;
@@ -42,19 +52,22 @@
 	background-color: #18C3CC;
 	margin: 25px 0px;
 }
+#gameInfo {
+	float: right;
+}
 #opponentBoard{
-	margin: 15px;
+	margin: 0 px 10px;
 }
 #playerBoard{
-	margin: 15px;
+	margin: 10px;
 }
 #currentPlayerTurn {
-	width: 400px;
-	height: 75px;
+	width: 1000px;
+	height: 150px;
 	background-color: #18C3CC;
 	border: 5px solid #fff;
+	font-size: 75px;
 }
-
 .ships {
   position: relative;
   display: inline-block;
