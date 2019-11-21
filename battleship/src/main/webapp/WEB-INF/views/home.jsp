@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link href='css/Home.css' rel='stylesheet' />
+<link href='/css/Home.css' rel='stylesheet' type="text/css" />
 <meta charset="ISO-8859-1">
 <title>Battleship!</title>
 </head>
