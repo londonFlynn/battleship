@@ -41,13 +41,12 @@ public class Login {
 	}
 	
 	@PostMapping(path="/signup")
-	protected ResponseEntity<String> doSignUp(
+	protected String doSignUp(
 		Model model,
 		@RequestParam String username,
 		@RequestParam String password
 	) {
 		String targetResource = "redirect:/login";
-		HttpStatus httpStat = HttpStatus.OK;
 		Optional<User> optUser = userRepo.findById(username);
 		String signupMsg = null;
 		
@@ -58,14 +57,13 @@ public class Login {
 			User user = userRepo.save(new User(username, password, null, 0, 0));
 			if(user != null) signupMsg = "A user was successfully made for you.";
 			else {
-				httpStat = HttpStatus.INTERNAL_SERVER_ERROR;
 				targetResource = "error";
 			}
 		}
 		
 		if(signupMsg != null) model.addAttribute("signupMsg", signupMsg);
 		
-		return new ResponseEntity<String>(targetResource, httpStat);
+		return targetResource;
 	}
 
 }

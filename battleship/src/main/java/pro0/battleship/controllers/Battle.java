@@ -42,9 +42,8 @@ public class Battle {
 	
 	
 	@GetMapping(path="")
-	protected ResponseEntity<String> doMainGet(Principal prn) {
+	protected String doMainGet(Principal prn) {
 		String targetResource = "error";
-		HttpStatus httpStat = HttpStatus.OK;
 		Optional<User> user = userRepo.findById(prn.getName());
 
 		Game game = null;
@@ -53,9 +52,8 @@ public class Battle {
 			game = gameRepo.save(Game.newGame(user.get(), gameRepo, boardRepo, boardRowRepo, boardCellRepo, shipRepo));
 			targetResource = "redirect:/battle/" + game.getId();
 		}
-		else httpStat = HttpStatus.INTERNAL_SERVER_ERROR;
 		
-		return new ResponseEntity<String>(targetResource, httpStat);
+		return targetResource;
 	}
 	
 	@GetMapping(path="/{gameID}")
