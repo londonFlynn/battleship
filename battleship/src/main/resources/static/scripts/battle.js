@@ -169,7 +169,7 @@ window.onload = function() {
 var setGameId = function setGameId(id) {
     gameId = id;
     this.connect(id);
-}
+};
 
 function sendRequest(object, requestPath, requestType, result) {
     var xmlHttp = new XMLHttpRequest();
