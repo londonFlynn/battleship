@@ -83,14 +83,14 @@ class BoardPosition {
     }
 }
 
-const ShipType = {
+const Direction = {
     NORTH: 'NORTH',
     SOUTH: 'SOUTH',
     EAST: 'EAST',
     WEST: 'WEST'
 }
 
-const Direction = {
+const ShipType = {
     AIRCRAFT_CARRIER: 'AIRCRAFT_CARRIER',
     BATTLESHIP: 'BATTLESHIP',
     SUBMARINE: 'SUBMARINE',
