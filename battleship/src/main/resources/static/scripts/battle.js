@@ -286,6 +286,7 @@ function reciveTurnChangeNotification(turnChangeNotification) {
     }
 }
 function reciveGameStartedNotification(gameStartedNotification) {
+    console.log(gameStartedNotification);
     if (gameStartedNotification.started) {
         gameHasStarted();
         if (gameStartedNotification.turn.playerUsername == username) {
@@ -297,10 +298,10 @@ function reciveGameStartedNotification(gameStartedNotification) {
 }
 
 function setupGameFromServer() {
-    setupYourBoardFromServer();
-    setupOpponentBoardFromServer();
-    setupShipsFromServer();
-    setupDestroyedShipsFromServer();
+    // setupYourBoardFromServer();
+    // setupOpponentBoardFromServer();
+    // setupShipsFromServer();
+    // setupDestroyedShipsFromServer();
     setupGameHasStartedFromServer();
 }
 
@@ -309,11 +310,13 @@ function setupYourBoardFromServer() {
     for(var i = 0; i < 10; i++) {
         setupBoardRowFromServer(board, i, false);
     }
+    console.log(board);
     showUsersBoard(board);
 }
 
 function setupShipsFromServer() {
     sendRequest(null, "/gamestate/ships/"+gameId, "GET", function(shipPlacementResponses) {
+        console.log(shipPlacementResponses);
         shipPlacementResponses.forEach(function(shipPlacementResponse) {
             displayShipInPositions(shipPlacementResponse.positions);
         });
@@ -322,6 +325,7 @@ function setupShipsFromServer() {
 
 function setupDestroyedShipsFromServer() {
     sendRequest(null, "/gamestate/destroyed/"+gameId, "GET", function(shipSunkNotifications) {
+        console.log(shipSunkNotifications);
         shipSunkNotifications.forEach(reciveShipSunkNotificaiton);
     });
 }
@@ -342,5 +346,6 @@ function setupOpponentBoardFromServer() {
     for(var i = 0; i < 10; i++) {
         setupBoardRowFromServer(board, i, true);
     }
+    console.log(board);
     showOpponentBoard(board);
 }
