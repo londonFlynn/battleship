@@ -15,8 +15,7 @@ public class Home {
 
 	@GetMapping(path="")
 	protected String doMainGet(Principal principal, Model model) {
-		boolean loggedIn = false;
-		if(principal != null) loggedIn = true;
+		boolean loggedIn = principal != null;
 		
 		model.addAttribute("loggedIn", loggedIn);
 		// For JS requests eventually

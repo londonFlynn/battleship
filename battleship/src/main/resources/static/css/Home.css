@@ -1,21 +1,25 @@
 @charset "ISO-8859-1";
 
-body {background-image: url("/battleship.jpg");
+body {background-image: url("/battleship2.jpg");
 	background-size: cover;}
 h1 {font-size: 150px;
 	 padding: 15px;
 	 margin: 15px;
 	 text-align: center;}
-.header {background-color: #000;
+a {
+	color: #f2e205;
+}
+.header {background-color: #194973;
 	display: inline-block;
 	width: 100%;
 	height: 100px;}
-.gameplaySection {background-color: #222;
+.gameplaySection {background-color: #194973;
 	color: #fff;
 	width: 400px;
 	height: 230px;}
 #login {float: right;
-	background-color: #fff;
+	background-color: #000;
+	color: #fff;
 	margin: 25px;
 	border: 10px solid white;}
 #homelink {float: left;

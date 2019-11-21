@@ -57,12 +57,12 @@ hr {
 }
 
 </style>
-<title>Battleship! - Games</title>
+<title>Battleship! - DEPLOY</title>
 </head>
 <body>
 
 <div class="split left">
-<h2>Available Games</h2>
+<!-- h2>Available Games</h2>
 
 <div class="availablegame">
   <p><span>Chris Fox.</span> CEO at Mighty Schools.</p>
@@ -71,7 +71,7 @@ hr {
 
 </div>
 
-<div class="vline"></div>
+<div class="vline"></div> -->
 
 <div class="split right">
 
@@ -82,7 +82,7 @@ hr {
     
 	<hr>
     
-    <h2 style="color:white">Create Room</h2>
+    <h2 style="color:white">Create Battle</h2>
     <label>Private
     	<input type="radio">
     </label>
