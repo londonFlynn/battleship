@@ -69,8 +69,19 @@ function userMissed(position) {
 }
 function userHit(position) {
     //TODO display the hit
+	opponentBoard
+	position.xPos
 	//get coordinate and relate it to opponent board
 	//change background image to /hit.gif
+	
+	
+	class BoardPosition {
+	    constructor(xPos, yPos) {
+	        this.xPos = xPos;
+	        this.yPos = yPos;
+	    }
+	}
+	
 }
 function usersShipWasSunk(shipType) {
 	var count = 0;

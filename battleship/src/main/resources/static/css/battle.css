@@ -62,11 +62,11 @@ td {
 	margin: 10px;
 }
 #currentPlayerTurn {
-	width: 1000px;
+	width: 900px;
 	height: 150px;
 	background-color: #18C3CC;
 	border: 5px solid #fff;
-	font-size: 75px;
+	font-size: 55px;
 }
 .ships {
   position: relative;
