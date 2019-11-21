@@ -12,6 +12,26 @@ var psubmarine = document.getElementById('psubmarine');
 var opponentBoard = document.getElementById('opponentBoard');
 console.log(opponentBoard);
 
+function determineClick() {
+	console.log('determine click');
+	console.log(event);
+}
+
+opponentBoard.addEventListener("click", event => {
+	var index = event.target.id.substring(0, 1) + "," + event.target.id.substring(1);
+	index.split(",");
+	var xPos = index[0].charCodeAt(0) - 49;
+	
+	var yPos = event.target.id.substring(1);
+	var y = parseInt(yPos, 10)
+	y = y-1;
+	
+	console.log("X: " + String.fromCharCode(xPos) +"; Y: "+ y);
+	
+	sendTargetCellRequest(String.fromCharCode(xPos), y);
+});
+
+
 function showUsersBoard(board) {
     //TODO populate the board
 
@@ -138,6 +158,12 @@ function connect(id) {
         stompClient.subscribe('/tojs/gameOver/'+id, function (gameOverNotification) {
             reciveGameOverNotification(gameOverNotification);
         });
+        stompClient.subscribe('/tojs/turnChange/'+id, function (turnChangeNotification) {
+            reciveTurnChangeNotification(turnChangeNotification);
+        });
+        stompClient.subscribe('/tojs/gameStarted/'+id, function (gameStartedNotification) {
+            reciveGameStartedNotification(gameStartedNotification);
+        });
         setupGameFromServer();
     });
 }
@@ -186,44 +212,56 @@ function reciveGameOverNotification(gameOverNotification) {
     }
     // disconnect();
 }
+function reciveTurnChangeNotification(turnChangeNotification) {
+    if (turnChangeNotification.playerUsername == username) {
+        itsYourTurn();
+    } else {
+        itsTheOpponentsTurn();
+    }
+}
+function reciveGameStartedNotification(gameStartedNotification) {
+    if (gameStartedNotification.started) {
+        gameHasStarted();
+        if (gameStartedNotification.turn.playerUsername == username) {
+            itsYourTurn();
+        } else {
+            itsTheOpponentsTurn();
+        }
+    }
+}
 
 function setupGameFromServer() {
-    
+    setupYourBoardFromServer();
+    setupOpponentBoardFromServer();
+    setupShipsFromServer();
+    setupDestroyedShipsFromServer();
+    setupGameHasStartedFromServer();
 }
 
-var Game = {
-    id: 1,
-    boards: null,
-    user: null,
-    currentTurn: null,
-    otherUser: null
+function setupYourBoardFromServer() {
+    // setupBoardRowFromServer():
 }
 
-function determineClick() {
-	console.log('determine click');
-	console.log(event);
+function setupShipsFromServer() {
+
 }
 
-opponentBoard.addEventListener("click", event => {
-	var index = event.target.id.substring(0, 1) + "," + event.target.id.substring(1);
-	index.split(",");
-	var xPos = index[0].charCodeAt(0) - 49;
-	
-	var yPos = event.target.id.substring(1);
-	var y = parseInt(yPos, 10)
-	y = y-1;
-	
-	console.log("X: " + String.fromCharCode(xPos) +"; Y: "+ y);
-	
-	sendTargetCellRequest(String.fromCharCode(xPos), y);
-});
+function setupDestroyedShipsFromServer() {
 
+}
 
+function setupTurnFromServer() {
 
+}
 
+function setupBoardRowFromServer(row, whoseBoard) {
 
+}
 
+function setupGameHasStartedFromServer() {
+    // setupTurnFromServer();
+}
 
-
-
-
+function setupOpponentBoardFromServer() {
+    // setupBoardRowFromServer():
+}
