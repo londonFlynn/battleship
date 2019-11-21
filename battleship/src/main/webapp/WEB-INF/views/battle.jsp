@@ -70,7 +70,7 @@
 	</tbody>
 	</table>
 	<div>
-		<h1 id='currentPlayerTurn'>Turn: username</h1>
+		<h1 id='currentPlayerTurn'>Turn: <%=username %></h1>
 	</div>
 	<div id='opponentShips' class='shipsAvaliable'>
 		<div id='oaircraft'class='ships'><span class="tooltiptext">Aircraft</span></div>
@@ -86,7 +86,7 @@
 		<div id='pdestroyer' class='ships'><span class="tooltiptext">Destroyer</span></div>
 		<div id='psubmarine' class='ships'><span class="tooltiptext">Submarine</span></div>
 	</div>
-	<script src='scripts/battle.js'></script>
+	<script src='/scripts/battle.js'></script>
 </body>
 </html>
 
