@@ -109,8 +109,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, "/login/*").permitAll()
 				.antMatchers(HttpMethod.POST, "/login").permitAll()
 				.antMatchers(HttpMethod.POST, "/login/*").permitAll()
+				
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-
 				
 				.anyRequest().authenticated()
 				
