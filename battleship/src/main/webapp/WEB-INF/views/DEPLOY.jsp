@@ -73,12 +73,11 @@ img {
 <div class="split right">
   <div class="centered">
     <h2>Create</h2>
-    <div>
+    <a href="/DEPLOY/DEPLOYING">
     	<img src="./shipWheel.png" id="createBattle">
-    </div>
+    </a>
     <h2>Battle</h2>
   </div>
 </div>
-<script src="/scripts/DEPLOY.js"></script>
 </body>
 </html>
