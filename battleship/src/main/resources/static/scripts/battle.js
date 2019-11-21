@@ -67,13 +67,22 @@ function userLost() {
 function userWon() {
     //TODO display the success
 }
+function itsYourTurn() {
+    //TODO unlock board
+}
+function itsTheOpponentsTurn() {
+    //TODO lock board
+}
+function gameHasStarted() {
+    //Notify User
+}
 
 function sendShipPlacementRequest(position, direction, shipType) {
-    stompClient.send("/fromjs/placeShip/"+gameId,{}, {"position": position, "direction":direction, "shipType": shipType});
+    
 }
 
 function sendTargetCellRequest(position) {
-    tompClient.send("/fromjs/targetCell/"+gameId,{}, {"position":position});
+    stompClient.send("/fromjs/targetCell/"+gameId,{}, {"position":position});
 }
 
 class BoardPosition {
