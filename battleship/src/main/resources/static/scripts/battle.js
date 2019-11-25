@@ -17,17 +17,13 @@ var wonGame = document.getElementById('winner');
 var lostGame = document.getElementById('loser');
 var game = document.getElementById('game');
 var opponentBoard = document.getElementById('opponentBoard');
+var playerBoard = document.getElementById('playerBoard');
 
 console.log(opponentBoard);
 wonGame.style.display = "none";
 lostGame.style.display = "none";
 
-function determineClick() {
-	console.log('determine click');
-	console.log(event);
-}
-
-opponentBoard.addEventListener("click", event => {
+opponentBoard.addEventListener("click", event => {	
 	var index = event.target.id.substring(0, 1) + "," + event.target.id.substring(1);
 	index.split(",");
 	var xPos = index[0].charCodeAt(0) - 49;
@@ -73,22 +69,38 @@ function notifyInvalidAttack() {
     //TODO Notify user that they cannot attack that space
 }
 function userGotHit(position) {
-    //TODO display the hit
-	//get coordinate and relate it to user board
-	//change background image to /hit.gif
+	position.xPos = position.xPos + "";
+	var initialAscii = position.xPos.charCodeAt(0) + 49;
+	var x = String.fromCharCode(initialAscii);
+	var y = position.yPos + 1;
+	
+	var targetId = x + "" + y;
+
+	for (var i = 0, row; row = playerBoard.rows[i]; i++) {
+	   for (var j = 0, col; col = row.cells[j]; j++) {
+		   if(col.id == targetId) {
+			   col.style.backgroundImage="url('/images/hit.gif'";
+		   }
+	   }  
+	}
 }
 function userWasMissed(position) {
-    //TODO display the miss
-	//get coordinate and relate it to user board
-	//change background image to /miss.gif
+	position.xPos = position.xPos + "";
+	var initialAscii = position.xPos.charCodeAt(0) + 49;
+	var x = String.fromCharCode(initialAscii);
+	var y = position.yPos + 1;
+	
+	var targetId = x + "" + y;
+
+	for (var i = 0, row; row = playerBoard.rows[i]; i++) {
+	   for (var j = 0, col; col = row.cells[j]; j++) {
+		   if(col.id == targetId) {
+			   col.style.backgroundImage="url('/images/miss.gif'";
+		   }
+	   }  
+	}
 }
 function userMissed(position) {
-    //TODO display the miss
-	//get coordinate and relate it to opponent board
-	//change background image to /miss.gif
-}
-function userHit(position) {
-    //TODO display the hit
 	position.xPos = position.xPos + "";
 	var initialAscii = position.xPos.charCodeAt(0) + 49;
 	var x = String.fromCharCode(initialAscii);
@@ -97,20 +109,28 @@ function userHit(position) {
 	var targetId = x + "" + y;
 
 	for (var i = 0, row; row = opponentBoard.rows[i]; i++) {
-	   //iterate through rows
-	   //rows would be accessed using the "row" variable assigned in the for loop
 	   for (var j = 0, col; col = row.cells[j]; j++) {
 		   if(col.id == targetId) {
-			   console.log("Found: " + col.id);
+			   col.style.backgroundImage="url('/images/miss.gif'";
 		   }
-	     //iterate through columns
-	     //columns would be accessed using the "col" variable assigned in the for loop
 	   }  
 	}
+}
+function userHit(position) {
+	position.xPos = position.xPos + "";
+	var initialAscii = position.xPos.charCodeAt(0) + 49;
+	var x = String.fromCharCode(initialAscii);
+	var y = position.yPos + 1;
 	
-	//get coordinate and relate it to opponent board
-	//change background image to /hit.gif
-	
+	var targetId = x + "" + y;
+
+	for (var i = 0, row; row = opponentBoard.rows[i]; i++) {
+	   for (var j = 0, col; col = row.cells[j]; j++) {
+		   if(col.id == targetId) {
+			   col.style.backgroundImage="url('/images/hit.gif'";
+		   }
+	   }  
+	}	
 }
 function usersShipWasSunk(shipType) {
 	var count = 0;
@@ -176,7 +196,6 @@ class BoardPosition {
     }
 }
 
-userHit(new BoardPosition(0, 0));
 const Direction = {
     NORTH: 'NORTH',
     SOUTH: 'SOUTH',

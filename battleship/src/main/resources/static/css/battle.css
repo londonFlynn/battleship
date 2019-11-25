@@ -12,7 +12,7 @@ td {
 .otiles {
 	width: 50px;
 	height: 50px;
-	background-image: url(/img/sync.gif);
+	background-image: url(/images/sync.gif);
 	color: #fff;
 	padding: 1px;
 	margin: 5px;
@@ -20,12 +20,12 @@ td {
 }
 .otiles:hover{
 	opacity: 0.5;
-	background-image: url(/img/target.gif);
+	background-image: url(/images/target.gif);
 }
 .tile {
 	width: 35px;
 	height: 45px;
-	background-image: url(/img/still.jpg);
+	background-image: url(/images/sync.gif);
 	color: #fff;
 	padding: 1px;
 	margin: 5px;
@@ -62,7 +62,7 @@ td {
 	margin: 10px;
 }
 #currentPlayerTurn {
-	width: 900px;
+	width: 700px;
 	height: 150px;
 	background-color: #18C3CC;
 	border: 5px solid #fff;

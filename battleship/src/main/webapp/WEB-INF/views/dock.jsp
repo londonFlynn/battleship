@@ -82,7 +82,7 @@ body{
     <p>Loses: <%=lost%></p>
 </div>
 <div class="signpost">
-	<img src="/img/signpost4.png">
+	<img src="/images/signpost4.png">
 	
 	<div class="left">
 		<p class="top"><a href="/savedgames">Saved Games</a></p>
