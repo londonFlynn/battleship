@@ -3,6 +3,7 @@ package pro0.battleship.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,11 +18,23 @@ public class BoardRow {
 	@Id
 	@GeneratedValue( strategy= GenerationType.AUTO )
 	private Integer id;
+	
+	@Column(name = "row_number")
+	private int rowNumber;
+	
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<BoardCell> cells = new ArrayList<BoardCell>();
 	
 	public BoardRow() {
 		
+	}
+	
+	public int getRowNumber() {
+		return rowNumber;
+	}
+
+	public void setRowNumber(int rowNumber) {
+		this.rowNumber = rowNumber;
 	}
 
 	public Integer getId() {

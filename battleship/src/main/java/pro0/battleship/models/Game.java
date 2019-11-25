@@ -42,7 +42,7 @@ public class Game {
 	@ManyToOne
 	private User otherUser;
 	@ManyToOne
-	private User currentTurn;
+	private User currentTurn = null;
 	@Column(name = "creationTimeStamp", nullable = false, updatable = false)
 	@CreationTimestamp
     private LocalDateTime creationTimeStamp;
@@ -62,6 +62,7 @@ public class Game {
 					}
 					BoardRow row = new BoardRow();
 					row.setCells(boardCells);
+					row.setRowNumber(j);
 					boardRows.add(row);
 					BoardRow newRow = boardRowJpaRepository.save(row);
 				}
@@ -134,6 +135,15 @@ public class Game {
 		if (user.equals(this.user)) {
 			return otherUser;
 		} else if (user.equals(otherUser)) {
+			return this.user;
+		} else {
+			return null;
+		}
+	}
+	public User getOtherUser(String username) {
+		if (username.equals(this.user.getUsername())) {
+			return otherUser;
+		} else if (username.equals(otherUser.getUsername())) {
 			return this.user;
 		} else {
 			return null;
