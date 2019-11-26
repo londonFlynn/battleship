@@ -34,7 +34,7 @@ opponentBoard.addEventListener("click", event => {
 	
 	console.log("X: " + String.fromCharCode(xPos) +"; Y: "+ y);
 	
-	sendTargetCellRequest(String.fromCharCode(xPos), y);
+	sendTargetCellRequest(new BoardPosition(xPos, y));
 });
 
 

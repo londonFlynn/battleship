@@ -26,7 +26,7 @@ public class GameplayServlet {
 	@SendTo("/tojs/attackResult/{gameId}")
 	public AttackResult recieveTargetCellRequest(@DestinationVariable("gameId") int gameId, Principal prn, @RequestBody TargetCellRequest request) {
 		String username = prn.getName();
-		
+		System.out.println(request);
 		return null;
 	}
 	
