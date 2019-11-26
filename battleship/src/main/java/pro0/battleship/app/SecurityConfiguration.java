@@ -109,6 +109,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, "/login/*").permitAll()
 				.antMatchers(HttpMethod.POST, "/login").permitAll()
 				.antMatchers(HttpMethod.POST, "/login/*").permitAll()
+				.antMatchers(HttpMethod.GET, "/fromjs/**").permitAll()
+				.antMatchers(HttpMethod.POST, "/fromjs/**").permitAll()
+				.antMatchers(HttpMethod.GET, "/betweenjs/**").permitAll()
 				
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 				
