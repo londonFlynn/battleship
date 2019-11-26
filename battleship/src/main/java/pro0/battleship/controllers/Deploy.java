@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 
 import pro0.battleship.models.Game;
 import pro0.battleship.models.User;
@@ -61,6 +62,8 @@ public class Deploy {
 				.findFirst();
 			
 			if(optGameToJoin.isPresent()) {
+				RestTemplate restTemplate = new RestTemplate();
+				restTemplate.getForEntity("/DEPLOY/" + scouredOpponent.getUsername(), String.class);
 				Game gameToJoin = optGameToJoin.get();
 				targetResource = "/battle/" + gameToJoin.getId();
 			}
