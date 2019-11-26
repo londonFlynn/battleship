@@ -70,16 +70,18 @@ public class GameObjectServlet {
 				searchUsername = guestUsername;
 			}
 		}
-		List<BoardRow> boardRows = boardRowJpaRepository.searchByGameAndRowNumber(gameId, row, searchUsername);
+		List<BoardRow> boardRows = boardRowJpaRepository.searchByGameAndRowNumber(gameId, row, userJpaRepository.findById(searchUsername).orElse(null));
 		if (boardRows.size() > 0) {
 			return boardRows.get(0);
 		}
+		System.out.println("SOMETHING WENT VERY WRONG. THIS SHOULD NEVER HAPPEN.");
 		return null;
 	}
+	
 	@GetMapping(path="/ships/{gameId}")
 	public List<ShipPlacementResponse> sendUsersShips(@PathVariable int gameId, Principal prn) {
 		String username = prn.getName();
-		List<Ship> ships = shipJpaRepository.getShipsByGameId(gameId, username);
+		List<Ship> ships = shipJpaRepository.getShipsByGameId(gameId, userJpaRepository.findById(username).orElse(null));
 		List<ShipPlacementResponse> shipPlacementResponses = new ArrayList<ShipPlacementResponse>();
 		for (Ship ship : ships) {
 			if (ship.getPosition() != null) {
@@ -110,7 +112,6 @@ public class GameObjectServlet {
 		String currentTurnUsername = gameJpaRepository.getCurrentTurn(gameId);
 		System.out.println(currentTurnUsername);
 		if (currentTurnUsername != null) {
-			System.out.println("sending turn");
 			return new GameStartNotification(true, new TurnChangeNotification(currentTurnUsername));
 		} else {
 			return new GameStartNotification(false, null);

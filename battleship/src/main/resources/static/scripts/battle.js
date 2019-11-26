@@ -186,7 +186,8 @@ function sendShipPlacementRequest(position, direction, shipType) {
 }
 
 function sendTargetCellRequest(position) {
-    stompClient.send("/fromjs/targetCell/"+gameId,{}, {"position":position});
+    console.log(position);
+    stompClient.send("/fromjs/targetCell/"+gameId,{}, JSON.stringify({"position":position}));
 }
 
 class BoardPosition {
@@ -227,7 +228,7 @@ var setGameId = function setGameId(id) {
     this.connect(id);
 };
 
-function sendRequest(object, requestPath, requestType, result) {
+async function sendRequest(object, requestPath, requestType, result) {
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open(requestType, requestPath, true);
     xmlHttp.setRequestHeader('Content-type', 'application/json');
@@ -340,17 +341,16 @@ function reciveGameStartedNotification(gameStartedNotification) {
 function setupGameFromServer() {
     setupYourBoardFromServer();
     // setupOpponentBoardFromServer();
-    // setupShipsFromServer();
-    // setupDestroyedShipsFromServer();
+    setupShipsFromServer();
+    setupDestroyedShipsFromServer();
     setupGameHasStartedFromServer();
 }
 
-function setupYourBoardFromServer() {
+async function setupYourBoardFromServer() {
     var board = {rows: new Array()};
     for(var i = 0; i < 10; i++) {
-        setupBoardRowFromServer(board, i, false);
+        await setupBoardRowFromServer(board, i, false);
     }
-    console.log(board);
     showUsersBoard(board);
 }
 
@@ -371,8 +371,8 @@ function setupDestroyedShipsFromServer() {
 }
 
 
-function setupBoardRowFromServer(board, row, opponent) {
-    sendRequest(null, "/gamestate/row/"+gameId+"/"+row+"/"+opponent, "GET", function(boardRow) {
+async function setupBoardRowFromServer(board, row, opponent) {
+    await sendRequest(null, "/gamestate/row/"+gameId+"/"+row+"/"+opponent, "GET", function(boardRow) {
         console.log(boardRow);
         board.rows.push(boardRow);
     });
@@ -387,6 +387,5 @@ function setupOpponentBoardFromServer() {
     for(var i = 0; i < 10; i++) {
         setupBoardRowFromServer(board, i, true);
     }
-    console.log(board);
     showOpponentBoard(board);
 }
