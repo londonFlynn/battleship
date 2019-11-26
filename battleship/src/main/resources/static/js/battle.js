@@ -300,6 +300,7 @@ function reciveAttackResult(attackResult) {
             if (attackResult.hit) {
                 userHit(attackResult.position);
             } else {
+                console.log("Miss");
                 userMissed(attackResult.position);
             }
         }
@@ -339,11 +340,18 @@ function reciveGameStartedNotification(gameStartedNotification) {
 }
 
 function setupGameFromServer() {
-    setupYourBoardFromServer();
-    setupOpponentBoardFromServer();
+    // setupYourBoardFromServer();
+    // setupOpponentBoardFromServer();
+    setupCellsFromServer();
     setupShipsFromServer();
     setupDestroyedShipsFromServer();
     setupGameHasStartedFromServer();
+}
+
+async function setupCellsFromServer() {
+    sendRequest(null, "/gamestate/attacks/"+gameId, "GET", function(attackResults) {
+        attackResults.forEach(reciveAttackResult);
+    });
 }
 
 async function setupYourBoardFromServer() {

@@ -57,8 +57,9 @@ public class GameplayServlet {
 		if (game.getCurrentTurn().equals(user)) {
 			try {
 				boolean hit = gc.attackSquare(user, request.getPosition());
-//				game.setCurrentTurn(game.getOtherUser(username));
-//				sendTurnChangeNotification(gameId, game.getOtherUser(username).getUsername());
+				game.setCurrentTurn(game.getOtherUser(username));
+				gameJpaRepository.save(game);
+//				sendTurnChangeNotification(gameId, game.getCurrentTurn().getUsername());
 				if (hit) {
 					Ship ship = gc.getShipInPosition(request.getPosition(), game.getOtherUser(username));
 					if (gc.shipIsSunk(ship)) {
@@ -68,7 +69,7 @@ public class GameplayServlet {
 						sendGameOverNotification(gameId, username);
 					}
 				}
-				return new AttackResult(username, request.getPosition(), hit);
+				return new AttackResult(game.getOtherUser(username).getUsername(), request.getPosition(), hit);
 			} catch (SpaceAlreadyAttackedExeception e) {
 				return AttackResult.invalidAttackResult(username);
 			}

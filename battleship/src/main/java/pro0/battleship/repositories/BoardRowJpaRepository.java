@@ -17,7 +17,16 @@ public interface BoardRowJpaRepository extends JpaRepository<BoardRow, Integer>{
 			"JOIN b.rows r " +
 			"WHERE r.rowNumber LIKE :rowNumber AND g.id LIKE :gameId AND b.user LIKE :username")
 	public List<BoardRow> searchByGameAndRowNumber(@Param(value="gameId") int gameId, @Param(value="rowNumber") int rowNumber, @Param(value="username") User user);
-//	@Query(
+
+	@Query(
+			"SELECT r " +
+			"FROM Game g " +
+			"JOIN g.boards b " +
+			"JOIN b.rows r " +
+			"WHERE g.id LIKE :gameId")
+	public List<BoardRow> findByGame(@Param(value="gameId") int gameId);
+	
+	//	@Query(
 //			"SELECT r " +
 //			"FROM BoardRow r " +
 //			"JOIN board_rows s " +

@@ -22,8 +22,11 @@ public class GameplayController {
 	
 	GameJpaRepository gameJpaRepository;
 	
+	BoardCellJpaRepository boardCellJpaRepository;
+	
 	public GameplayController(int gameId, GameJpaRepository gameJpaRepository, BoardJpaRepository boardJpaRepository, BoardRowJpaRepository boardRowJpaRepository, BoardCellJpaRepository boardCellJpaRepository, ShipJpaRepository shipJpaRepository) {
 		this.gameJpaRepository = gameJpaRepository;
+		this.boardCellJpaRepository = boardCellJpaRepository;
 		this.game = gameJpaRepository.findById(gameId).orElse(null);
 		this.game.setBoards(gameJpaRepository.getGameBoards(gameId));
 		for (Board board : this.game.getBoards()) {
@@ -55,7 +58,8 @@ public class GameplayController {
 		defendSquare(game.getOtherUser(attacker), position);
 		boolean hit = !game.getUsersBoard(game.getOtherUser(attacker)).spaceIsOpen(position);
 		game.getUsersBoard(game.getOtherUser(attacker)).getRows().get(position.getyPos()).getCells().get(position.getxPos()).setHit(hit);
-		gameJpaRepository.save(game);
+		System.out.println(game.getOtherUser(attacker).getUsername());
+		boardCellJpaRepository.save(game.getUsersBoard(game.getOtherUser(attacker)).getRows().get(position.getyPos()).getCells().get(position.getxPos()));
 		return hit;
 	}
 	private void defendSquare(User defender, BoardPosition position) throws SpaceAlreadyAttackedExeception {
