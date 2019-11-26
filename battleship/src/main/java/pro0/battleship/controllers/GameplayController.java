@@ -1,10 +1,12 @@
 package pro0.battleship.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import pro0.battleship.exceptions.SpaceAlreadyAttackedExeception;
 import pro0.battleship.models.Board;
 import pro0.battleship.models.BoardPosition;
+import pro0.battleship.models.BoardRow;
 import pro0.battleship.models.Game;
 import pro0.battleship.models.Ship;
 import pro0.battleship.models.User;
@@ -18,19 +20,42 @@ public class GameplayController {
 	
 	private Game game;
 	
-	
-	
+	GameJpaRepository gameJpaRepository;
 	
 	public GameplayController(int gameId, GameJpaRepository gameJpaRepository, BoardJpaRepository boardJpaRepository, BoardRowJpaRepository boardRowJpaRepository, BoardCellJpaRepository boardCellJpaRepository, ShipJpaRepository shipJpaRepository) {
+		this.gameJpaRepository = gameJpaRepository;
 		this.game = gameJpaRepository.findById(gameId).orElse(null);
+		this.game.setBoards(gameJpaRepository.getGameBoards(gameId));
+		for (Board board : this.game.getBoards()) {
+			List<BoardRow> rows = new ArrayList<BoardRow>();
+			for (int i = 0; i < 10; i++) {
+				BoardRow row = boardRowJpaRepository.searchByGameAndRowNumber(gameId, i, board.getUser()).get(0);
+				rows.add(row);
+			}
+			board.setRows(rows);
+			List<Ship> ships = shipJpaRepository.getShipsByGameId(gameId, board.getUser());
+			board.setShips(ships);
+		}
 	}
-	public GameplayController(Game game, BoardJpaRepository boardJpaRepository, BoardRowJpaRepository boardRowJpaRepository, BoardCellJpaRepository boardCellJpaRepository, ShipJpaRepository shipJpaRepository) {
+	public Ship getShipInPosition(BoardPosition position, User user) {
+		Board b = game.getUsersBoard(user);
+		Ship result = null;
+		for (Ship ship : b.getShips()) {
+			if (b.shipIsCoveringSpace(ship, position)) {
+				result = ship;
+			}
+		}
+		return result;
+	}
+	
+	public GameplayController(Game game) {
 		this.game = game;
 	}
 	public boolean attackSquare(User attacker, BoardPosition position) throws SpaceAlreadyAttackedExeception {
 		defendSquare(game.getOtherUser(attacker), position);
 		boolean hit = !game.getUsersBoard(game.getOtherUser(attacker)).spaceIsOpen(position);
-		game.getUsersBoard(game.getOtherUser(attacker)).getRows().get(position.getyPos()).getCells().get(position.getyPos()).setHit(hit);
+		game.getUsersBoard(game.getOtherUser(attacker)).getRows().get(position.getyPos()).getCells().get(position.getxPos()).setHit(hit);
+		gameJpaRepository.save(game);
 		return hit;
 	}
 	private void defendSquare(User defender, BoardPosition position) throws SpaceAlreadyAttackedExeception {

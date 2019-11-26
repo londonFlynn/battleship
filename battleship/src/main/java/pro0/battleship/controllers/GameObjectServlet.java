@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import pro0.battleship.models.BoardRow;
-import pro0.battleship.models.Game;
 import pro0.battleship.models.GameStartNotification;
 import pro0.battleship.models.Ship;
 import pro0.battleship.models.ShipPlacementResponse;
@@ -95,11 +94,9 @@ public class GameObjectServlet {
 	
 	@GetMapping(path="/destroyed/{gameId}")
 	public List<ShipSunkNotification> sendDestroyedShips(@PathVariable int gameId, Principal prn) {
-		String username = prn.getName();
 		List<Ship> ships = shipJpaRepository.getShipsByGameId(gameId);
 		List<ShipSunkNotification> shipSunkNotifications = new ArrayList<ShipSunkNotification>();
-		Game game = gameJpaRepository.findById(gameId).orElse(null);
-		GameplayController gc = new GameplayController(game, boardJpaRepository, boardRowJpaRepository, boardCellJpaRepository, shipJpaRepository);
+		GameplayController gc = new GameplayController(gameId,gameJpaRepository, boardJpaRepository, boardRowJpaRepository,  boardCellJpaRepository, shipJpaRepository);
 		for (Ship ship : ships) {
 			if (gc.shipIsSunk(ship)) {
 				shipSunkNotifications.add(new ShipSunkNotification(ship.getBoard().getUser().getUsername(), ship.getShipType()));

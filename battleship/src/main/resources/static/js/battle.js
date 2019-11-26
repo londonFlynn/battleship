@@ -187,7 +187,6 @@ function sendShipPlacementRequest(position, direction, shipType) {
 }
 
 function sendTargetCellRequest(position) {
-    console.log(position);
     stompClient.send("/fromjs/targetCell/"+gameId,{}, JSON.stringify({"position":position}));
 }
 
@@ -252,19 +251,19 @@ function connect(id) {
         setConnected(true);
         console.log('Connected: ' + frame);
         stompClient.subscribe('/tojs/attackResult/'+id, function (attackResult) {
-            reciveAttackResult(attackResult);
+            reciveAttackResult(JSON.parse(attackResult.body));
         });
         stompClient.subscribe('/tojs/sunkShip/'+id, function (shipSunkNotification) {
-            reciveShipSunkNotificaiton(shipSunkNotification);
+            reciveShipSunkNotificaiton(JSON.parse(shipSunkNotification.body));
         });
         stompClient.subscribe('/tojs/gameOver/'+id, function (gameOverNotification) {
-            reciveGameOverNotification(gameOverNotification);
+            reciveGameOverNotification(JSON.parse(gameOverNotification.body));
         });
         stompClient.subscribe('/tojs/turnChange/'+id, function (turnChangeNotification) {
-            reciveTurnChangeNotification(turnChangeNotification);
+            reciveTurnChangeNotification(JSON.parse(turnChangeNotification.body));
         });
         stompClient.subscribe('/tojs/gameStarted/'+id, function (gameStartedNotification) {
-            reciveGameStartedNotification(gameStartedNotification);
+            reciveGameStartedNotification(JSON.parse(gameStartedNotification.body));
         });
         setupGameFromServer();
     });
@@ -285,6 +284,7 @@ function reciveShipPlacementResponse(shipPlacementResponse) {
 }
 
 function reciveAttackResult(attackResult) {
+    console.log(attackResult);
     if (attackResult.invalid) {
         if (attackResult.playerUsername == username) {
             notifyInvalidAttack();
@@ -328,7 +328,6 @@ function reciveTurnChangeNotification(turnChangeNotification) {
     }
 }
 function reciveGameStartedNotification(gameStartedNotification) {
-    console.log(gameStartedNotification);
     if (gameStartedNotification.started) {
         gameHasStarted();
         if (gameStartedNotification.turn.playerUsername == username) {
@@ -341,7 +340,7 @@ function reciveGameStartedNotification(gameStartedNotification) {
 
 function setupGameFromServer() {
     setupYourBoardFromServer();
-    // setupOpponentBoardFromServer();
+    setupOpponentBoardFromServer();
     setupShipsFromServer();
     setupDestroyedShipsFromServer();
     setupGameHasStartedFromServer();
@@ -357,7 +356,6 @@ async function setupYourBoardFromServer() {
 
 function setupShipsFromServer() {
     sendRequest(null, "/gamestate/ships/"+gameId, "GET", function(shipPlacementResponses) {
-        console.log(shipPlacementResponses);
         shipPlacementResponses.forEach(function(shipPlacementResponse) {
             displayShipInPositions(shipPlacementResponse.positions);
         });
@@ -366,7 +364,6 @@ function setupShipsFromServer() {
 
 function setupDestroyedShipsFromServer() {
     sendRequest(null, "/gamestate/destroyed/"+gameId, "GET", function(shipSunkNotifications) {
-        console.log(shipSunkNotifications);
         shipSunkNotifications.forEach(reciveShipSunkNotificaiton);
     });
 }
@@ -374,7 +371,6 @@ function setupDestroyedShipsFromServer() {
 
 async function setupBoardRowFromServer(board, row, opponent) {
     await sendRequest(null, "/gamestate/row/"+gameId+"/"+row+"/"+opponent, "GET", function(boardRow) {
-        console.log(boardRow);
         board.rows.push(boardRow);
     });
 }
