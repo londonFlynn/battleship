@@ -47,7 +47,8 @@ public class Deploy {
 	
 	@PostMapping(path="")
 	protected String doMainPost(
-			@RequestParam String username
+			@RequestParam String username,
+			Principal prn
 	) {
 		String targetResource = "/DEPLOY";
 		
@@ -65,7 +66,13 @@ public class Deploy {
 				RestTemplate restTemplate = new RestTemplate();
 				restTemplate.getForEntity("/DEPLOY/" + scouredOpponent.getUsername(), String.class);
 				Game gameToJoin = optGameToJoin.get();
-				targetResource = "/battle/" + gameToJoin.getId();
+				Optional<User> optUser = userRepo.findById(prn.getName());
+				if(optUser.isPresent()) {
+					User user = optUser.get();
+					gameToJoin.setOtherUser(user);
+					targetResource = "/battle/" + gameToJoin.getId();
+				}
+				
 			}
 		}
 		
