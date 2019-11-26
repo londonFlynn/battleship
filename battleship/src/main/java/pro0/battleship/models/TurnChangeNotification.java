@@ -1,6 +1,7 @@
 package pro0.battleship.models;
 
 public class TurnChangeNotification {
+	int id;
 	private String playerUsername;
 
 	public TurnChangeNotification(String playerUsername) {
