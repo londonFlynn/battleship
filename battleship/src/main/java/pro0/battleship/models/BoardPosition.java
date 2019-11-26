@@ -35,6 +35,13 @@ public class BoardPosition {
 	public void setyPos(int yPos) {
 		this.yPos = yPos;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("BoardPosition [xPos=").append(xPos).append(", yPos=").append(yPos).append("]");
+		return builder.toString();
+	}
 	
 	
 

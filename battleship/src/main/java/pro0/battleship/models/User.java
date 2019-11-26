@@ -103,6 +103,15 @@ public class User {
 				.append("]");
 		return builder.toString();
 	}
+	@Override
+	public boolean equals(Object other) {
+		if (other.getClass() == User.class) {
+			return this.username.equals(((User) other).username);
+		} else {
+			return false;
+		}
+	}
+	
 	
 	
 

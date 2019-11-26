@@ -45,12 +45,12 @@ public class BoardRow {
 		this.id = id;
 	}
 	boolean hasSpaceBeenTargeted(int xPos) {
-		return cells.get(xPos-1).getTargeted();
+		return cells.get(xPos).getTargeted();
 	}
 
 	void targetSpace(int xPos) {
 		if (!hasSpaceBeenTargeted(xPos)) {
-			cells.get(xPos-1).setTargeted(true);;
+			cells.get(xPos).setTargeted(true);;
 		}
 	}
 	
