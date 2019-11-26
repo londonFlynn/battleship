@@ -1,12 +1,17 @@
 package pro0.battleship.controllers;
 
+import java.net.URLEncoder;
 import java.util.Optional;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,7 +49,8 @@ public class Login {
 	protected String doSignUp(
 		Model model,
 		@RequestParam String username,
-		@RequestParam String password
+		@RequestParam String password,
+		HttpServletRequest request
 	) {
 		String targetResource = "redirect:/login";
 		Optional<User> optUser = userRepo.findById(username);
@@ -54,8 +60,18 @@ public class Login {
 		else if(username.length() <= 0) signupMsg = "A username must be at least one character in length.";
 		else if(password.length() <= 0) signupMsg = "A password must be at least one character in length.";
 		else {
-			User user = userRepo.save(new User(username, password, "/images/babyduck.jpg", 0, 0));
-			if(user != null) signupMsg = "A user was successfully made for you.";
+			User user = userRepo.save(new User(username, password, null, 0, 0));
+			if(user != null) {
+				signupMsg = "A user was successfully made for you.";
+				model.addAttribute("username", username);
+				model.addAttribute("password", password);
+				try {
+					request.login(username, password);
+					targetResource = "redirect:/dock";
+				} catch (ServletException e) {
+					e.printStackTrace();
+				}
+			}
 			else {
 				targetResource = "error";
 			}
@@ -65,5 +81,12 @@ public class Login {
 		
 		return targetResource;
 	}
+	
+//	private void signIn(String encoding) {
+//		String encodedUrl = URLEncoder.encode(encoding);
+//		RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+//		
+//		redirectStrategy.sendRedirect("login");
+//	}
 
 }
