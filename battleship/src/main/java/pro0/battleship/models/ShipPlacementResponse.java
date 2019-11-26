@@ -1,14 +1,16 @@
 package pro0.battleship.models;
 
+import java.util.List;
+
 public class ShipPlacementResponse {
 	private boolean success = false;
-	private BoardPosition[] positions;
+	private List<BoardPosition> positions;
 	public ShipPlacementResponse() {}
 	
-	public ShipPlacementResponse(boolean success, BoardPosition[] positions) {
+	public ShipPlacementResponse(boolean success, List<BoardPosition> list) {
 		super();
 		this.success = success;
-		this.positions = positions;
+		this.positions = list;
 	}
 
 	public boolean isSuccess() {
@@ -17,10 +19,10 @@ public class ShipPlacementResponse {
 	public void setSuccess(boolean success) {
 		this.success = success;
 	}
-	public BoardPosition[] getPositions() {
+	public List<BoardPosition> getPositions() {
 		return positions;
 	}
-	public void setPositions(BoardPosition[] positions) {
+	public void setPositions(List<BoardPosition> positions) {
 		this.positions = positions;
 	}
 	

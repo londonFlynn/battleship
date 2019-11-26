@@ -17,17 +17,13 @@ var wonGame = document.getElementById('winner');
 var lostGame = document.getElementById('loser');
 var game = document.getElementById('game');
 var opponentBoard = document.getElementById('opponentBoard');
+var playerBoard = document.getElementById('playerBoard');
 
 console.log(opponentBoard);
 wonGame.style.display = "none";
 lostGame.style.display = "none";
 
-function determineClick() {
-	console.log('determine click');
-	console.log(event);
-}
-
-opponentBoard.addEventListener("click", event => {
+opponentBoard.addEventListener("click", event => {	
 	var index = event.target.id.substring(0, 1) + "," + event.target.id.substring(1);
 	index.split(",");
 	var xPos = index[0].charCodeAt(0) - 49;
@@ -73,24 +69,68 @@ function notifyInvalidAttack() {
     //TODO Notify user that they cannot attack that space
 }
 function userGotHit(position) {
-    //TODO display the hit
-	//get coordinate and relate it to user board
-	//change background image to /hit.gif
+	position.xPos = position.xPos + "";
+	var initialAscii = position.xPos.charCodeAt(0) + 49;
+	var x = String.fromCharCode(initialAscii);
+	var y = position.yPos + 1;
+	
+	var targetId = x + "" + y;
+
+	for (var i = 0, row; row = playerBoard.rows[i]; i++) {
+	   for (var j = 0, col; col = row.cells[j]; j++) {
+		   if(col.id == targetId) {
+			   col.style.backgroundImage="url('/images/hit.gif'";
+		   }
+	   }  
+	}
 }
 function userWasMissed(position) {
-    //TODO display the miss
-	//get coordinate and relate it to user board
-	//change background image to /miss.gif
+	position.xPos = position.xPos + "";
+	var initialAscii = position.xPos.charCodeAt(0) + 49;
+	var x = String.fromCharCode(initialAscii);
+	var y = position.yPos + 1;
+	
+	var targetId = x + "" + y;
+
+	for (var i = 0, row; row = playerBoard.rows[i]; i++) {
+	   for (var j = 0, col; col = row.cells[j]; j++) {
+		   if(col.id == targetId) {
+			   col.style.backgroundImage="url('/images/miss.gif'";
+		   }
+	   }  
+	}
 }
 function userMissed(position) {
-    //TODO display the miss
-	//get coordinate and relate it to opponent board
-	//change background image to /miss.gif
+	position.xPos = position.xPos + "";
+	var initialAscii = position.xPos.charCodeAt(0) + 49;
+	var x = String.fromCharCode(initialAscii);
+	var y = position.yPos + 1;
+	
+	var targetId = x + "" + y;
+
+	for (var i = 0, row; row = opponentBoard.rows[i]; i++) {
+	   for (var j = 0, col; col = row.cells[j]; j++) {
+		   if(col.id == targetId) {
+			   col.style.backgroundImage="url('/images/miss.gif'";
+		   }
+	   }  
+	}
 }
 function userHit(position) {
-    //TODO display the hit
-	//get coordinate and relate it to opponent board
-	//change background image to /hit.gif
+	position.xPos = position.xPos + "";
+	var initialAscii = position.xPos.charCodeAt(0) + 49;
+	var x = String.fromCharCode(initialAscii);
+	var y = position.yPos + 1;
+	
+	var targetId = x + "" + y;
+
+	for (var i = 0, row; row = opponentBoard.rows[i]; i++) {
+	   for (var j = 0, col; col = row.cells[j]; j++) {
+		   if(col.id == targetId) {
+			   col.style.backgroundImage="url('/images/hit.gif'";
+		   }
+	   }  
+	}	
 }
 function usersShipWasSunk(shipType) {
 	var count = 0;
@@ -286,6 +326,7 @@ function reciveTurnChangeNotification(turnChangeNotification) {
     }
 }
 function reciveGameStartedNotification(gameStartedNotification) {
+    console.log(gameStartedNotification);
     if (gameStartedNotification.started) {
         gameHasStarted();
         if (gameStartedNotification.turn.playerUsername == username) {
@@ -297,36 +338,42 @@ function reciveGameStartedNotification(gameStartedNotification) {
 }
 
 function setupGameFromServer() {
-    setupYourBoardFromServer();
-    setupOpponentBoardFromServer();
-    setupShipsFromServer();
-    setupDestroyedShipsFromServer();
+    // setupYourBoardFromServer();
+    // setupOpponentBoardFromServer();
+    // setupShipsFromServer();
+    // setupDestroyedShipsFromServer();
     setupGameHasStartedFromServer();
 }
 
 function setupYourBoardFromServer() {
-    sendRequest(null, "/gamestate/myBoard/"+gameId, "GET", function(board) {
-
-    });
-    // setupBoardRowFromServer():
+    var board = {rows: new Array()};
+    for(var i = 0; i < 10; i++) {
+        setupBoardRowFromServer(board, i, false);
+    }
+    console.log(board);
+    showUsersBoard(board);
 }
 
 function setupShipsFromServer() {
     sendRequest(null, "/gamestate/ships/"+gameId, "GET", function(shipPlacementResponses) {
-
+        console.log(shipPlacementResponses);
+        shipPlacementResponses.forEach(function(shipPlacementResponse) {
+            displayShipInPositions(shipPlacementResponse.positions);
+        });
     });
 }
 
 function setupDestroyedShipsFromServer() {
     sendRequest(null, "/gamestate/destroyed/"+gameId, "GET", function(shipSunkNotifications) {
-
+        console.log(shipSunkNotifications);
+        shipSunkNotifications.forEach(reciveShipSunkNotificaiton);
     });
 }
 
 
-function setupBoardRowFromServer(row, opponent) {
+function setupBoardRowFromServer(board, row, opponent) {
     sendRequest(null, "/gamestate/row/"+gameId+"/"+row+"/"+opponent, "GET", function(boardRow) {
-
+        board.rows.push(boardRow);
     });
 }
 
@@ -335,8 +382,10 @@ function setupGameHasStartedFromServer() {
 }
 
 function setupOpponentBoardFromServer() {
-    sendRequest(null, "/gamestate/opponentBoard/"+gameId, "GET", function(board) {
-
-    });
-    // setupBoardRowFromServer():
+    var board = {rows: new Array()};
+    for(var i = 0; i < 10; i++) {
+        setupBoardRowFromServer(board, i, true);
+    }
+    console.log(board);
+    showOpponentBoard(board);
 }
