@@ -1,5 +1,7 @@
 package pro0.battleship.models;
 
+import javax.persistence.Entity;
+
 public class AttackResult {
 	
 	private boolean invalid = false;

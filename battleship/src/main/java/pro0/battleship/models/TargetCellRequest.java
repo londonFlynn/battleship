@@ -1,5 +1,7 @@
 package pro0.battleship.models;
 
+import javax.persistence.Entity;
+
 public class TargetCellRequest {
 	private BoardPosition position;
 

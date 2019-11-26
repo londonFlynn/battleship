@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import pro0.battleship.models.BoardRow;
 import pro0.battleship.models.Game;
@@ -26,7 +26,7 @@ import pro0.battleship.repositories.UserJpaRepository;
 
 
 
-@Controller
+@RestController
 @RequestMapping("/gamestate")
 public class GameObjectServlet {
 	
@@ -107,14 +107,14 @@ public class GameObjectServlet {
 	}
 	@GetMapping(path="/started/{gameId}")
 	public GameStartNotification sendGameStarted(@PathVariable int gameId) {
-//		String currentTurnUsername = gameJpaRepository.getCurrentTurn(gameId);
-//		System.out.println(currentTurnUsername);
-//		if (currentTurnUsername != null) {
-//			System.out.println("sending turn");
-//			return new GameStartNotification(true, new TurnChangeNotification(currentTurnUsername));
-//		} else {
+		String currentTurnUsername = gameJpaRepository.getCurrentTurn(gameId);
+		System.out.println(currentTurnUsername);
+		if (currentTurnUsername != null) {
+			System.out.println("sending turn");
+			return new GameStartNotification(true, new TurnChangeNotification(currentTurnUsername));
+		} else {
 			return new GameStartNotification(false, null);
-//		}
+		}
 	}
 	
 	
