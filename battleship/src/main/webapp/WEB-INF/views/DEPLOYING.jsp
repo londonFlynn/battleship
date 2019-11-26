@@ -9,6 +9,12 @@
 <html>
 <head>
 <style>
+body {
+	height: 100%;
+	background-image: url(images/loading.gif);
+	background-size: cover;
+	background-repeat: no-repeat;
+}
 
 </style>
 <meta charset="ISO-8859-1">
@@ -20,7 +26,6 @@
 <body>
 <div id="username" style="display: none"><%=username%></div>
 <div id="gameId" style="display: none"><%=gameId%></div>
-
 
 <script src="/js/DEPLOYING.js"></script>
 </body>
