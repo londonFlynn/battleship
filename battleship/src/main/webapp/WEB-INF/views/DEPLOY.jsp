@@ -54,9 +54,9 @@ img {
 <title>Battleship! - DEPLOY</title>
 </head>
 <body>
-<a href="/dock">Dock</a>
 
 <div class="split left">
+	<a href="/dock">Dock</a>
   <div class="centered">
     <h2>Search</h2>
     <h2>for</h2>

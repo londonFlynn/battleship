@@ -103,7 +103,7 @@
 			<h2>Player <%=username %> is the winner</h2>
 		</div>
 	</div>
-	<script src='/scripts/battle.js'></script>
+	<script src='/js/battle.js'></script>
 </body>
 </html>
 
