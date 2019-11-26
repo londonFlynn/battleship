@@ -10,7 +10,7 @@
 <style>
 body {
 	height: 100%;
-	background-image: url(/loading.gif);
+	background-image: url(images/loading.gif);
 	background-size: cover;
 	background-repeat: no-repeat;
 }
