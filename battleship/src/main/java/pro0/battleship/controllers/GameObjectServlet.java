@@ -6,9 +6,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import pro0.battleship.models.BoardRow;
 import pro0.battleship.models.Game;
@@ -51,7 +51,7 @@ public class GameObjectServlet {
 //	public Board sendOpponentBoard(@PathVariable int gameId) {
 //		return null;
 //	}
-	@RequestMapping(path="/row/{gameId}/{row}/{opponent}", method=RequestMethod.GET)
+	@GetMapping(path="/row/{gameId}/{row}/{opponent}")
 	public BoardRow sendBoardRow(@PathVariable int gameId, @PathVariable int row, @PathVariable boolean opponent, Principal prn) {
 		String username = prn.getName();
 		String hostUsername = gameJpaRepository.getHostUsername(gameId);
@@ -76,7 +76,7 @@ public class GameObjectServlet {
 		}
 		return null;
 	}
-	@RequestMapping(path="/ships/{gameId}", method=RequestMethod.GET)
+	@GetMapping(path="/ships/{gameId}")
 	public List<ShipPlacementResponse> sendUsersShips(@PathVariable int gameId, Principal prn) {
 		String username = prn.getName();
 		List<Ship> ships = shipJpaRepository.getShipsByGameId(gameId, username);
@@ -91,7 +91,7 @@ public class GameObjectServlet {
 	
 	
 	
-	@RequestMapping(path="/destroyed/{gameId}", method=RequestMethod.GET)
+	@GetMapping(path="/destroyed/{gameId}")
 	public List<ShipSunkNotification> sendDestroyedShips(@PathVariable int gameId, Principal prn) {
 		String username = prn.getName();
 		List<Ship> ships = shipJpaRepository.getShipsByGameId(gameId);
@@ -105,15 +105,16 @@ public class GameObjectServlet {
 		}
 		return shipSunkNotifications;
 	}
-	@RequestMapping(path="/started/{gameId}", method=RequestMethod.GET)
+	@GetMapping(path="/started/{gameId}")
 	public GameStartNotification sendGameStarted(@PathVariable int gameId) {
-		String currentTurnUsername = gameJpaRepository.getCurrentTurn(gameId);
-		System.out.println(currentTurnUsername);
-		if (currentTurnUsername != null) {
-			return new GameStartNotification(true, new TurnChangeNotification(currentTurnUsername));
-		} else {
+//		String currentTurnUsername = gameJpaRepository.getCurrentTurn(gameId);
+//		System.out.println(currentTurnUsername);
+//		if (currentTurnUsername != null) {
+//			System.out.println("sending turn");
+//			return new GameStartNotification(true, new TurnChangeNotification(currentTurnUsername));
+//		} else {
 			return new GameStartNotification(false, null);
-		}
+//		}
 	}
 	
 	
