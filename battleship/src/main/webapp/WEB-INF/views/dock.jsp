@@ -14,7 +14,7 @@
 <meta charset="ISO-8859-1">
 <style>
 body{
-	background: url("/img/pier.jpg") no-repeat center center fixed;
+	background: url("/images/pier.jpg") no-repeat center center fixed;
 	background-size: cover;
 }
 
