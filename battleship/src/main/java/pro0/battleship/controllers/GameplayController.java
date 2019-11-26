@@ -8,11 +8,23 @@ import pro0.battleship.models.BoardPosition;
 import pro0.battleship.models.Game;
 import pro0.battleship.models.Ship;
 import pro0.battleship.models.User;
+import pro0.battleship.repositories.BoardCellJpaRepository;
+import pro0.battleship.repositories.BoardJpaRepository;
+import pro0.battleship.repositories.BoardRowJpaRepository;
+import pro0.battleship.repositories.GameJpaRepository;
+import pro0.battleship.repositories.ShipJpaRepository;
 
 public class GameplayController {
 	
 	private Game game;
-	public GameplayController(Game game) {
+	
+	
+	
+	
+	public GameplayController(int gameId, GameJpaRepository gameJpaRepository, BoardJpaRepository boardJpaRepository, BoardRowJpaRepository boardRowJpaRepository, BoardCellJpaRepository boardCellJpaRepository, ShipJpaRepository shipJpaRepository) {
+		this.game = gameJpaRepository.findById(gameId).orElse(null);
+	}
+	public GameplayController(Game game, BoardJpaRepository boardJpaRepository, BoardRowJpaRepository boardRowJpaRepository, BoardCellJpaRepository boardCellJpaRepository, ShipJpaRepository shipJpaRepository) {
 		this.game = game;
 	}
 	public boolean attackSquare(User attacker, BoardPosition position) throws SpaceAlreadyAttackedExeception {
@@ -29,7 +41,8 @@ public class GameplayController {
 			throw new SpaceAlreadyAttackedExeception();
 		}
 	}
-	public boolean shipIsSunk(Ship ship, Board board) {
+	public boolean shipIsSunk(Ship ship) {
+		Board board = ship.getBoard();
 		boolean sunk = true;
 		for (int i = 0; i < ship.getLength() && sunk; i++) {
 			BoardPosition position = ship.getSpaceCoords(i);
@@ -42,7 +55,7 @@ public class GameplayController {
 		List<Ship> ships = board.getShips();
 		boolean losing = true;
 		for (Ship ship : ships) {
-			losing = losing && shipIsSunk(ship, board);
+			losing = losing && shipIsSunk(ship);
 		}
 		return losing;
 	}
