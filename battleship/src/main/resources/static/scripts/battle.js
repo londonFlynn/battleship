@@ -13,63 +13,28 @@ var userShipsLife = [
 		pdestroyer = document.getElementById('pdestroyer'),
 		psubmarine = document.getElementById('psubmarine')
 ]
-var placingShips = [
-	placingAircraft = document.getElementById('placingAircraft'),
-	placingBattleship = document.getElementById('placingBattleship'),
-	placingCruiser = document.getElementById('placingCruiser'),
-	placingDestroyer = document.getElementById('placingDestroyer'),
-	placingSubmarine = document.getElementById('placingSubmarine')
-]
 var wonGame = document.getElementById('winner');
 var lostGame = document.getElementById('loser');
 var game = document.getElementById('game');
 var opponentBoard = document.getElementById('opponentBoard');
 var playerBoard = document.getElementById('playerBoard');
-var start = document.getElementById('startGame');
-var placementAmount = 0;
 
 console.log(opponentBoard);
-//opponentBoard.style.display = "none";
 wonGame.style.display = "none";
 lostGame.style.display = "none";
-
-function addEventListenersToPlacements() {
-	placingAircraft.addEventListener("click", event => {
-		placementAmount = 5;
-	});
-	placingBattleship.addEventListener("click", event => {
-		placementAmount = 4;
-	});
-	placingCruiser.addEventListener("click", event => {
-		placementAmount = 3;
-	});
-	placingDestroyer.addEventListener("click", event => {
-		placementAmount = 2;
-	});
-	placingSubmarine.addEventListener("click", event => {
-		placementAmount = 3;
-	});
-	console.log("events added");
-}
-
-addEventListenersToPlacements();
-//start.addEventListener("click", event => {
-//	
-//	opponentBoard.style.display = "block";
-//});
 
 opponentBoard.addEventListener("click", event => {	
 	var index = event.target.id.substring(0, 1) + "," + event.target.id.substring(1);
 	index.split(",");
 	var xPos = index[0].charCodeAt(0) - 49;
-	var x = (parseInt(xPos, 10)) - 48;
 	
 	var yPos = event.target.id.substring(1);
 	var y = parseInt(yPos, 10)
 	y = y-1;
 	
-	console.log("X: " + x +"; Y: "+ y);
-	sendTargetCellRequest(new BoardPosition(x, y));
+	console.log("X: " + String.fromCharCode(xPos) +"; Y: "+ y);
+	
+	sendTargetCellRequest(String.fromCharCode(xPos), y);
 });
 
 
