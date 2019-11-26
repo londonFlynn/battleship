@@ -338,7 +338,7 @@ function reciveGameStartedNotification(gameStartedNotification) {
 }
 
 function setupGameFromServer() {
-    // setupYourBoardFromServer();
+    setupYourBoardFromServer();
     // setupOpponentBoardFromServer();
     // setupShipsFromServer();
     // setupDestroyedShipsFromServer();
@@ -373,6 +373,7 @@ function setupDestroyedShipsFromServer() {
 
 function setupBoardRowFromServer(board, row, opponent) {
     sendRequest(null, "/gamestate/row/"+gameId+"/"+row+"/"+opponent, "GET", function(boardRow) {
+        console.log(boardRow);
         board.rows.push(boardRow);
     });
 }
