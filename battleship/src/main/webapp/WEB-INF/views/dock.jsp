@@ -67,6 +67,16 @@ body{
 	z-index: 999;
 	font-size: 1.2vw;
 }
+
+a {
+	color: #8b6914;
+	text-decoration: none;
+	text-shadow: 1px 1px 1px black;
+}
+
+a:hover {
+  color: #452b0a;
+}
 </style>
 <title>Battleship! - Dock </title>
 </head>

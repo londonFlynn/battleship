@@ -1,9 +1,14 @@
 package pro0.battleship.controllers;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.security.Principal;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,7 +55,7 @@ public class Deploy {
 			@RequestParam String username,
 			Principal prn
 	) {
-		String targetResource = "/DEPLOY";
+		String targetResource = "forward:/DEPLOY";
 		
 		Optional<User> optScouredOpponent = userRepo.findById(username);
 		
@@ -64,13 +69,21 @@ public class Deploy {
 			
 			if(optGameToJoin.isPresent()) {
 				RestTemplate restTemplate = new RestTemplate();
-				restTemplate.getForEntity("/DEPLOY/" + scouredOpponent.getUsername(), String.class);
+				RequestEntity req = null;
+				try {
+					req = new RequestEntity(HttpMethod.GET, new URI("http://localhost:8080/betweenjs/DEPLOY/" + scouredOpponent.getUsername()));
+				} catch (URISyntaxException urise) {
+					urise.printStackTrace();
+				}
+				ResponseEntity<String> resp = restTemplate.exchange(req, String.class);
+				System.out.println(resp);
 				Game gameToJoin = optGameToJoin.get();
 				Optional<User> optUser = userRepo.findById(prn.getName());
 				if(optUser.isPresent()) {
 					User user = optUser.get();
 					gameToJoin.setOtherUser(user);
-					targetResource = "/battle/" + gameToJoin.getId();
+					gameRepo.save(gameToJoin);
+					targetResource = "redirect:/battle/" + gameToJoin.getId();
 				}
 				
 			}
