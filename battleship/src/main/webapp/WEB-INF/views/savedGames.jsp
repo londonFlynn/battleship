@@ -45,10 +45,14 @@ body {
 	<% if (games != null) { 
 		for (Game game : games) {
 			//If opponent is null do not print
-			if(!game.getOtherUser().getUsername().equals(null)) {
+			if(game.getOtherUser() != null) {
 	%>
 <div class="savedgame">
-  <p><span>You vs <%=game.getOtherUser().getUsername() %></span></p>
+  <p>
+  	<span>
+  		<a href="/battle/" + <%=game.getId() %>>You vs <%=game.getOtherUser().getUsername() %></a>
+  	</span>
+  </p>
   <p></p>
 </div>
   <%		}
