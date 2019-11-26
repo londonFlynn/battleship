@@ -25,6 +25,7 @@
 			    enabled. Please enable
 			    Javascript and reload this page!</h2>
 			</noscript>
+			<h2>Opponent's Board</h2>
 			<table id="opponentBoard" class="board">
 				<tbody><tr>
 					<th class='titleTile'></th>
@@ -49,6 +50,7 @@
 				<% let='a';} %>
 				</tbody>
 			</table>
+			<h2>Player's Board</h2>
 			<table id='playerBoard' class='board'>
 				<tbody>
 					<tr>
@@ -74,6 +76,17 @@
 					<% let='a';} %>
 				</tbody>
 			</table>
+		</div>
+		<div id='shipPlacement'>
+			<h2>Place Ships</h2>
+			<div>
+				<div id='startPlacingShips'></div>
+					<h3 id='placingAircraft'>Aircraft 5</h3>
+					<h3 id='placingBattleship'>Battleship 4</h3>
+					<h3 id='placingCruiser'>Cruiser 3</h3>
+					<h3 id='placingDestroyer'>Destroyer 2</h3>
+					<h3 id='placingSubmarine'>Submarine 3</h3>
+			</div>
 		</div>
 		<div id='gameInfo' style="display: inline-block">
 			<div>

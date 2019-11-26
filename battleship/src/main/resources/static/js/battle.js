@@ -27,14 +27,15 @@ opponentBoard.addEventListener("click", event => {
 	var index = event.target.id.substring(0, 1) + "," + event.target.id.substring(1);
 	index.split(",");
 	var xPos = index[0].charCodeAt(0) - 49;
+	var x = (parseInt(xPos, 10)) - 48;
+
 	
 	var yPos = event.target.id.substring(1);
 	var y = parseInt(yPos, 10)
 	y = y-1;
 	
-	console.log("X: " + String.fromCharCode(xPos) +"; Y: "+ y);
-	
-	sendTargetCellRequest(new BoardPosition(xPos, y));
+	console.log("X: " + x +"; Y: "+ y);
+	sendTargetCellRequest(new BoardPosition(x, y));
 });
 
 
