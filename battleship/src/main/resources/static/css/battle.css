@@ -68,6 +68,9 @@ td {
 	border: 5px solid #fff;
 	font-size: 55px;
 }
+#shipPlacement{
+	background-color: #fff;
+}
 .ships {
   position: relative;
   display: inline-block;
