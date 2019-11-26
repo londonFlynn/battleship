@@ -1,6 +1,7 @@
 
 window.onload() = function () {
 	username = document.getElementById("username").innerText;
+	gameId = document.getElementById("gameId").innerText;
 };
 
 function connect(username) {
@@ -8,8 +9,10 @@ function connect(username) {
 	 stompClient = Stomp.over(socket); //Stomp to find queues for the sockets
 	 stompClient.connect({}, function (frame) {
 		 setConnected(true);
-		 stompClient.subscribe('/tojs/DEPLOY/' + username, function (oppoUsername) {
-			 
-		 })
+		 stompClient.subscribe('/tojs/DEPLOY/' + username, function (myUsername) {
+			 if(myUsername) {
+				 window.location.href = "/battle/" + gameId;
+			 }
+		 });
 	 });
 }
