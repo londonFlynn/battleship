@@ -12,7 +12,8 @@
 <style>
 body {
 	font-family: Verdana;
-	color: black;
+	background-color: #2d2d2d;
+	color: white;
 }
 
 .split {
@@ -46,6 +47,14 @@ body {
 	left: 50%;
 	border-right: 4px solid grey;
 	height: 80%;
+}
+
+a {
+	color: #f2e205;
+	text-decoration: none;
+}
+a:hover {
+  color: #B94BC1;
 }
 </style>
 <title>Battleship! - Login</title>
@@ -81,7 +90,9 @@ body {
 				<input style="border-color: black;" type="text" name="username" />
 				<h2>Password</h2>
 				<input style="border-color: black;" type="password" name="password" /> 
+				<p>
 				<input type="submit" name="create" value="Create Account" />
+				</p>
 				<% if(signupMsg != null) { %>
 						<div style="color:red"><%= signupMsg %></div>
 				<% } %>
