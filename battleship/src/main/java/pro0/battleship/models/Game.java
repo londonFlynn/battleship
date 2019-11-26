@@ -154,6 +154,11 @@ public class Game {
 	}
 	public void setOtherUser(User other) {
 		this.otherUser = other;
+		for (Board board : boards) {
+			if(board.getUser().equals(user)) {
+				board.setUser(other);
+			}
+		}
 	}
 	
 	public Board getUsersBoard(User user) {

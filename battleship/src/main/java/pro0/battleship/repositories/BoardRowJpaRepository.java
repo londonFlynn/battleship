@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import pro0.battleship.models.BoardRow;
+import pro0.battleship.models.User;
 
 public interface BoardRowJpaRepository extends JpaRepository<BoardRow, Integer>{
 	@Query(
@@ -15,8 +16,17 @@ public interface BoardRowJpaRepository extends JpaRepository<BoardRow, Integer>{
 			"JOIN g.boards b " +
 			"JOIN b.rows r " +
 			"WHERE r.rowNumber LIKE :rowNumber AND g.id LIKE :gameId AND b.user LIKE :username")
-	public List<BoardRow> searchByGameAndRowNumber(@Param(value="gameId") int gameId, @Param(value="rowNumber") int rowNumber, @Param(value="username") String username);
-//	@Query(
+	public List<BoardRow> searchByGameAndRowNumber(@Param(value="gameId") int gameId, @Param(value="rowNumber") int rowNumber, @Param(value="username") User user);
+
+	@Query(
+			"SELECT r " +
+			"FROM Game g " +
+			"JOIN g.boards b " +
+			"JOIN b.rows r " +
+			"WHERE g.id LIKE :gameId")
+	public List<BoardRow> findByGame(@Param(value="gameId") int gameId);
+	
+	//	@Query(
 //			"SELECT r " +
 //			"FROM BoardRow r " +
 //			"JOIN board_rows s " +

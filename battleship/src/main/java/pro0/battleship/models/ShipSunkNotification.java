@@ -1,6 +1,9 @@
 package pro0.battleship.models;
 
+import javax.persistence.Entity;
+
 import pro0.battleship.enums.ShipType;
+
 
 public class ShipSunkNotification {
 	private String playerUsername;

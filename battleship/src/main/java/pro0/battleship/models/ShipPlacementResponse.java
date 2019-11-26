@@ -2,6 +2,9 @@ package pro0.battleship.models;
 
 import java.util.List;
 
+import javax.persistence.Entity;
+
+
 public class ShipPlacementResponse {
 	private boolean success = false;
 	private List<BoardPosition> positions;

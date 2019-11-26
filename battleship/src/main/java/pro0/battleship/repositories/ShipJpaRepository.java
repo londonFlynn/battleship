@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import pro0.battleship.models.Ship;
+import pro0.battleship.models.User;
 
 public interface ShipJpaRepository extends JpaRepository<Ship, Long> {
 	
@@ -15,7 +16,7 @@ public interface ShipJpaRepository extends JpaRepository<Ship, Long> {
 			"JOIN g.boards b " +
 			"JOIN b.ships s "+
 			"WHERE g.id = :gameId AND b.user LIKE :username")
-	public List<Ship> getShipsByGameId(@Param(value="gameId") int gameId, @Param(value="username") String username);
+	public List<Ship> getShipsByGameId(@Param(value="gameId") int gameId, @Param(value="username") User user);
 	
 	@Query("SELECT s "+
 			"FROM Game g " +
