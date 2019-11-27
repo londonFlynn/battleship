@@ -64,7 +64,7 @@ public class Deploy {
 			Optional<Game> optGameToJoin = scouredOpponent.getGames().stream()
 				.filter(game -> game.isActive())
 				.sorted((game1, game2) ->
-					game1.getCreationTimeStamp().compareTo(game2.getCreationTimeStamp()))
+					game1.getCreationTimeStamp().compareTo(game2.getCreationTimeStamp()) * -1)
 				.findFirst();
 			
 			if(optGameToJoin.isPresent()) {
