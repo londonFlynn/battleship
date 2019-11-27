@@ -80,7 +80,7 @@
 		<div id='shipPlacement'>
 			<h2>Place Ships</h2>
 			<div>
-				<div id='startmadude'>start</div>
+				<div id='start'>start</div>
 				<div id='startPlacingShips'>
 					<h3 class='placement' id='placingAircraft'>Aircraft 5</h3>
 					<h3 class='placement' id='placingBattleship'>Battleship 4</h3>
@@ -91,7 +91,7 @@
 				<h2>Orientation</h2>
 				<div>
 					<h3 class='orient' id='horizontal'>Horizontal</h3>
-					<h3 class='orient' id='vertical''>Vertical</h3>
+					<h3 class='orient' id='vertical'>Vertical</h3>
 				</div>
 			</div>
 		</div>
