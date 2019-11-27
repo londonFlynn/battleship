@@ -11,8 +11,8 @@ function connect(username) {
 	 stompClient.connect({}, function (frame) {
 		 console.log("connected: " + frame);
 		 stompClient.subscribe('/tojs/DEPLOY/' + username, function (myUsername) {
-			 if(JSON.parse(myUsername.body)) {
-				 console.log("Received something.");
+			 if(myUsername.body) {
+				 console.log("Received something: " + myUsername.body);
 				 window.location.href = "/battle/" + gameId;
 			 }
 		 });
