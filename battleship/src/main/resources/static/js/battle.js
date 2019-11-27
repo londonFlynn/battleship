@@ -36,28 +36,36 @@ wonGame.style.display = "none";
 lostGame.style.display = "none";
 //element.addEventListener("mousedown", handleMouseDown, true); after last ship placed
 
-document.getElementById('startmadude').addEventListener("click", event => {
+document.getElementById('start').addEventListener("click", event => {
 	addEventListenersToPlacementNames()
-	playerMouseOver();
+	playerMouseEvents();
 	placingShips.forEach(element => {
 		element.addEventListener("mouseover", event => element.style.opacity = .5);
 		element.addEventListener("mouseout", event => element.style.opacity = 1);
 		element.style.cursor = "pointer";
-		document.getElementById('startmadude').style.display = "none";
+		document.getElementById('start').style.display = "none";
 	});
+	currentShipType = ShipType.AIRCRAFT_CARRIER;
+	placingAircraft.style.color = 'red';
 });
 
-function addEventListenersToPlacementNames() {
-	placingAircraft.addEventListener("click", event => {placementAmount = 5;currentShipType = ShipType.AIRCRAFT_CARRIER;});
-	placingBattleship.addEventListener("click", event => {placementAmount = 4;currentShipType = ShipType.BATTLESHIP;});
-	placingCruiser.addEventListener("click", event => {placementAmount = 3;currentShipType = ShipType.CRUISER;});
-	placingDestroyer.addEventListener("click", event => {placementAmount = 2;currentShipType = ShipType.DESTROYER});
-	placingSubmarine.addEventListener("click", event => {placementAmount = 3;currentShipType = ShipType.SUBMARINE;});
-	document.getElementById('horizontal').addEventListener("click", event => {rotated = false; console.log(rotated);});
-	document.getElementById('vertical').addEventListener("click", event => {rotated = true; console.log(rotated);});
+function resetPlacementColor() {	
+	placingShips.forEach(element => {
+		element.style.color = 'black';
+	});
 }
 
-function playerMouseOver() {
+function addEventListenersToPlacementNames() {
+	placingAircraft.addEventListener("click", event => {resetPlacementColor();placementAmount = 5;currentShipType = ShipType.AIRCRAFT_CARRIER;placingAircraft.style.color = 'red'});
+	placingBattleship.addEventListener("click", event => {resetPlacementColor();placementAmount = 4;currentShipType = ShipType.BATTLESHIP;placingBattleship.style.color = 'red'});
+	placingCruiser.addEventListener("click", event => {resetPlacementColor();placementAmount = 3;currentShipType = ShipType.CRUISER;placingCruiser.style.color = 'red'});
+	placingDestroyer.addEventListener("click", event => {resetPlacementColor();placementAmount = 2;currentShipType = ShipType.DESTROYER;placingDestroyer.style.color = 'red'});
+	placingSubmarine.addEventListener("click", event => {resetPlacementColor();placementAmount = 3;currentShipType = ShipType.SUBMARINE;placingSubmarine.style.color = 'red'});
+	document.getElementById('horizontal').addEventListener("click", event => {rotated = false;});
+	document.getElementById('vertical').addEventListener("click", event => {rotated = true;});
+}
+
+function playerMouseEvents() {
 	playerBoard.addEventListener("mouseover", event => {
 		var position = turnIntoBoardPosition(event);
 		
@@ -79,8 +87,8 @@ function playerMouseOver() {
 						   }
 					   } else {						   
 						   if((j+placementAmount-1) < 11){
-							   col.style.backgroundImage="url(/images/target.gif)";
 							   try {
+								   col.style.backgroundImage="url(/images/target.gif)";
 								   row.cells[j+k].style.backgroundImage="url(/images/target.gif)";
 							   }
 							   catch(err) {
@@ -110,16 +118,16 @@ function playerMouseOver() {
 					if(col.id == targetId) {
 						col.style.backgroundImage="url(/images/still.jpg)";
 						for(let k=1;k<placementAmount;k++){
-							if(rotated) {
-								playerBoard.rows[i+k].cells[j].style.backgroundImage="url(/images/still.jpg)";
-							} else {							
-								try {
+							try {
+								if(rotated) {
+									playerBoard.rows[i+k].cells[j].style.backgroundImage="url(/images/still.jpg)";
+								} else {							
 									row.cells[j+k].style.backgroundImage="url(/images/still.jpg)";
 								}
-								catch(err) {
+							}
+							catch(err) {
 //								  document.getElementById("demo").innerHTML = err.message;
 //									es fine
-								}
 							}
 						}
 					}
@@ -129,8 +137,64 @@ function playerMouseOver() {
 	});
 	playerBoard.addEventListener("click", event => {
 		sendShipPlacementRequest(turnIntoBoardPosition(event), rotated ? Direction.SOUTH : Direction.EAST, currentShipType);
-		if(currentShipType === ShipType.)
-	})
+		
+		var position = turnIntoBoardPosition(event);
+		position.xPos = position.xPos + "";
+		var initialAscii = position.xPos.charCodeAt(0) + 49;
+		var x = String.fromCharCode(initialAscii);
+		var y = position.yPos + 1;
+		
+		var targetId = x + "" + y;
+		
+		for (let i = 0, row; row = playerBoard.rows[i]; i++) {
+			for (let j = 0, col; col = row.cells[j]; j++) {
+				if(col.id == targetId) {
+					col.style.backgroundImage="url(/images/still.jpg)";
+					for(let k=1;k<placementAmount;k++){
+						try {
+							if(rotated) {
+								playerBoard.rows[i+k].cells[j].style.backgroundImage="url(/images/still.jpg)";
+							} else {							
+								row.cells[j+k].style.backgroundImage="url(/images/still.jpg)";
+							}
+						}
+						catch(err) {
+//							  document.getElementById("demo").innerHTML = err.message;
+//								es fine
+						}
+					}
+				}
+			}  
+		}
+		
+		switch(currentShipType) {
+		  case ShipType.AIRCRAFT_CARRIER:
+			  placingShips[0].style.display='none';
+		    break;
+		  case ShipType.BATTLESHIP:
+			  placingShips[1].style.display='none';
+		    break;
+		  case ShipType.CRUISER:
+			  placingShips[2].style.display='none';
+		    break;
+		  case ShipType.DESTROYER:
+			  placingShips[3].style.display='none';
+		    break;
+		  case ShipType.SUBMARINE:
+			  placingShips[4].style.display='none';
+		    break;
+		  default:
+		    console.log('internal error')
+		}
+		placementAmount = 0;
+		var count = 0;
+		placingShips.forEach(element => {
+			if(element.style.display === 'none') {
+				count++;
+				console.log("ships placed: " + count);
+			}
+		})
+	});
 }
 
 function turnIntoBoardPosition(event) {
@@ -311,7 +375,6 @@ function sendShipPlacementRequest(position, direction, shipType) {
         "shipType": shipType
     }
     var url = "/shipPlacement";
-    console.log("here ma dudes");
     sendRequest(shipPlacementRequest, url, "POST", reciveShipPlacementResponse);   
 }
 
