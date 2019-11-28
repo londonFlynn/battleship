@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -18,6 +19,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import pro0.battleship.enums.Direction;
 import pro0.battleship.enums.ShipType;
+import pro0.battleship.repositories.BoardPositionJpaRepository;
+import pro0.battleship.repositories.ShipJpaRepository;
 @Entity(name="Ship")
 @Table(name="ship")
 public class Ship {
@@ -30,6 +33,7 @@ public class Ship {
 	private Direction direction = null;
 	private short length;
 	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(nullable = true)
 	private BoardPosition position;
 	@ManyToOne
 	@JsonIgnore
@@ -51,8 +55,8 @@ public class Ship {
 		this.direction = null;
 		this.length = length;
 	}
-	public void placeShip(BoardPosition position, Direction direction) {
-		setPosition(position);
+	public void placeShip(BoardPosition position, Direction direction, BoardPositionJpaRepository boardPositionJpaRepository, ShipJpaRepository shipJpaRepository) {
+		setPosition(position, boardPositionJpaRepository, shipJpaRepository);
 		setDirection(direction);
 	}
 
@@ -97,6 +101,18 @@ public class Ship {
 	public void setPosition(BoardPosition position) {
 		this.position = position;
 	}
+	public void setPosition(BoardPosition position, BoardPositionJpaRepository boardPositionJpaRepository, ShipJpaRepository shipJpaRepository) {
+		boardPositionJpaRepository.save(position);
+		this.position = position;
+		shipJpaRepository.save(this);
+	}
+	public void setPosition(BoardPosition position, ShipJpaRepository shipJpaRepository, BoardPositionJpaRepository boardPositionJpaRepository) {
+		if (this.position != null) {
+		boardPositionJpaRepository.delete(this.position);
+		}
+		this.position = position;
+		shipJpaRepository.save(shipJpaRepository.findById(this.id).orElse(null));
+	}
 
 	public Board getBoard() {
 		return board;
@@ -128,7 +144,10 @@ public class Ship {
 	public List<BoardPosition> getSpaceCoords() {
 		List<BoardPosition> positions = new ArrayList<BoardPosition>();
 		for (int i = 0; i < length; i++) {
-			positions.add(getSpaceCoords(i));
+			BoardPosition pos = getSpaceCoords(i);
+			if (pos != null) {
+				positions.add(pos);
+			}
 		}
 		return positions;
 	}

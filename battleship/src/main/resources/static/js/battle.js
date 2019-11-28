@@ -374,7 +374,7 @@ function sendShipPlacementRequest(position, direction, shipType) {
         "direction": direction,
         "shipType": shipType
     }
-    var url = "/shipPlacement";
+    var url = "/shipPlacement/"+gameId;
     sendRequest(shipPlacementRequest, url, "POST", reciveShipPlacementResponse);   
 }
 
