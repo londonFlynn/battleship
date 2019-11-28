@@ -80,12 +80,19 @@
 		<div id='shipPlacement'>
 			<h2>Place Ships</h2>
 			<div>
-				<div id='startPlacingShips'></div>
-					<h3 id='placingAircraft'>Aircraft 5</h3>
-					<h3 id='placingBattleship'>Battleship 4</h3>
-					<h3 id='placingCruiser'>Cruiser 3</h3>
-					<h3 id='placingDestroyer'>Destroyer 2</h3>
-					<h3 id='placingSubmarine'>Submarine 3</h3>
+				<div id='start'>start</div>
+				<div id='startPlacingShips'>
+					<h3 class='placement' id='placingAircraft'>Aircraft 5</h3>
+					<h3 class='placement' id='placingBattleship'>Battleship 4</h3>
+					<h3 class='placement' id='placingCruiser'>Cruiser 3</h3>
+					<h3 class='placement' id='placingDestroyer'>Destroyer 2</h3>
+					<h3 class='placement' id='placingSubmarine'>Submarine 3</h3>				
+				</div>
+				<h2>Orientation</h2>
+				<div>
+					<h3 class='orient' id='horizontal'>Horizontal</h3>
+					<h3 class='orient' id='vertical'>Vertical</h3>
+				</div>
 			</div>
 		</div>
 		<div id='gameInfo' style="display: inline-block">
@@ -93,18 +100,20 @@
 				<h1 id='currentPlayerTurn'>Turn: <%=username %></h1>
 			</div>
 			<div id='opponentShips' class='shipsAvaliable'>
-				<div id='oaircraft'class='ships'><span class="tooltiptext">Opponent's Aircraft</span></div>
-				<div id='obattleship'class='ships'><span class="tooltiptext">Opponent's Battleship</span></div>
-				<div id='ocruiser'class='ships'><span class="tooltiptext">Opponent's Cruiser</span></div>
-				<div id='odestroyer'class='ships'><span class="tooltiptext">Opponent's Destroyer</span></div>
-				<div id='osubmarine'class='ships'><span class="tooltiptext">Opponent's Submarine</span></div>
+				<p>Opponent's Ships</p>
+				<div id='oaircraft'class='ships'><span class="tooltiptext">Aircraft</span></div>
+				<div id='obattleship'class='ships'><span class="tooltiptext">Battleship</span></div>
+				<div id='ocruiser'class='ships'><span class="tooltiptext">Cruiser</span></div>
+				<div id='odestroyer'class='ships'><span class="tooltiptext">Destroyer</span></div>
+				<div id='osubmarine'class='ships'><span class="tooltiptext">Submarine</span></div>
 			</div>
 			<div id='playerShips' class='shipsAvaliable'>
-				<div id='paircraft' class='ships'><span class="tooltiptext">Your Aircraft</span></div>
-				<div id='pbattleship' class='ships'><span class="tooltiptext">Your Battleship</span></div>
-				<div id='pcruiser' class='ships'><span class="tooltiptext">Your Cruiser</span></div>
-				<div id='pdestroyer' class='ships'><span class="tooltiptext">Your Destroyer</span></div>
-				<div id='psubmarine' class='ships'><span class="tooltiptext">Your Submarine</span></div>
+				<p>Player's Ships</p>
+				<div id='paircraft' class='ships'><span class="tooltiptext">Aircraft</span></div>
+				<div id='pbattleship' class='ships'><span class="tooltiptext">Battleship</span></div>
+				<div id='pcruiser' class='ships'><span class="tooltiptext">Cruiser</span></div>
+				<div id='pdestroyer' class='ships'><span class="tooltiptext">Destroyer</span></div>
+				<div id='psubmarine' class='ships'><span class="tooltiptext">Submarine</span></div>
 			</div>
 		</div>
 		<div id='winner'>

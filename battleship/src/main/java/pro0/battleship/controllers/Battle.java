@@ -39,20 +39,20 @@ public class Battle {
 	ShipJpaRepository shipRepo;
 	
 	
-	@GetMapping(path="")
-	protected String doMainGet(Principal prn) {
-		String targetResource = "error";
-		Optional<User> user = userRepo.findById(prn.getName());
-
-		Game game = null;
-		
-		if(user.isPresent()) {
-			game = gameRepo.save(Game.newGame(user.get(), gameRepo, boardRepo, boardRowRepo, boardCellRepo, shipRepo));
-			targetResource = "redirect:/battle/" + game.getId();
-		}
-		
-		return targetResource;
-	}
+//	@GetMapping(path="")
+//	protected String doMainGet(Principal prn) {
+//		String targetResource = "error";
+//		Optional<User> user = userRepo.findById(prn.getName());
+//
+//		Game game = null;
+//		
+//		if(user.isPresent()) {
+//			game = gameRepo.save(Game.newGame(user.get(), gameRepo, boardRepo, boardRowRepo, boardCellRepo, shipRepo));
+//			targetResource = "redirect:/battle/" + game.getId();
+//		}
+//		
+//		return targetResource;
+//	}
 	
 	@GetMapping(path="/{gameID}")
 	protected String doGetBattle(
