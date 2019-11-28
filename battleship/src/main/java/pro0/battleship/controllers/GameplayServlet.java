@@ -8,6 +8,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import pro0.battleship.enums.ShipType;
@@ -52,14 +53,14 @@ public class GameplayServlet {
 			@RequestBody TargetCellRequest request) {
 		String username = prn.getName();
 		User user = userJpaRepository.findById(username).orElse(null);
-		Game game = gameJpaRepository.findById(gameId).orElse(null);
 		GameplayController gc = new GameplayController(gameId, gameJpaRepository, boardJpaRepository, boardRowJpaRepository,  boardCellJpaRepository, shipJpaRepository);
+		Game game = gc.getGame();
 		if (game.getCurrentTurn().equals(user)) {
 			try {
 				boolean hit = gc.attackSquare(user, request.getPosition());
 				game.setCurrentTurn(game.getOtherUser(username));
 				gameJpaRepository.save(game);
-//				sendTurnChangeNotification(gameId, game.getCurrentTurn().getUsername());
+				sendTurnChangeNotification(gameId, userJpaRepository.getTurnForGame(gameId).orElse(null).getUsername());
 				if (hit) {
 					Ship ship = gc.getShipInPosition(request.getPosition(), game.getOtherUser(username));
 					if (gc.shipIsSunk(ship)) {
@@ -77,18 +78,22 @@ public class GameplayServlet {
 			return AttackResult.invalidAttackResult(username);
 		}
 	}
+	@GetMapping("/betweenjs/start/{gameId}")
+	public void startGame(int gameId) {
+		GameplayController gc = new GameplayController(gameId, gameJpaRepository, boardJpaRepository, boardRowJpaRepository,  boardCellJpaRepository, shipJpaRepository);
+		Game game = gc.getGame();
+		User user = userJpaRepository.getGuestUserForGame(gameId).orElse(null);
+		game.setCurrentTurn(user);
+		gameJpaRepository.save(game);
+		sendTurnChangeNotification(gameId, user.getUsername());
+	}
 
 	public void sendShipSunkNotification(int gameId, String username, ShipType shipType) {
 		this.template.convertAndSend("/tojs/sunkShip/" + gameId, new ShipSunkNotification(username, shipType));
 	}
 
-	public void sendGameStartedNotification(int gameId, String username) {
-		this.template.convertAndSend("/tojs/sunkShip/" + gameId,
-				new GameStartNotification(true, new TurnChangeNotification(username)));
-	}
-
 	public void sendTurnChangeNotification(int gameId, String username) {
-		this.template.convertAndSend("/tojs/sunkShip/" + gameId, new TurnChangeNotification(username));
+		this.template.convertAndSend("/tojs/turnChange/" + gameId, new TurnChangeNotification(username));
 	}
 
 	public void sendGameOverNotification(int gameId, String username) {

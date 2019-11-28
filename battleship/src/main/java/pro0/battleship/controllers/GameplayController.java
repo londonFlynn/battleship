@@ -24,9 +24,12 @@ public class GameplayController {
 	
 	BoardCellJpaRepository boardCellJpaRepository;
 	
+	ShipJpaRepository shipJpaRepository;
+	
 	public GameplayController(int gameId, GameJpaRepository gameJpaRepository, BoardJpaRepository boardJpaRepository, BoardRowJpaRepository boardRowJpaRepository, BoardCellJpaRepository boardCellJpaRepository, ShipJpaRepository shipJpaRepository) {
 		this.gameJpaRepository = gameJpaRepository;
 		this.boardCellJpaRepository = boardCellJpaRepository;
+		this.shipJpaRepository = shipJpaRepository;
 		this.game = gameJpaRepository.findById(gameId).orElse(null);
 		this.game.setBoards(gameJpaRepository.getGameBoards(gameId));
 		for (Board board : this.game.getBoards()) {
@@ -40,6 +43,26 @@ public class GameplayController {
 			board.setShips(ships);
 		}
 	}
+	
+	
+	public ShipJpaRepository getShipJpaRepository() {
+		return shipJpaRepository;
+	}
+
+
+	public void setShipJpaRepository(ShipJpaRepository shipJpaRepository) {
+		this.shipJpaRepository = shipJpaRepository;
+	}
+
+
+	public Game getGame() {
+		return game;
+	}
+
+	public void setGame(Game game) {
+		this.game = game;
+	}
+
 	public Ship getShipInPosition(BoardPosition position, User user) {
 		Board b = game.getUsersBoard(user);
 		Ship result = null;

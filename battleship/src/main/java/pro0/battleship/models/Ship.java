@@ -107,11 +107,13 @@ public class Ship {
 		shipJpaRepository.save(this);
 	}
 	public void setPosition(BoardPosition position, ShipJpaRepository shipJpaRepository, BoardPositionJpaRepository boardPositionJpaRepository) {
-		if (this.position != null) {
-		boardPositionJpaRepository.delete(this.position);
+		Ship ship2 = shipJpaRepository.findById(this.id).orElse(null);
+		Ship ship = shipJpaRepository.save(ship2);
+		if (ship.position != null) {
+			boardPositionJpaRepository.delete(ship.position);
 		}
-		this.position = position;
-		shipJpaRepository.save(shipJpaRepository.findById(this.id).orElse(null));
+		ship.position = position;
+		shipJpaRepository.save(ship);
 	}
 
 	public Board getBoard() {

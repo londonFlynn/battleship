@@ -68,18 +68,19 @@ public class Game {
 				}
 				Board board = new Board();
 				board.setRows(boardRows);
-				setupShips(board, shipJpaRepository);
-				boards.add(board);
 				Board newBoard = boardJpaRepository.save(board);
+				setupShips(newBoard, shipJpaRepository);
+				boards.add(newBoard);
+				boardJpaRepository.save(newBoard);
 			}
 			Game game = new Game();
 			game.setUser(user);
 			game.setBoards(boards);
 			game.getBoards().get(0).setUser(user);
+			boardJpaRepository.save(game.getBoards().get(0));
 			Game returnGame = gameJpaRepository.save(game);
 			return game;
 	}
-	
 	private static void setupShips(Board board, ShipJpaRepository shipJpaRepository) {
 		Ship aircraftCarrior = new Ship(ShipType.AIRCRAFT_CARRIER, ShipPlacementController.getShipLengthFromType(ShipType.AIRCRAFT_CARRIER));
 		Ship battleShip = new Ship(ShipType.BATTLESHIP, ShipPlacementController.getShipLengthFromType(ShipType.BATTLESHIP));
@@ -91,6 +92,16 @@ public class Game {
 		board.getShips().add(submarine);
 		board.getShips().add(cruser);
 		board.getShips().add(destroyer);
+		aircraftCarrior.setBoard(board);
+		battleShip.setBoard(board);
+		submarine.setBoard(board);
+		cruser.setBoard(board);
+		destroyer.setBoard(board);
+		shipJpaRepository.save(aircraftCarrior);
+		shipJpaRepository.save(battleShip);
+		shipJpaRepository.save(submarine);
+		shipJpaRepository.save(cruser);
+		shipJpaRepository.save(destroyer);
 	}
 
 	public LocalDateTime getCreationTimeStamp() {
@@ -154,11 +165,11 @@ public class Game {
 	}
 	public void setOtherUser(User other) {
 		this.otherUser = other;
-		for (Board board : boards) {
-			if(board.getUser().equals(user)) {
-				board.setUser(other);
-			}
-		}
+//		for (Board board : boards) {
+//			if(board.getUser().equals(user)) {
+//				board.setUser(other);
+//			}
+//		}
 	}
 	
 	public Board getUsersBoard(User user) {
