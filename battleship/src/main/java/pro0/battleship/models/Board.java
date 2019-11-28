@@ -27,7 +27,7 @@ public class Board {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	@OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "board")
 	@JsonIgnore
 	private List<Ship> ships = new ArrayList<Ship>();
 	// TODO store spaces data in JPA
@@ -73,6 +73,7 @@ public class Board {
 //	}
 	
 	public boolean hasSpaceBeenTargeted(BoardPosition position) {
+		if (position == null) return false;
 		return  rows.get(position.getyPos()).hasSpaceBeenTargeted(position.getxPos());
 	}
 

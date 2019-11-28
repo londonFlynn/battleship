@@ -3,6 +3,7 @@ package pro0.battleship.controllers;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
+import pro0.battleship.models.Board;
 import pro0.battleship.models.Game;
 import pro0.battleship.models.User;
 import pro0.battleship.repositories.BoardCellJpaRepository;
@@ -82,6 +84,13 @@ public class Deploy {
 				if(optUser.isPresent()) {
 					User user = optUser.get();
 					gameToJoin.setOtherUser(user);
+					List<Board> boards = boardRepo.findByGame(gameToJoin.getId());
+					for (Board board : boards) {
+						if (board.getUser() == null) {
+							board.setUser(user);
+							boardRepo.save(board);
+						}
+					}
 					gameRepo.save(gameToJoin);
 					targetResource = "redirect:/battle/" + gameToJoin.getId();
 				}

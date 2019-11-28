@@ -7,13 +7,19 @@ import pro0.battleship.enums.ShipType;
 import pro0.battleship.models.Board;
 import pro0.battleship.models.BoardPosition;
 import pro0.battleship.models.Ship;
+import pro0.battleship.models.ShipPlacementResponse;
+import pro0.battleship.models.User;
+import pro0.battleship.repositories.BoardPositionJpaRepository;
+import pro0.battleship.repositories.ShipJpaRepository;
 
 public class ShipPlacementController {
 	
 	private Board board;
+	ShipJpaRepository shipJpaRepository;
 
-	public ShipPlacementController(Board board) {
-		setBoard(board);
+	public ShipPlacementController(User user, GameplayController gc) {
+		setBoard(gc.getGame().getUsersBoard(user));
+		this.shipJpaRepository = gc.getShipJpaRepository();
 	}
 
 	public Board getBoard() {
@@ -23,19 +29,19 @@ public class ShipPlacementController {
 	public void setBoard(Board board) {
 		this.board = board;
 	}
-	public boolean attemptPlacement(ShipType shipType, BoardPosition position, Direction direction) {
-		Ship selectedShip = null;
+	
+	public ShipPlacementResponse attemptPlacement(ShipType shipType, BoardPosition position, Direction direction, ShipJpaRepository shipJpaRepository, BoardPositionJpaRepository boardPositionJpaRepository) {
 		List<Ship> ships = board.getShips();
+		Ship selectedShip = ships.get(0);
 		for (Ship ship : ships) {
 			if (ship.getShipType().equals(shipType)) {
 				selectedShip = ship;
-				break;
 			}
 		}
-		return attemptPlacement(selectedShip, position, direction);
+		return attemptPlacement(selectedShip, position, direction, shipJpaRepository, boardPositionJpaRepository);
 	}
-	public boolean attemptPlacement(Ship ship, BoardPosition position, Direction direction) {
-		unplaceShip(ship);
+	public ShipPlacementResponse attemptPlacement(Ship ship, BoardPosition position, Direction direction, ShipJpaRepository shpJpaRepository, BoardPositionJpaRepository boardPositionJpaRepository) {
+		unplaceShip(ship, shipJpaRepository, boardPositionJpaRepository);
 		int xIncriment = 0;
 		int yIncriment = 0;
 		switch(direction) {
@@ -54,12 +60,13 @@ public class ShipPlacementController {
 		}
 		boolean valid = incrimentedPlacementCheck(getShipLengthFromType(ship.getShipType()), position, xIncriment, yIncriment);
 		if (valid) {
-			ship.placeShip(position, direction);
+			ship.placeShip(position, direction, boardPositionJpaRepository, shpJpaRepository);
+			shipJpaRepository.save(ship);
 		}
-		return valid;
+		return new ShipPlacementResponse(valid, ship.getSpaceCoords());
 	}
-	private void unplaceShip(Ship ship) {
-		ship.setPosition(null);
+	private void unplaceShip(Ship ship, ShipJpaRepository shipJpaRepository, BoardPositionJpaRepository boardPositionJpaRepository) {
+		ship.setPosition(null, shipJpaRepository, boardPositionJpaRepository);
 	}
 	
 	private boolean incrimentedPlacementCheck(int length, BoardPosition position, int xIncriment, int yIncriment) {
