@@ -331,6 +331,7 @@ function userWon() {
 }
 function itsYourTurn() {
     //TODO unlock board
+	opponentBoard.style.display = "block";
 	var allOtiles = document.getElementsByClass('otiles2');
 	for(var i = 0; i < allOtiles.length; i++) {
 		allOtiles[i].classList.toggle("otiles2", false);
@@ -341,6 +342,7 @@ function itsYourTurn() {
 }
 function itsTheOpponentsTurn() {
     //TODO lock board (but still let them see it)
+	opponentBoard.style.display = "block";
 	var allOtiles = document.getElementsByClass('otiles');
 	for(var i = 0; i < allOtiles.length; i++) {
 		allOtiles[i].classList.toggle("otiles", false);
