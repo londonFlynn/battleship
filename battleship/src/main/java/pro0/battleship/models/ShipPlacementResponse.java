@@ -4,16 +4,30 @@ import java.util.List;
 
 import javax.persistence.Entity;
 
+import pro0.battleship.enums.ShipType;
+
 
 public class ShipPlacementResponse {
 	private boolean success = false;
 	private List<BoardPosition> positions;
+	private ShipType shipType;
 	public ShipPlacementResponse() {}
 	
-	public ShipPlacementResponse(boolean success, List<BoardPosition> list) {
+	public ShipPlacementResponse(boolean success, List<BoardPosition> list, ShipType shipType) {
 		super();
+		this.shipType = shipType;
 		this.success = success;
 		this.positions = list;
+	}
+	
+	
+
+	public ShipType getShipType() {
+		return shipType;
+	}
+
+	public void setShipType(ShipType shipType) {
+		this.shipType = shipType;
 	}
 
 	public boolean isSuccess() {

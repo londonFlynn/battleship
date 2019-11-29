@@ -5,5 +5,5 @@ public enum ShipType {
 	BATTLESHIP,
 	SUBMARINE,
 	CRUISER,
-	DESROYER
+	DESTROYER
 }

@@ -63,7 +63,7 @@ public class ShipPlacementController {
 			ship.placeShip(position, direction, boardPositionJpaRepository, shpJpaRepository);
 			shipJpaRepository.save(ship);
 		}
-		return new ShipPlacementResponse(valid, ship.getSpaceCoords());
+		return new ShipPlacementResponse(valid, ship.getSpaceCoords(), ship.getShipType());
 	}
 	private void unplaceShip(Ship ship, ShipJpaRepository shipJpaRepository, BoardPositionJpaRepository boardPositionJpaRepository) {
 		ship.setPosition(null, shipJpaRepository, boardPositionJpaRepository);
@@ -100,7 +100,7 @@ public class ShipPlacementController {
 		case SUBMARINE:
 			length = (short) 3;
 			break;
-		case DESROYER:
+		case DESTROYER:
 			length = (short) 2;
 			break;
 		default:

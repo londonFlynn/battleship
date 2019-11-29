@@ -358,8 +358,9 @@ function itsYourTurn() {
 function itsTheOpponentsTurn() {
     //TODO lock board
 }
-function gameHasStarted() {
-    //Notify User
+var gameHasStarted = false;
+function shipPlacementFailure(ShipType) {
+	//allow user to attempt to place ship again
 }
 
 function displayShipInPositions(positions) {
@@ -454,9 +455,6 @@ function connect(id) {
         stompClient.subscribe('/tojs/turnChange/'+id, function (turnChangeNotification) {
             reciveTurnChangeNotification(JSON.parse(turnChangeNotification.body));
         });
-        stompClient.subscribe('/tojs/gameStarted/'+id, function (gameStartedNotification) {
-            reciveGameStartedNotification(JSON.parse(gameStartedNotification.body));
-        });
         setupGameFromServer();
     });
 }
@@ -473,7 +471,9 @@ function reciveShipPlacementResponse(shipPlacementResponse) {
 	console.log(shipPlacementResponse);
     if (shipPlacementResponse.success) {
         displayShipInPositions(shipPlacementResponse.positions);
-    }
+    } else if (!gameHasStarted) {
+		shipPlacementFailure(shipPlacementResponse.shipType);
+	}
 }
 
 function reciveAttackResult(attackResult) {
@@ -515,20 +515,11 @@ function reciveGameOverNotification(gameOverNotification) {
     // disconnect();
 }
 function reciveTurnChangeNotification(turnChangeNotification) {
-    if (turnChangeNotification.playerUsername == username) {
+	gameHasStarted = true;
+	if (turnChangeNotification.playerUsername == username) {
         itsYourTurn();
     } else {
         itsTheOpponentsTurn();
-    }
-}
-function reciveGameStartedNotification(gameStartedNotification) {
-    if (gameStartedNotification.started) {
-        gameHasStarted();
-        if (gameStartedNotification.turn.playerUsername == username) {
-            itsYourTurn();
-        } else {
-            itsTheOpponentsTurn();
-        }
     }
 }
 
