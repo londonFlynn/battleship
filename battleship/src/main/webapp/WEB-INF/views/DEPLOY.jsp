@@ -62,7 +62,7 @@ img {
     <h2>for</h2>
     <h2>Battle</h2>
     <form method="POST">
-	    <input type="text" value="Username" name="username"/>
+	    <input type="text" placeholder="Username" name="username"/>
 	    <input type="submit" value="Scour"/>
     </form>
   </div>
