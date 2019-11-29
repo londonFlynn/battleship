@@ -230,29 +230,6 @@ opponentBoard.addEventListener("click", event => {
 	sendTargetCellRequest(new BoardPosition(x, y));
 });
 
-
-function showUsersBoard(board) {
-    //TODO populate the board
-
-    board.rows.forEach (function(row) {
-        row.cells.forEach(function(cell){
-            console.log(cell.targeted);
-            console.log(cell.hit);
-        });
-    });
-}
-
-function showOpponentBoard(board) {
-    //TODO polulate the board
-
-    board.rows.forEach (function(row) {
-        row.cells.forEach(function(cell){
-            console.log(cell.targeted);
-            console.log(cell.hit);
-        });
-    });
-}
-
 function setConnected(connected) {
     if (!connected ) {
         //TODO Notify user that they lost their connection
@@ -356,16 +333,16 @@ function itsYourTurn() {
     //TODO unlock board
 }
 function itsTheOpponentsTurn() {
-    //TODO lock board
+    //TODO lock board (but still let them see it)
 }
 var gameHasStarted = false;
 function shipPlacementFailure(ShipType) {
-	//allow user to attempt to place ship again
+	//TODO allow user to attempt to place ship again
 }
 
 function displayShipInPositions(positions) {
     positions.forEach(function (position) {
-        //show a ship in that position
+        //TODO show a ship in that position
     });
 }
 
