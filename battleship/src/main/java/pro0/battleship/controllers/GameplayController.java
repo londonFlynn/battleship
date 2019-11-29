@@ -3,6 +3,8 @@ package pro0.battleship.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Hibernate;
+
 import pro0.battleship.exceptions.SpaceAlreadyAttackedExeception;
 import pro0.battleship.models.Board;
 import pro0.battleship.models.BoardPosition;
@@ -31,16 +33,16 @@ public class GameplayController {
 		this.boardCellJpaRepository = boardCellJpaRepository;
 		this.shipJpaRepository = shipJpaRepository;
 		this.game = gameJpaRepository.findById(gameId).orElse(null);
-		this.game.setBoards(gameJpaRepository.getGameBoards(gameId));
 		for (Board board : this.game.getBoards()) {
-			List<BoardRow> rows = new ArrayList<BoardRow>();
-			for (int i = 0; i < 10; i++) {
-				BoardRow row = boardRowJpaRepository.searchByGameAndRowNumber(gameId, i, board.getUser()).get(0);
-				rows.add(row);
+			Hibernate.initialize(board);
+			List<BoardRow> rows = board.getRows();
+			for (BoardRow row : rows) {
+				Hibernate.initialize(row);
 			}
-			board.setRows(rows);
-			List<Ship> ships = shipJpaRepository.getShipsByGameId(gameId, board.getUser());
-			board.setShips(ships);
+			List<Ship> ships = board.getShips();
+			for (Ship ship : ships) {
+				Hibernate.initialize(ship);
+			}
 		}
 	}
 	
