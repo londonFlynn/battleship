@@ -60,7 +60,7 @@ public class ShipPlacementServlet {
 		Game game = gameJpaRepository.findById(gameId).orElse(null);
 		GameplayController gc = new GameplayController(gameId, gameJpaRepository, boardJpaRepository, boardRowJpaRepository, boardCellJpaRepository, shipJpaRepository);
 		ShipPlacementController pc = new ShipPlacementController(user, gc);
-		ShipPlacementResponse shipPlacementResponse = new ShipPlacementResponse(false, new ArrayList<BoardPosition>());
+		ShipPlacementResponse shipPlacementResponse = new ShipPlacementResponse(false, new ArrayList<BoardPosition>(), ShipType.valueOf(request.getShipType()));
 		if (game.getCurrentTurn() == null) {
 			shipPlacementResponse = pc.attemptPlacement(ShipType.valueOf(request.getShipType()), request.getPosition(), Direction.valueOf(request.getDirection()), shipJpaRepository, boardPositionJpaRepository);
 		}
@@ -77,9 +77,10 @@ public class ShipPlacementServlet {
 	
 	private void sendStartOfGameNotification(int gameId) {
 		RestTemplate restTemplate = new RestTemplate();
-		RequestEntity req = null;
+		RequestEntity<String> req = null;
 		try {
-			req = new RequestEntity(HttpMethod.GET, new URI("http://localhost:8080/betweenjs/start/"+gameId));
+			req = new RequestEntity<String>(HttpMethod.GET, new URI("http://localhost:8080/betweenjs/start/"+Integer.toString(gameId)));
+			req.toString();
 		} catch (URISyntaxException urise) {
 			urise.printStackTrace();
 		}

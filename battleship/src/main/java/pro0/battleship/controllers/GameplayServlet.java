@@ -9,6 +9,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import pro0.battleship.enums.ShipType;
@@ -79,13 +80,14 @@ public class GameplayServlet {
 		}
 	}
 	@GetMapping("/betweenjs/start/{gameId}")
-	public void startGame(int gameId) {
+	public String startGame(@PathVariable int gameId) {
 		GameplayController gc = new GameplayController(gameId, gameJpaRepository, boardJpaRepository, boardRowJpaRepository,  boardCellJpaRepository, shipJpaRepository);
 		Game game = gc.getGame();
 		User user = userJpaRepository.getGuestUserForGame(gameId).orElse(null);
 		game.setCurrentTurn(user);
 		gameJpaRepository.save(game);
-		sendTurnChangeNotification(gameId, user.getUsername());
+		sendTurnChangeNotification(gameId, userJpaRepository.getTurnForGame(gameId).orElse(null).getUsername());
+		return "success";
 	}
 
 	public void sendShipSunkNotification(int gameId, String username, ShipType shipType) {
@@ -93,6 +95,9 @@ public class GameplayServlet {
 	}
 
 	public void sendTurnChangeNotification(int gameId, String username) {
+		System.out.println(this.template);
+		System.out.println(gameId);
+		System.out.println(username);
 		this.template.convertAndSend("/tojs/turnChange/" + gameId, new TurnChangeNotification(username));
 	}
 

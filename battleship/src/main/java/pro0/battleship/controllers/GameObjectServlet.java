@@ -89,7 +89,7 @@ public class GameObjectServlet {
 		List<ShipPlacementResponse> shipPlacementResponses = new ArrayList<ShipPlacementResponse>();
 		for (Ship ship : ships) {
 			if (ship.getPosition() != null) {
-				shipPlacementResponses.add(new ShipPlacementResponse(true, ship.getSpaceCoords()));
+				shipPlacementResponses.add(new ShipPlacementResponse(true, ship.getSpaceCoords(), ship.getShipType()));
 			}
 		}
 		return shipPlacementResponses;

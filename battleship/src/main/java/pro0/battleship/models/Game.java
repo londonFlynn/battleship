@@ -86,7 +86,7 @@ public class Game {
 		Ship battleShip = new Ship(ShipType.BATTLESHIP, ShipPlacementController.getShipLengthFromType(ShipType.BATTLESHIP));
 		Ship submarine = new Ship(ShipType.SUBMARINE, ShipPlacementController.getShipLengthFromType(ShipType.SUBMARINE));
 		Ship cruser = new Ship(ShipType.CRUISER, ShipPlacementController.getShipLengthFromType(ShipType.CRUISER));
-		Ship destroyer = new Ship(ShipType.DESROYER, ShipPlacementController.getShipLengthFromType(ShipType.DESROYER));
+		Ship destroyer = new Ship(ShipType.DESTROYER, ShipPlacementController.getShipLengthFromType(ShipType.DESTROYER));
 		board.getShips().add(aircraftCarrior);
 		board.getShips().add(battleShip);
 		board.getShips().add(submarine);
