@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.Hibernate;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import pro0.battleship.enums.Direction;
@@ -107,8 +109,8 @@ public class Ship {
 		shipJpaRepository.save(this);
 	}
 	public void setPosition(BoardPosition position, ShipJpaRepository shipJpaRepository, BoardPositionJpaRepository boardPositionJpaRepository) {
-		Ship ship2 = shipJpaRepository.findById(this.id).orElse(null);
-		Ship ship = shipJpaRepository.save(ship2);
+		Ship ship = shipJpaRepository.findById(this.id).orElse(null);
+		Hibernate.initialize(ship);
 		if (ship.position != null) {
 			boardPositionJpaRepository.delete(ship.position);
 		}

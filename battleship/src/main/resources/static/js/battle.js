@@ -470,6 +470,7 @@ function disconnect() {
 }
 
 function reciveShipPlacementResponse(shipPlacementResponse) {
+	console.log(shipPlacementResponse);
     if (shipPlacementResponse.success) {
         displayShipInPositions(shipPlacementResponse.positions);
     }
