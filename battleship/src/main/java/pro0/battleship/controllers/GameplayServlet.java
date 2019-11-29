@@ -45,7 +45,7 @@ public class GameplayServlet {
 	UserJpaRepository userJpaRepository;
 	@Autowired
 	ShipJpaRepository shipJpaRepository;
-
+	@Autowired
 	private SimpMessagingTemplate template;
 
 	@MessageMapping("/targetCell/{gameId}")
@@ -95,9 +95,6 @@ public class GameplayServlet {
 	}
 
 	public void sendTurnChangeNotification(int gameId, String username) {
-		System.out.println(this.template);
-		System.out.println(gameId);
-		System.out.println(username);
 		this.template.convertAndSend("/tojs/turnChange/" + gameId, new TurnChangeNotification(username));
 	}
 
