@@ -331,9 +331,23 @@ function userWon() {
 }
 function itsYourTurn() {
     //TODO unlock board
+	var allOtiles = document.getElementsByClass('otiles2');
+	for(var i = 0; i < allOtiles.length; i++) {
+		allOtiles[i].classList.toggle("otiles2", false);
+		allOtiles[i].classList.toggle("otiles", true);
+		//allOtiles[i].classList.remove('otiles2'); //give back the hover attribute basically
+		//allOtiles[i].classList.add('otiles');
+	}
 }
 function itsTheOpponentsTurn() {
     //TODO lock board (but still let them see it)
+	var allOtiles = document.getElementsByClass('otiles');
+	for(var i = 0; i < allOtiles.length; i++) {
+		allOtiles[i].classList.toggle("otiles", false);
+		allOtiles[i].classList.toggle("otiles2", true);
+		//allOtiles[i].classList.remove('otiles'); //remove the hover attribute basically
+		//allOtiles[i].classList.add('otiles2');
+	}
 }
 var gameHasStarted = false;
 function shipPlacementFailure(ShipType) {

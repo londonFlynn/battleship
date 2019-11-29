@@ -53,8 +53,9 @@ a {
 	color: #f2e205;
 	text-decoration: none;
 }
+
 a:hover {
-  color: #B94BC1;
+  color: #194973;
 }
 </style>
 <title>Battleship! - Login</title>
