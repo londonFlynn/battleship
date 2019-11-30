@@ -35,6 +35,16 @@ public class BoardPosition {
 	public void setyPos(int yPos) {
 		this.yPos = yPos;
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		boolean equal = false;
+		if (obj.getClass() == BoardPosition.class) {
+			BoardPosition that = (BoardPosition) obj;
+			equal = this.id == that.id || (this.xPos == that.xPos && this.yPos == that.yPos);
+		}
+		return equal;
+	}
 
 	@Override
 	public String toString() {

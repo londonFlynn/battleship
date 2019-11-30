@@ -123,17 +123,19 @@ public class Board {
 	public boolean shipIsCoveringSpace(Ship ship, BoardPosition position) {
 		boolean covering = false;
 		if (ship != null && ship.getPosition() != null && ship.getDirection() != null && ship.getLength() > 0) {
+			covering = ship.getPosition().equals(position);
 			if (ship.getPosition().getxPos() == position.getxPos()) {
 				if (ship.getDirection().equals(Direction.NORTH)) {
-					covering = ship.getPosition().getyPos() >= position.getyPos() && ship.getPosition().getyPos() - ship.getLength() <= position.getyPos();
+					covering = ship.getPosition().getyPos() >= position.getyPos() && ship.getPosition().getyPos() - ship.getLength() < position.getyPos();
 				} else if (ship.getDirection().equals(Direction.SOUTH)) {
-					covering = ship.getPosition().getyPos() <= position.getyPos() && ship.getPosition().getyPos() + ship.getLength() >= position.getyPos();
+					covering = ship.getPosition().getyPos() <= position.getyPos() && ship.getPosition().getyPos() + ship.getLength() > position.getyPos();
 				}
 			} else if (ship.getPosition().getyPos() == position.getyPos()) {
 				if (ship.getDirection().equals(Direction.EAST)) {
-					covering = ship.getPosition().getxPos() <= position.getxPos() && ship.getPosition().getxPos() + ship.getLength() >= position.getxPos();
+					covering = ship.getPosition().getxPos() <= position.getxPos() && ship.getPosition().getxPos() + ship.getLength() > position.getxPos();
+				
 				} else if (ship.getDirection().equals(Direction.WEST)) {
-					covering = ship.getPosition().getxPos() >= position.getxPos() && ship.getPosition().getxPos() - ship.getLength() <= position.getxPos();
+					covering = ship.getPosition().getxPos() >= position.getxPos() && ship.getPosition().getxPos() - ship.getLength() < position.getxPos();
 				}
 			}
 		}
