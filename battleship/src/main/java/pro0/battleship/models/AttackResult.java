@@ -49,6 +49,14 @@ public class AttackResult {
 	public void setHit(boolean hit) {
 		this.hit = hit;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("AttackResult [invalid=").append(invalid).append(", playerUsername=").append(playerUsername)
+				.append(", position=").append(position).append(", hit=").append(hit).append("]");
+		return builder.toString();
+	}
 	
 	
 

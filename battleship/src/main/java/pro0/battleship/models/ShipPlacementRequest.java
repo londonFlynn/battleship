@@ -25,6 +25,14 @@ public class ShipPlacementRequest {
 	public void setShipType(String shipType) {
 		this.shipType = shipType;
 	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ShipPlacementRequest [position=").append(position).append(", direction=").append(direction)
+				.append(", shipType=").append(shipType).append("]");
+		return builder.toString();
+	}
+	
 	
 	
 }

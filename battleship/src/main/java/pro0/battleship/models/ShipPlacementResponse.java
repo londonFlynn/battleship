@@ -42,6 +42,14 @@ public class ShipPlacementResponse {
 	public void setPositions(List<BoardPosition> positions) {
 		this.positions = positions;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ShipPlacementResponse [success=").append(success).append(", positions=").append(positions)
+				.append(", shipType=").append(shipType).append("]");
+		return builder.toString();
+	}
 	
 	
 

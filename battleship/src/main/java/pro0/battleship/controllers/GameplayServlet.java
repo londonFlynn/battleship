@@ -52,10 +52,12 @@ public class GameplayServlet {
 	@SendTo("/tojs/attackResult/{gameId}")
 	public AttackResult recieveTargetCellRequest(@DestinationVariable("gameId") int gameId, Principal prn,
 			@RequestBody TargetCellRequest request) {
+		System.out.println(request);
 		String username = prn.getName();
 		User user = userJpaRepository.findById(username).orElse(null);
 		GameplayController gc = new GameplayController(gameId, gameJpaRepository, boardJpaRepository, boardRowJpaRepository,  boardCellJpaRepository, shipJpaRepository);
 		Game game = gc.getGame();
+		AttackResult result = AttackResult.invalidAttackResult(username);
 		if (game.getCurrentTurn().equals(user)) {
 			try {
 				boolean hit = gc.attackSquare(user, request.getPosition());
@@ -71,13 +73,13 @@ public class GameplayServlet {
 						sendGameOverNotification(gameId, username);
 					}
 				}
-				return new AttackResult(game.getOtherUser(username).getUsername(), request.getPosition(), hit);
+				result =  new AttackResult(game.getOtherUser(username).getUsername(), request.getPosition(), hit);
 			} catch (SpaceAlreadyAttackedExeception e) {
-				return AttackResult.invalidAttackResult(username);
+
 			}
-		} else {
-			return AttackResult.invalidAttackResult(username);
 		}
+		System.out.println(result);
+		return result;
 	}
 	@GetMapping("/betweenjs/start/{gameId}")
 	public String startGame(@PathVariable int gameId) {

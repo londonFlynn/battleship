@@ -3,7 +3,6 @@ package pro0.battleship.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,12 +14,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import pro0.battleship.enums.Direction;
 
 @Entity(name = "Board")
 @Table(name = "board")
+@Transactional
 public class Board {
 	@Transient
 	public static final short boardSize = 10;
@@ -121,17 +123,19 @@ public class Board {
 	public boolean shipIsCoveringSpace(Ship ship, BoardPosition position) {
 		boolean covering = false;
 		if (ship != null && ship.getPosition() != null && ship.getDirection() != null && ship.getLength() > 0) {
+			covering = ship.getPosition().equals(position);
 			if (ship.getPosition().getxPos() == position.getxPos()) {
 				if (ship.getDirection().equals(Direction.NORTH)) {
-					covering = ship.getPosition().getyPos() >= position.getyPos() && ship.getPosition().getyPos() - ship.getLength() <= position.getyPos();
+					covering = ship.getPosition().getyPos() >= position.getyPos() && ship.getPosition().getyPos() - ship.getLength() < position.getyPos();
 				} else if (ship.getDirection().equals(Direction.SOUTH)) {
-					covering = ship.getPosition().getyPos() <= position.getyPos() && ship.getPosition().getyPos() + ship.getLength() >= position.getyPos();
+					covering = ship.getPosition().getyPos() <= position.getyPos() && ship.getPosition().getyPos() + ship.getLength() > position.getyPos();
 				}
 			} else if (ship.getPosition().getyPos() == position.getyPos()) {
 				if (ship.getDirection().equals(Direction.EAST)) {
-					covering = ship.getPosition().getxPos() <= position.getxPos() && ship.getPosition().getxPos() + ship.getLength() >= position.getxPos();
+					covering = ship.getPosition().getxPos() <= position.getxPos() && ship.getPosition().getxPos() + ship.getLength() > position.getxPos();
+				
 				} else if (ship.getDirection().equals(Direction.WEST)) {
-					covering = ship.getPosition().getxPos() >= position.getxPos() && ship.getPosition().getxPos() - ship.getLength() <= position.getxPos();
+					covering = ship.getPosition().getxPos() >= position.getxPos() && ship.getPosition().getxPos() - ship.getLength() < position.getxPos();
 				}
 			}
 		}

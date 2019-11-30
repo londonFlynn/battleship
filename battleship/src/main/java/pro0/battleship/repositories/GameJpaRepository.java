@@ -35,4 +35,16 @@ public interface GameJpaRepository extends JpaRepository<Game, Integer> {
 			"ON u.username = g.currentTurn "+
 			"WHERE g.id = :gameId")
 	public String getCurrentTurn(@Param(value="gameId") int gameId);
+	
+	
+//	@Query("SELECT g "+
+//			"FROM Game g " +
+//			"JOIN fetch g.boards b "+
+//			"JOIN fetch g.user u "+
+//			"JOIN fetch g.otherUser ou "+
+//			"JOIN fetch g.currentTurn t "+
+//			"JOIN fetch b.ships s "+
+//			"JOIN fetch b.rows r "+
+//			"WHERE g.id = :gameId")
+//	public Game loadEntireGame(@Param(value="gameId") int gameId);
 }

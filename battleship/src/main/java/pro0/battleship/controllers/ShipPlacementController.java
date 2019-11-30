@@ -40,7 +40,7 @@ public class ShipPlacementController {
 		}
 		return attemptPlacement(selectedShip, position, direction, shipJpaRepository, boardPositionJpaRepository);
 	}
-	public ShipPlacementResponse attemptPlacement(Ship ship, BoardPosition position, Direction direction, ShipJpaRepository shpJpaRepository, BoardPositionJpaRepository boardPositionJpaRepository) {
+	public ShipPlacementResponse attemptPlacement(Ship ship, BoardPosition position, Direction direction, ShipJpaRepository shipJpaRepository, BoardPositionJpaRepository boardPositionJpaRepository) {
 		unplaceShip(ship, shipJpaRepository, boardPositionJpaRepository);
 		int xIncriment = 0;
 		int yIncriment = 0;
@@ -60,7 +60,7 @@ public class ShipPlacementController {
 		}
 		boolean valid = incrimentedPlacementCheck(getShipLengthFromType(ship.getShipType()), position, xIncriment, yIncriment);
 		if (valid) {
-			ship.placeShip(position, direction, boardPositionJpaRepository, shpJpaRepository);
+			ship.placeShip(position, direction, boardPositionJpaRepository, shipJpaRepository);
 			shipJpaRepository.save(ship);
 		}
 		return new ShipPlacementResponse(valid, ship.getSpaceCoords(), ship.getShipType());
