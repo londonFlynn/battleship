@@ -332,10 +332,12 @@ function userWon() {
 function itsYourTurn() {
     //TODO unlock board
 	opponentBoard.style.display = "block";
-	var allOtiles = document.getElementsByClass('otiles2');
+	var allOtiles = document.getElementsByClassName('otiles2');
+	console.log(allOtiles);
 	for(var i = 0; i < allOtiles.length; i++) {
-		allOtiles[i].classList.toggle("otiles2", false);
-		allOtiles[i].classList.toggle("otiles", true);
+		allOtiles[i].className = "otiles";
+//		allOtiles[i].classList.toggle("otiles2", false);
+//		allOtiles[i].classList.toggle("otiles", true);
 		//allOtiles[i].classList.remove('otiles2'); //give back the hover attribute basically
 		//allOtiles[i].classList.add('otiles');
 	}
@@ -343,12 +345,16 @@ function itsYourTurn() {
 function itsTheOpponentsTurn() {
     //TODO lock board (but still let them see it)
 	opponentBoard.style.display = "block";
-	var allOtiles = document.getElementsByClass('otiles');
+	var allOtiles = document.getElementsByClassName('otiles');
 	for(var i = 0; i < allOtiles.length; i++) {
-		allOtiles[i].classList.toggle("otiles", false);
-		allOtiles[i].classList.toggle("otiles2", true);
-		//allOtiles[i].classList.remove('otiles'); //remove the hover attribute basically
-		//allOtiles[i].classList.add('otiles2');
+		//allOtiles[i].classList.toggle("otiles2", true);
+		allOtiles[i].className = "otiles2";
+		//allOtiles[i].classList.toggle("otiles2", true);
+		//console.log(allOtiles[i].classList);
+//		allOtiles[i].classList.remove('otiles', 'otiles2'); //remove the hover attribute basically
+		//console.log(allOtiles[i].classList);
+//		allOtiles[i].classList.add('otiles2');
+		console.log(allOtiles[i].classList);
 	}
 }
 var gameHasStarted = false;
