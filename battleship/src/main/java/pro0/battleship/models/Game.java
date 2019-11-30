@@ -15,8 +15,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import pro0.battleship.controllers.ShipPlacementController;
 import pro0.battleship.enums.ShipType;
@@ -28,6 +30,7 @@ import pro0.battleship.repositories.ShipJpaRepository;
 
 @Entity(name="Game")
 @Table(name="game")
+@Transactional
 public class Game {
 	
 	@Id
@@ -35,6 +38,7 @@ public class Game {
 	private Integer id;
 	@OneToMany(orphanRemoval = true)
 	@JsonIgnore
+	@JsonManagedReference
 	private List<Board> boards = new ArrayList<Board>();
 	@ManyToOne
 	@JoinColumn(name = "user")

@@ -33,6 +33,7 @@ public class GameplayController {
 		this.boardCellJpaRepository = boardCellJpaRepository;
 		this.shipJpaRepository = shipJpaRepository;
 		this.game = gameJpaRepository.findById(gameId).orElse(null);
+		Hibernate.initialize(this.game.getBoards());
 		for (Board board : this.game.getBoards()) {
 			Hibernate.initialize(board);
 			List<BoardRow> rows = board.getRows();
