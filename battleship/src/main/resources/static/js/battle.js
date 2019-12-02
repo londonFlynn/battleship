@@ -333,6 +333,7 @@ function itsYourTurn() {
     //TODO unlock board
 	opponentBoard.style.display = "block";
 	var allOtiles = document.getElementsByClassName('otiles2');
+	document.getElementById("currentPlayerTurn").innerHTML = "Your Turn!";
 	console.log(allOtiles);
 	for(var i = 0; i < allOtiles.length; i++) {
 		allOtiles[i].className = "otiles";
@@ -346,6 +347,7 @@ function itsTheOpponentsTurn() {
     //TODO lock board (but still let them see it)
 	opponentBoard.style.display = "block";
 	var allOtiles = document.getElementsByClassName('otiles');
+	document.getElementById("currentPlayerTurn").innerHTML = "Not Your Turn!";
 	for(var i = 0; i < allOtiles.length; i++) {
 		//allOtiles[i].classList.toggle("otiles2", true);
 		allOtiles[i].className = "otiles2";
