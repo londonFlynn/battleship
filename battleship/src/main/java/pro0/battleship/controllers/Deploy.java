@@ -84,6 +84,7 @@ public class Deploy {
 				if(optUser.isPresent()) {
 					User user = optUser.get();
 					gameToJoin.setOtherUser(user);
+					user.getGames().add(gameToJoin);
 					List<Board> boards = boardRepo.findByGame(gameToJoin.getId());
 					for (Board board : boards) {
 						if (board.getUser() == null) {
@@ -92,6 +93,8 @@ public class Deploy {
 						}
 					}
 					gameRepo.save(gameToJoin);
+					userRepo.save(user);
+					
 					targetResource = "redirect:/battle/" + gameToJoin.getId();
 				}
 				
