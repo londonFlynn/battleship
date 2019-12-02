@@ -367,6 +367,20 @@ function shipPlacementFailure(ShipType) {
 function displayShipInPositions(positions) {
     positions.forEach(function (position) {
         //TODO show a ship in that position
+    	position.xPos = position.xPos + "";
+    	var initialAscii = position.xPos.charCodeAt(0) + 49;
+    	var x = String.fromCharCode(initialAscii);
+    	var y = position.yPos + 1;
+    	
+    	var targetId = x + "" + y;
+
+    	for (var i = 0, row; row = playerBoard.rows[i]; i++) {
+    	   for (var j = 0, col; col = row.cells[j]; j++) {
+    		   if(col.id == targetId) {
+    			   col.style.backgroundImage="url('/images/placeShip.png'";
+    		   }
+    	   }  
+    	}
     });
 }
 
