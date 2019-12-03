@@ -59,8 +59,23 @@ public class Battle {
 			@PathVariable int gameID,
 			Model model, Principal prn
 	) {
+		Game game = gameRepo.findById(gameID).orElse(null);
+		User user = userRepo.findById(prn.getName()).orElse(null);
+		boolean canView = false;
+		if (game != null) {
+			if (game.getUser() != null && game.getOtherUser() != null) {
+				canView = game.getUser().equals(user) || game.getOtherUser().equals(user);
+			} else {
+				canView = true;
+			}
+		}
 		model.addAttribute("gameID", gameID);
 		model.addAttribute("username", prn.getName());
+		if (canView) {
 		return "battle";
+		}
+		else {
+			return "redirect:/DEPLOY";
+		}
 	}
 }
