@@ -53,6 +53,8 @@ public class Game {
 	
 	private boolean isActive = true;
 	
+	private boolean firstUserHasJoined = false;
+	
 	public static Game newGame(User user, GameJpaRepository gameJpaRepository, BoardJpaRepository boardJpaRepository, BoardRowJpaRepository boardRowJpaRepository, BoardCellJpaRepository boardCellJpaRepository, ShipJpaRepository shipJpaRepository) {
 			List<Board> boards = new ArrayList<>();
 			for (int i = 0; i < 2; i++) {
@@ -210,6 +212,12 @@ public class Game {
 		this.isActive = isActive;
 	}
 
+	public boolean getFirstUserHasJoined() {
+		return firstUserHasJoined;
+	}
+	public void setFirstUserHasJoined(boolean firstUserHasJoined) {
+		this.firstUserHasJoined = firstUserHasJoined;
+	}
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
