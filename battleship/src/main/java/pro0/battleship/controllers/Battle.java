@@ -1,11 +1,8 @@
 package pro0.battleship.controllers;
 
 import java.security.Principal;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +19,7 @@ import pro0.battleship.repositories.ShipJpaRepository;
 import pro0.battleship.repositories.UserJpaRepository;
 
 @Controller
-@RequestMapping(path="/battle")
+@RequestMapping(path = "/battle")
 public class Battle {
 
 	@Autowired
@@ -37,8 +34,7 @@ public class Battle {
 	BoardCellJpaRepository boardCellRepo;
 	@Autowired
 	ShipJpaRepository shipRepo;
-	
-	
+
 //	@GetMapping(path="")
 //	protected String doMainGet(Principal prn) {
 //		String targetResource = "error";
@@ -53,12 +49,9 @@ public class Battle {
 //		
 //		return targetResource;
 //	}
-	
-	@GetMapping(path="/{gameID}")
-	protected String doGetBattle(
-			@PathVariable int gameID,
-			Model model, Principal prn
-	) {
+
+	@GetMapping(path = "/{gameID}")
+	protected String doGetBattle(@PathVariable int gameID, Model model, Principal prn) {
 		Game game = gameRepo.findById(gameID).orElse(null);
 		User user = userRepo.findById(prn.getName()).orElse(null);
 		boolean canView = false;
@@ -72,9 +65,8 @@ public class Battle {
 		model.addAttribute("gameID", gameID);
 		model.addAttribute("username", prn.getName());
 		if (canView) {
-		return "battle";
-		}
-		else {
+			return "battle";
+		} else {
 			return "redirect:/DEPLOY";
 		}
 	}

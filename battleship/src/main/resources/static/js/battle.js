@@ -26,6 +26,8 @@ var game = document.getElementById('game');
 var opponentBoard = document.getElementById('opponentBoard');
 var playerBoard = document.getElementById('playerBoard');
 var start = document.getElementById('startGame');
+var placer = document.getElementById('shipPlacement');
+var gameInfo = document.getElementById('gameInfo');
 var placementAmount = 5;
 var rotated = false;
 var currentShipType;
@@ -33,6 +35,8 @@ var currentShipType;
 opponentBoard.style.display = "none";
 wonGame.style.display = "none";
 lostGame.style.display = "none";
+gameInfo.style.display = "none";
+//element.addEventListener("mousedown", handleMouseDown, true); after last ship placed
 
 document.getElementById('start').addEventListener("click", event => {
 	addEventListenersToPlacementNames()
@@ -78,26 +82,36 @@ function playerMouseEvents() {
 		
 		var targetId = x + "" + y;
 
+		//iterate thru entire table
 		for (let i = 0, row; row = playerBoard.rows[i]; i++) {
 		   for (let j = 0, col; col = row.cells[j]; j++) {
+			   //check if current cell(col) was the one that is hovered over
 			   if(col.id == targetId) {
+				   //when hovered cell does not have a ship as a background image
 				   if(col.style.backgroundImage !='url("/images/placeShip.png")'){
-					   
+					   //iteration for size of ship
 					   for(let k=1;k<placementAmount;k++){
+						   //vertical
 						   if(rotated){
+							   //check so changed images won't be off the board
 							   if((i+placementAmount-1) < 11) {
+								   //hovered cell
 								   col.style.backgroundImage="url(/images/target.gif)";
+								   //following cells based on ship size
 								   playerBoard.rows[i+k].cells[j].style.backgroundImage="url(/images/target.gif)";							   
 							   }
-						   } else {						   
+						   }
+						   //horizontal
+						   else {
+							 //check so changed images won't be off the board
 							   if((j+placementAmount-1) < 11){
 								   try {
+									   //hovered cell
 									   col.style.backgroundImage="url(/images/target.gif)";
+									   //following cells based on ship size
 									   row.cells[j+k].style.backgroundImage="url(/images/target.gif)";
 								   }
 								   catch(err) {
-//							   document.getElementById("demo").innerHTML = err.message;
-//								meh it's fine
 								   }
 							   }
 						   }
@@ -126,9 +140,9 @@ function playerMouseEvents() {
 							for(let k=1;k<placementAmount;k++){
 								try {
 									if(rotated) {
-										playerBoard.rows[i+k].cells[j].style.backgroundImage="url(/images/still.jpg)";
-									} else {							
-										row.cells[j+k].style.backgroundImage="url(/images/still.jpg)";
+											playerBoard.rows[i+k].cells[j].style.backgroundImage="url(/images/still.jpg)";
+									} else {
+											row.cells[j+k].style.backgroundImage="url(/images/still.jpg)";
 									}
 								}
 								catch(err) {
@@ -309,37 +323,43 @@ function userSunkAShip(shipType) {
 function userLost() {
     loser.style.display = "block";
     game.style.display = "none";
+    gameInfo.style.display = "none";
 }
 function userWon() {
 	winner.style.display = "block";
     game.style.display = "none";
+    gameInfo.style.display = "none";
 }
 function itsYourTurn() {
 	opponentBoard.style.display = "block";
-	var allOtiles = document.getElementsByClassName('otiles2');
+	gameInfo.style.display = "block";
+	placer.style.display = "none";
 	document.getElementById("currentPlayerTurn").innerHTML = "Your Turn!";
-	for(var i = 0; i < allOtiles.length; i++) {
-		allOtiles[i].className = "otiles";
-//		allOtiles[i].classList.toggle("otiles2", false);
-//		allOtiles[i].classList.toggle("otiles", true);
-		//allOtiles[i].classList.remove('otiles2'); //give back the hover attribute basically
-		//allOtiles[i].classList.add('otiles');
+	
+	for (let i = 0, row; row = opponentBoard.rows[i]; i++) {
+		   for (let j = 0, col; col = row.cells[j]; j++) {
+			   if(col.classList.contains('otiles2')) {
+				   col.classList.remove('otiles2');
+				   col.classList.add('otiles');
+			   }
+		   }
 	}
+	
 }
 function itsTheOpponentsTurn() {
     //TODO lock board (but still let them see it)
 	opponentBoard.style.display = "block";
-	var allOtiles = document.getElementsByClassName('otiles');
+	gameInfo.style.display = "block";
+	placer.style.display = "none";
 	document.getElementById("currentPlayerTurn").innerHTML = "Not Your Turn!";
-	for(var i = 0; i < allOtiles.length; i++) {
-		//allOtiles[i].classList.toggle("otiles2", true);
-		allOtiles[i].className = "otiles2";
-		//allOtiles[i].classList.toggle("otiles2", true);
-		//console.log(allOtiles[i].classList);
-//		allOtiles[i].classList.remove('otiles', 'otiles2'); //remove the hover attribute basically
-		//console.log(allOtiles[i].classList);
-//		allOtiles[i].classList.add('otiles2');
-		console.log(allOtiles[i].classList);
+	
+	for (let i = 0, row; row = opponentBoard.rows[i]; i++) {
+		   for (let j = 0, col; col = row.cells[j]; j++) {
+			   if(col.classList.contains('otiles')) {
+				   col.classList.remove('otiles');
+				   col.classList.add('otiles2');
+			   }
+		   }
 	}
 }
 var gameHasStarted = false;
@@ -566,12 +586,6 @@ function reciveTurnChangeNotification(turnChangeNotification) {
     } else {
         itsTheOpponentsTurn();
     }
-}
-
-function reciveGameStartedNotification(gameStartedNotification) {
-	if (gameStartedNotification.started) {
-		reciveTurnChangeNotification(gameStartedNotification.turn);
-	}
 }
 
 function setupGameFromServer() {

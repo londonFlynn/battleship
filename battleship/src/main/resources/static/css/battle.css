@@ -115,3 +115,12 @@ td {
 .ships:hover .tooltiptext {
   visibility: visible;
 }
+
+a {
+	color: #f2e205;
+	text-decoration: none;
+}
+
+a:hover {
+  color: #194973;
+}
