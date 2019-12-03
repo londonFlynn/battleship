@@ -5,7 +5,7 @@
     
 <%
 	String username = (String) request.getAttribute("username");
-	List<Game> games = (List<Game>)request.getAttribute("games");
+	List<Game> allGames = (List<Game>) request.getAttribute("allGames");
 %>
 <!DOCTYPE html>
 <html>
@@ -44,10 +44,10 @@ body {
 <a id='dock' href='/dock'>Dock</a>
 <h1>Saved Games</h1>
 
-	<% if (games != null) { 
-		for (Game game : games) {
+	<% if (allGames != null) { 
+		for (Game game : allGames) {
 			//If opponent is null do not print
-			if(game.getOtherUser() != null) {
+			if(game.getOtherUser(username) != null) {
 	%>
 <div class="savedgame">
   <p>

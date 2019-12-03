@@ -3,6 +3,7 @@ package pro0.battleship.controllers;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
@@ -41,11 +42,10 @@ public class SavedGames {
 		if(optUser.isPresent()) {
 			User user = optUser.get();
 			model.addAttribute("username", prn.getName());
-			model.addAttribute("games", user.getGames());
-			for(Game game : user.getGames()) {
-				System.out.println(game.getId());
-			}
-			System.out.println("You're in the right block.");
+			
+			List<Game> allGames = user.getGames();
+			allGames.addAll(user.getOtherGames());
+			model.addAttribute("allGames", allGames);
 		} else {
 			resp.setStatus(500);
 			targetResource = "error";

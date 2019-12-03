@@ -22,7 +22,10 @@ public class User {
 	private List<Board> boards = new ArrayList<>();
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Game> games = new ArrayList<>();
-
+	@OneToMany(mappedBy = "otherUser", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Game> otherGames = new ArrayList<>();
+	
+	
 	public User() {
 	}
 
@@ -78,6 +81,10 @@ public class User {
 		return games;
 	}
 	
+	public List<Game> getOtherGames() {
+		return otherGames;
+	}
+
 	void addBoard(Board board) {
 		boards.add(board);
 		board.setUser(this);
