@@ -15,11 +15,14 @@ import pro0.battleship.models.Board;
 import pro0.battleship.models.BoardCell;
 import pro0.battleship.models.BoardPosition;
 import pro0.battleship.models.BoardRow;
+import pro0.battleship.models.Game;
+import pro0.battleship.models.GameOverNotification;
 import pro0.battleship.models.GameStartNotification;
 import pro0.battleship.models.Ship;
 import pro0.battleship.models.ShipPlacementResponse;
 import pro0.battleship.models.ShipSunkNotification;
 import pro0.battleship.models.TurnChangeNotification;
+import pro0.battleship.models.User;
 import pro0.battleship.repositories.BoardCellJpaRepository;
 import pro0.battleship.repositories.BoardJpaRepository;
 import pro0.battleship.repositories.BoardRowJpaRepository;
@@ -137,6 +140,19 @@ public class GameObjectServlet {
 		} else {
 			return new GameStartNotification(false, null);
 		}
+	}
+	@GetMapping(path = "/over/{gameId}")
+	public GameOverNotification sendGameOver(@PathVariable int gameId, Principal prn) {
+		GameplayController gc = new GameplayController(gameId, gameJpaRepository, boardJpaRepository, boardRowJpaRepository,  boardCellJpaRepository, shipJpaRepository);
+		Game game = gc.getGame();
+		User user = userJpaRepository.findById(prn.getName()).orElse(null);
+		GameOverNotification gameOverNotification = null;
+		if (gc.gameIsWon(user)) {
+			gameOverNotification = new GameOverNotification(user.getUsername());
+		} else if (gc.gameIsLost(user)) {
+			gameOverNotification = new GameOverNotification(game.getOtherUser(user).getUsername());
+		}
+		return gameOverNotification;
 	}
 
 }

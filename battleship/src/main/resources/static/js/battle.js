@@ -239,7 +239,7 @@ function setConnected(connected) {
     }
 }
 function notifyInvalidAttack() {
-    //TODO Notify user that they cannot attack that space
+
 }
 function userGotHit(position) {
 	position.xPos = position.xPos + "";
@@ -335,7 +335,6 @@ function userWon() {
     gameInfo.style.display = "none";
 }
 function itsYourTurn() {
-    //TODO unlock board
 	opponentBoard.style.display = "block";
 	gameInfo.style.display = "block";
 	placer.style.display = "none";
@@ -374,7 +373,6 @@ function shipPlacementFailure(ShipType) {
 
 function displayShipInPositions(positions) {
     positions.forEach(function (position) {
-        //TODO show a ship in that position
     	position.xPos = position.xPos + "";
     	var initialAscii = position.xPos.charCodeAt(0) + 49;
     	var x = String.fromCharCode(initialAscii);
@@ -530,11 +528,14 @@ function reciveShipSunkNotificaiton(shipSunkNotification) {
     }
 }
 function reciveGameOverNotification(gameOverNotification) {
-    if (gameOverNotification.winner == username) {
-        userWon();
-    } else {
-        userLost();
-    }
+	if (gameOverNotification) {
+		console.log("game over");
+		if (gameOverNotification.winner == username) {
+			userWon();
+		} else {
+			userLost();
+		}
+	}
     // disconnect();
 }
 function reciveTurnChangeNotification(turnChangeNotification) {
@@ -551,8 +552,9 @@ function setupGameFromServer() {
     // setupOpponentBoardFromServer();
     setupCellsFromServer();
     setupShipsFromServer();
-    setupDestroyedShipsFromServer();
-    setupGameHasStartedFromServer();
+	setupDestroyedShipsFromServer();
+	setupGameHasStartedFromServer();
+	setupGameHasEndedFromServer();
 }
 
 async function setupCellsFromServer() {
@@ -592,6 +594,9 @@ async function setupBoardRowFromServer(board, row, opponent) {
 
 function setupGameHasStartedFromServer() {
     sendRequest(null, "/gamestate/started/"+gameId, "GET", reciveGameStartedNotification);
+}
+function setupGameHasEndedFromServer() {
+    sendRequest(null, "/gamestate/over/"+gameId, "GET", reciveGameOverNotification);
 }
 
 function setupOpponentBoardFromServer() {

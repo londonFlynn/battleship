@@ -3,8 +3,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
-<% 	List<Game> games = (List<Game>)request.getAttribute("games");
-	%>
+<%
+	String username = (String) request.getAttribute("username");
+	List<Game> games = (List<Game>)request.getAttribute("games");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,7 +52,7 @@ body {
 <div class="savedgame">
   <p>
   	<span>
-  		<a href="/battle/" + <%=game.getId() %>>You vs <%=game.getOtherUser().getUsername() %></a>
+  		<a href=<%="/savedgames/" + game.getId() %>>You vs <%=game.getOtherUser(username).getUsername() %></a>
   	</span>
   </p>
   <p></p>

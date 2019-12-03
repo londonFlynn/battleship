@@ -60,7 +60,7 @@ public class Login {
 		else if(username.length() <= 0) signupMsg = "A username must be at least one character in length.";
 		else if(password.length() <= 0) signupMsg = "A password must be at least one character in length.";
 		else {
-			User user = userRepo.save(new User(username, password, null, 0, 0));
+			User user = userRepo.save(new User(username, password, "images/babyduck.jpg", 0, 0));
 			if(user != null) {
 				signupMsg = "A user was successfully made for you.";
 				model.addAttribute("username", username);
