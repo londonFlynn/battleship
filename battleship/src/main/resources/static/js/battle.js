@@ -87,50 +87,24 @@ function playerMouseEvents() {
 			for (let j = 0, col; col = row.cells[j]; j++) {
 				//check if current cell(col) was the one that is hovered over
 				if (col.id == targetId) {
-					//when hovered cell does not have a ship as a background image
-					// if (col.style.backgroundImage != 'url("/images/placeShip.png")') {
-						//iteration for size of ship
-						if (col.style.backgroundImage == 'url("/images/still.jpg")') {
-							col.style.backgroundImage = 'url("/images/target.gif")';
+					//iteration for size of ship
+					if (col.style.backgroundImage != 'url("/images/placeShip.png")') {
+						col.style.backgroundImage = 'url("/images/target.gif")';
+					}
+					var nextCell = null;
+					for (let k = 1; k < placementAmount; k++) {
+						nextCell = null;
+						if (rotated && (i + placementAmount - 1) < 11) {
+							nextCell = playerBoard.rows[i + k].cells[j];
+						} else if ((j + placementAmount - 1) < 11) {
+							nextCell = row.cells[j + k];
 						}
-						var nextCell = null;
-						for (let k = 1; k < placementAmount; k++) {
-							nextCell = null;
-							if (rotated && (i + placementAmount - 1) < 11) {
-								nextCell = playerBoard.rows[i + k].cells[j];
-							} else if ((j + placementAmount - 1) < 11) {
-								nextCell = row.cells[j + k];
+						if (nextCell) {
+							if (nextCell.style.backgroundImage != 'url("/images/placeShip.png")') {
+								nextCell.style.backgroundImage = 'url("/images/target.gif")'
 							}
-							if (nextCell) {
-								if (nextCell.style.backgroundImage == 'url("/images/still.jpg")') {
-									nextCell.style.backgroundImage = 'url("/images/target.gif")'
-								}
-							}
-							//vertical
-							// if (rotated) {
-							// 	//check so changed images won't be off the board
-							// 	if ((i + placementAmount - 1) < 11) {
-							// 		if (playerBoard.rows[i + k].cells[j].style.backgroundImage == 'url("/images/still.jpg")') {
-							// 		//following cells based on ship size
-							// 		playerBoard.rows[i + k].cells[j].style.backgroundImage = 'url("/images/target.gif")';
-							// 		}
-							// 	}
-							// }
-							// //horizontal
-							// else {
-							// 	//check so changed images won't be off the board
-							// 	if ((j + placementAmount - 1) < 11) {
-							// 		try {
-							// 			if (row.cells[j + k].style.backgroundImage == 'url("/images/still.jpg")')
-							// 			//following cells based on ship size
-							// 			row.cells[j + k].style.backgroundImage = "url(/images/target.gif)";
-							// 		}
-							// 		catch (err) {
-							// 		}
-							// 	}
-							// }
 						}
-					// }
+					}
 				}
 			}
 		}
