@@ -65,6 +65,12 @@ public class User {
 	public void setGamesWon(int gamesWon) {
 		this.gamesWon = gamesWon;
 	}
+	public void winGame() {
+		this.gamesWon++;
+	}
+	public void loseGame() {
+		this.gamesLost++;
+	}
 
 	public int getGamesLost() {
 		return gamesLost;
