@@ -20,6 +20,7 @@
 		<div id='game' style="display: inline-block">
 			<div id="battleId" style="display: none"><%=gameID%></div>
 			<div id="username" style="display: none"><%=username%></div>
+			<a href="/" + <%=gameID%>>Back</a>
 			<noscript>
 				<h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
 			    enabled. Please enable
