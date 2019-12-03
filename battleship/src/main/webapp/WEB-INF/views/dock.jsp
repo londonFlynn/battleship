@@ -39,33 +39,67 @@ body{
 .right .top {
 	position: absolute;
 	top: 6%;
-	left: 13%;
+	left: 26%;
 	z-index: 999;
-	font-size: 1.2vw;
+	font-size: 2.5vw;
 }
 
 .right .bottom {
 	position: absolute;
-	top: 24%;
-	left: 13%;
+	top: 23.8%;
+	left: 25.8%;
 	z-index: 999;
-	font-size: 1.2vw;
+	font-size: 2.5vw;
 }
 
 .left .top {
 	position: absolute;
-	top: 15%;
-	left: 6%;
+	top: 14.5%;
+	left: 9%;
 	z-index: 999;
-	font-size: 1.2vw;
+	font-size: 2.5vw;
 }
 
 .left .bottom {
 	position: absolute;
-	top: 32%;
-	left: 6%;
+	top: 32.3%;
+	left: 11%;
 	z-index: 999;
-	font-size: 1.2vw;
+	font-size: 2.5vw;
+}
+
+@media only screen and (color) and (min-width: 1300px) {
+	.right .top {
+		position: absolute;
+		top: 6%;
+		left: 13%;
+		z-index: 999;
+		font-size: 1.2vw;
+	}
+	
+	.right .bottom {
+		position: absolute;
+		top: 24%;
+		left: 13%;
+		z-index: 999;
+		font-size: 1.2vw;
+	}
+	
+	.left .top {
+		position: absolute;
+		top: 15%;
+		left: 4.8%;
+		z-index: 999;
+		font-size: 1.2vw;
+	}
+	
+	.left .bottom {
+		position: absolute;
+		top: 32%;
+		left: 6%;
+		z-index: 999;
+		font-size: 1.2vw;
+	}
 }
 
 a {
