@@ -74,34 +74,36 @@ function addEventListenersToPlacementNames() {
 
 function playerMouseEvents() {
 	playerBoard.addEventListener("mouseover", event => {
-		var position = turnIntoBoardPosition(event);
-		position.xPos = position.xPos + "";
-		var initialAscii = position.xPos.charCodeAt(0) + 49;
-		var x = String.fromCharCode(initialAscii);
-		var y = position.yPos + 1;
+		if (gameHasStarted) {
+			var position = turnIntoBoardPosition(event);
+			position.xPos = position.xPos + "";
+			var initialAscii = position.xPos.charCodeAt(0) + 49;
+			var x = String.fromCharCode(initialAscii);
+			var y = position.yPos + 1;
 
-		var targetId = x + "" + y;
+			var targetId = x + "" + y;
 
-		//iterate thru entire table
-		for (let i = 0, row; row = playerBoard.rows[i]; i++) {
-			for (let j = 0, col; col = row.cells[j]; j++) {
-				//check if current cell(col) was the one that is hovered over
-				if (col.id == targetId) {
-					//iteration for size of ship
-					if (col.style.backgroundImage != 'url("/images/placeShip.png")') {
-						col.style.backgroundImage = 'url("/images/target.gif")';
-					}
-					var nextCell = null;
-					for (let k = 1; k < placementAmount; k++) {
-						nextCell = null;
-						if (rotated && (i + placementAmount - 1) < 11) {
-							nextCell = playerBoard.rows[i + k].cells[j];
-						} else if (!rotated && (j + placementAmount - 1) < 11) {
-							nextCell = row.cells[j + k];
+			//iterate thru entire table
+			for (let i = 0, row; row = playerBoard.rows[i]; i++) {
+				for (let j = 0, col; col = row.cells[j]; j++) {
+					//check if current cell(col) was the one that is hovered over
+					if (col.id == targetId) {
+						//iteration for size of ship
+						if (col.style.backgroundImage != 'url("/images/placeShip.png")') {
+							col.style.backgroundImage = 'url("/images/target.gif")';
 						}
-						if (nextCell) {
-							if (nextCell.style.backgroundImage != 'url("/images/placeShip.png")') {
-								nextCell.style.backgroundImage = 'url("/images/target.gif")'
+						var nextCell = null;
+						for (let k = 1; k < placementAmount; k++) {
+							nextCell = null;
+							if (rotated && (i + placementAmount - 1) < 11) {
+								nextCell = playerBoard.rows[i + k].cells[j];
+							} else if (!rotated && (j + placementAmount - 1) < 11) {
+								nextCell = row.cells[j + k];
+							}
+							if (nextCell) {
+								if (nextCell.style.backgroundImage != 'url("/images/placeShip.png")') {
+									nextCell.style.backgroundImage = 'url("/images/target.gif")'
+								}
 							}
 						}
 					}
