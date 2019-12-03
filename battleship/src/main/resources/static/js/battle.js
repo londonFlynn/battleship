@@ -197,9 +197,6 @@ function playerMouseEvents() {
 		placingShips.forEach(element => {
 			if(element.style.display === 'none') {
 				count++;
-				if(count == 4){
-					timedRefresh(1000);
-				}
 			}
 		})
 	});
