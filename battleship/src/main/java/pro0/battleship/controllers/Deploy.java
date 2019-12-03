@@ -61,7 +61,7 @@ public class Deploy {
 		
 		Optional<User> optScouredOpponent = userRepo.findById(username);
 		
-		if(optScouredOpponent.isPresent()) {
+		if(prn.getName() != username && optScouredOpponent.isPresent()) {
 			User scouredOpponent = optScouredOpponent.get();
 			Optional<Game> optGameToJoin = scouredOpponent.getGames().stream()
 				.filter(game -> game.isActive())
