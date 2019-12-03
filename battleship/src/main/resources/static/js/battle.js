@@ -334,7 +334,6 @@ function itsYourTurn() {
 	opponentBoard.style.display = "block";
 	var allOtiles = document.getElementsByClassName('otiles2');
 	document.getElementById("currentPlayerTurn").innerHTML = "Your Turn!";
-	console.log(allOtiles);
 	for(var i = 0; i < allOtiles.length; i++) {
 		allOtiles[i].className = "otiles";
 //		allOtiles[i].classList.toggle("otiles2", false);
