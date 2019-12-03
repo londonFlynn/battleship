@@ -96,7 +96,7 @@ function playerMouseEvents() {
 						nextCell = null;
 						if (rotated && (i + placementAmount - 1) < 11) {
 							nextCell = playerBoard.rows[i + k].cells[j];
-						} else if ((j + placementAmount - 1) < 11) {
+						} else if (!rotated && (j + placementAmount - 1) < 11) {
 							nextCell = row.cells[j + k];
 						}
 						if (nextCell) {
