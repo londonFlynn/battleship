@@ -64,13 +64,13 @@ public class Game {
 					for (int k = 0; k < 10; k++) {
 						BoardCell cell = new BoardCell();
 						boardCells.add(cell);
-						BoardCell newCell = boardCellJpaRepository.save(cell);
+						boardCellJpaRepository.save(cell);
 					}
 					BoardRow row = new BoardRow();
 					row.setCells(boardCells);
 					row.setRowNumber(j);
 					boardRows.add(row);
-					BoardRow newRow = boardRowJpaRepository.save(row);
+					boardRowJpaRepository.save(row);
 				}
 				Board board = new Board();
 				board.setRows(boardRows);
@@ -84,8 +84,7 @@ public class Game {
 			game.setBoards(boards);
 			game.getBoards().get(0).setUser(user);
 			boardJpaRepository.save(game.getBoards().get(0));
-			Game returnGame = gameJpaRepository.save(game);
-			return game;
+			return gameJpaRepository.save(game);
 	}
 	private static void setupShips(Board board, ShipJpaRepository shipJpaRepository) {
 		Ship aircraftCarrior = new Ship(ShipType.AIRCRAFT_CARRIER, ShipPlacementController.getShipLengthFromType(ShipType.AIRCRAFT_CARRIER));

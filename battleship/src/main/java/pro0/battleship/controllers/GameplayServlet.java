@@ -17,7 +17,6 @@ import pro0.battleship.exceptions.SpaceAlreadyAttackedExeception;
 import pro0.battleship.models.AttackResult;
 import pro0.battleship.models.Game;
 import pro0.battleship.models.GameOverNotification;
-import pro0.battleship.models.GameStartNotification;
 import pro0.battleship.models.Ship;
 import pro0.battleship.models.ShipSunkNotification;
 import pro0.battleship.models.TargetCellRequest;

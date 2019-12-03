@@ -1,6 +1,5 @@
 package pro0.battleship.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Hibernate;
