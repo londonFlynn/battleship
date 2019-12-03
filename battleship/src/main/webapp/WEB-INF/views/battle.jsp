@@ -122,7 +122,7 @@
 		</div>
 		<div id='loser'>
 			<h1>You lost the battle...</h1>
-			<h2>Player <%=username %> is the winner</h2>
+			<h2>Player <%=username %> is the loser</h2>
 		</div>
 	</div>
 	<script src='/js/battle.js'></script>
