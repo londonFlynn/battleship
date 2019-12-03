@@ -33,7 +33,6 @@ var currentShipType;
 opponentBoard.style.display = "none";
 wonGame.style.display = "none";
 lostGame.style.display = "none";
-//element.addEventListener("mousedown", handleMouseDown, true); after last ship placed
 
 document.getElementById('start').addEventListener("click", event => {
 	addEventListenersToPlacementNames()
@@ -55,13 +54,18 @@ function resetPlacementColor() {
 }
 
 function addEventListenersToPlacementNames() {
+	horizontalButton = document.getElementById('horizontal');
+	verticalButton = document.getElementById('vertical');
+	horizontalButton.style.color = 'red';
 	placingAircraft.addEventListener("click", event => {resetPlacementColor();placementAmount = 5;currentShipType = ShipType.AIRCRAFT_CARRIER;placingAircraft.style.color = 'red'});
 	placingBattleship.addEventListener("click", event => {resetPlacementColor();placementAmount = 4;currentShipType = ShipType.BATTLESHIP;placingBattleship.style.color = 'red'});
 	placingCruiser.addEventListener("click", event => {resetPlacementColor();placementAmount = 3;currentShipType = ShipType.CRUISER;placingCruiser.style.color = 'red'});
 	placingDestroyer.addEventListener("click", event => {resetPlacementColor();placementAmount = 2;currentShipType = ShipType.DESTROYER;placingDestroyer.style.color = 'red'});
 	placingSubmarine.addEventListener("click", event => {resetPlacementColor();placementAmount = 3;currentShipType = ShipType.SUBMARINE;placingSubmarine.style.color = 'red'});
-	document.getElementById('horizontal').addEventListener("click", event => {rotated = false;});
-	document.getElementById('vertical').addEventListener("click", event => {rotated = true;});
+	horizontalButton.addEventListener("click", event => {rotated = false;horizontalButton.style.color = 'red';verticalButton.style.color = 'black';});
+	verticalButton.addEventListener("click", event => {rotated = true;verticalButton.style.color = 'red';horizontalButton.style.color = 'black';});
+	horizontalButton.style.cursor = "pointer";
+	verticalButton.style.cursor ="pointer";
 }
 
 function playerMouseEvents() {
