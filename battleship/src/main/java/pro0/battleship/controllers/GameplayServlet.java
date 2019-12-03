@@ -17,7 +17,6 @@ import pro0.battleship.exceptions.SpaceAlreadyAttackedExeception;
 import pro0.battleship.models.AttackResult;
 import pro0.battleship.models.Game;
 import pro0.battleship.models.GameOverNotification;
-import pro0.battleship.models.GameStartNotification;
 import pro0.battleship.models.Ship;
 import pro0.battleship.models.ShipSunkNotification;
 import pro0.battleship.models.TargetCellRequest;
@@ -71,6 +70,10 @@ public class GameplayServlet {
 					}
 					if (gc.gameIsWon(user)) {
 						sendGameOverNotification(gameId, username);
+						user.winGame();
+						userJpaRepository.save(user);
+						game.getOtherUser(user).loseGame();
+						userJpaRepository.save(game.getOtherUser(user));
 						game.setActive(false);
 						game.setFirstUserHasJoined(false);
 						gameJpaRepository.save(game);

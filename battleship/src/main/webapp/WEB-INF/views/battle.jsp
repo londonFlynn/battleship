@@ -20,6 +20,7 @@
 		<div id='game' style="display: inline-block">
 			<div id="battleId" style="display: none"><%=gameID%></div>
 			<div id="username" style="display: none"><%=username%></div>
+			<a href="/" + <%=gameID%>>Back</a>
 			<noscript>
 				<h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
 			    enabled. Please enable
@@ -116,11 +117,11 @@
 				<div id='psubmarine' class='ships'><span class="tooltiptext">Submarine</span></div>
 			</div>
 		</div>
-		<div id='winner'>
+		<div id='winner' style="color: white;">
 			<h1>You won the battle!</h1>
 			<h2>Player <%=username %> is the winner</h2>
 		</div>
-		<div id='loser'>
+		<div id='loser' style="color: white;">
 			<h1>You lost the battle...</h1>
 			<h2>Player <%=username %> is the loser</h2>
 		</div>
