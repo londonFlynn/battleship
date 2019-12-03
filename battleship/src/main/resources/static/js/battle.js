@@ -466,10 +466,6 @@ var ShipType = {
     DESTROYER: 'DESTROYER'
 }
 
-window.onhashchange = function() {
-	console.log('smeh');
-}
-
 //You shouldnt need to touch anything below this line
 
 var stompClient = null;
