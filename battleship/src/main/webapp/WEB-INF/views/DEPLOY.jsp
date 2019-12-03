@@ -74,7 +74,7 @@ img {
   <div class="centered">
     <h2>Create</h2>
     <a href="/DEPLOY/DEPLOYING">
-    	<img src="/shipWheel.png" id="createBattle">
+    	<img src="images/shipWheel.png" id="createBattle">
     </a>
     <h2>Battle</h2>
   </div>
