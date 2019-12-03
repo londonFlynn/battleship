@@ -82,25 +82,38 @@ function playerMouseEvents() {
 		
 		var targetId = x + "" + y;
 
+		//iterate thru entire table
 		for (let i = 0, row; row = playerBoard.rows[i]; i++) {
 		   for (let j = 0, col; col = row.cells[j]; j++) {
+			   //check if current cell(col) was the one that is hovered over
 			   if(col.id == targetId) {
+				   //when hovered cell does not have a ship as a background image
 				   if(col.style.backgroundImage !='url("/images/placeShip.png")'){
+					   //iteration for size of ship
 					   for(let k=1;k<placementAmount;k++){
+						   //vertical
 						   if(rotated){
-								   if((i+placementAmount-1) < 11) {
+							   //check so changed images won't be off the board
+							   if((i+placementAmount-1) < 11) {
+								   //hovered cell
+								   col.style.backgroundImage="url(/images/target.gif)";
+								   //following cells based on ship size
+								   playerBoard.rows[i+k].cells[j].style.backgroundImage="url(/images/target.gif)";							   
+							   }
+						   }
+						   //horizontal
+						   else {
+							 //check so changed images won't be off the board
+							   if((j+placementAmount-1) < 11){
+								   try {
+									   //hovered cell
 									   col.style.backgroundImage="url(/images/target.gif)";
-									   playerBoard.rows[i+k].cells[j].style.backgroundImage="url(/images/target.gif)";							   
+									   //following cells based on ship size
+									   row.cells[j+k].style.backgroundImage="url(/images/target.gif)";
 								   }
-						   } else {
-								   if((j+placementAmount-1) < 11){
-									   try {
-										   col.style.backgroundImage="url(/images/target.gif)";
-										   row.cells[j+k].style.backgroundImage="url(/images/target.gif)";
-									   }
-									   catch(err) {
-									   }
+								   catch(err) {
 								   }
+							   }
 						   }
 					   }
 				   }
