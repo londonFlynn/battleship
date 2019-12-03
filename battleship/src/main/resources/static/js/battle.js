@@ -26,6 +26,8 @@ var game = document.getElementById('game');
 var opponentBoard = document.getElementById('opponentBoard');
 var playerBoard = document.getElementById('playerBoard');
 var start = document.getElementById('startGame');
+var placer = document.getElementById('shipPlacement');
+var gameInfo = document.getElementById('gameInfo');
 var placementAmount = 5;
 var rotated = false;
 var currentShipType;
@@ -34,6 +36,7 @@ console.log(opponentBoard);
 opponentBoard.style.display = "none";
 wonGame.style.display = "none";
 lostGame.style.display = "none";
+gameInfo.style.display = "none";
 //element.addEventListener("mousedown", handleMouseDown, true); after last ship placed
 
 document.getElementById('start').addEventListener("click", event => {
@@ -324,14 +327,18 @@ function userSunkAShip(shipType) {
 function userLost() {
     loser.style.display = "block";
     game.style.display = "none";
+    gameInfo.style.display = "none";
 }
 function userWon() {
 	winner.style.display = "block";
     game.style.display = "none";
+    gameInfo.style.display = "none";
 }
 function itsYourTurn() {
     //TODO unlock board
 	opponentBoard.style.display = "block";
+	gameInfo.style.display = "block";
+	placer.style.display = "none";
 	var allOtiles = document.getElementsByClassName('otiles2');
 	document.getElementById("currentPlayerTurn").innerHTML = "Your Turn!";
 	for(var i = 0; i < allOtiles.length; i++) {
@@ -345,6 +352,8 @@ function itsYourTurn() {
 function itsTheOpponentsTurn() {
     //TODO lock board (but still let them see it)
 	opponentBoard.style.display = "block";
+	gameInfo.style.display = "block";
+	placer.style.display = "none";
 	var allOtiles = document.getElementsByClassName('otiles');
 	document.getElementById("currentPlayerTurn").innerHTML = "Not Your Turn!";
 	for(var i = 0; i < allOtiles.length; i++) {
@@ -537,18 +546,12 @@ function reciveTurnChangeNotification(turnChangeNotification) {
     }
 }
 
-function reciveGameStartedNotification(gameStartedNotification) {
-	if (gameStartedNotification.started) {
-		reciveTurnChangeNotification(gameStartedNotification.turn);
-	}
-}
-
 function setupGameFromServer() {
     // setupYourBoardFromServer();
     // setupOpponentBoardFromServer();
     setupCellsFromServer();
     setupShipsFromServer();
-	setupDestroyedShipsFromServer();
+    setupDestroyedShipsFromServer();
     setupGameHasStartedFromServer();
 }
 
