@@ -172,26 +172,6 @@ function playerMouseEvents() {
 				}
 			}  
 		}
-		
-		switch(currentShipType) {
-		  case ShipType.AIRCRAFT_CARRIER:
-			  placingShips[0].style.display='none';
-		    break;
-		  case ShipType.BATTLESHIP:
-			  placingShips[1].style.display='none';
-		    break;
-		  case ShipType.CRUISER:
-			  placingShips[2].style.display='none';
-		    break;
-		  case ShipType.DESTROYER:
-			  placingShips[3].style.display='none';
-		    break;
-		  case ShipType.SUBMARINE:
-			  placingShips[4].style.display='none';
-		    break;
-		  default:
-		    console.log('internal error')
-		}
 		placementAmount = 0;
 		var count = 0;
 		placingShips.forEach(element => {
@@ -363,8 +343,30 @@ function itsTheOpponentsTurn() {
 	}
 }
 var gameHasStarted = false;
-function shipPlacementFailure(ShipType) {
+function shipPlacementFailure(shipType) {
 	//TODO allow user to attempt to place ship again
+}
+
+function hideShipPlacementForShip(shipType) {
+	switch(shipType) {
+		case ShipType.AIRCRAFT_CARRIER:
+			placingShips[0].style.display='none';
+		  break;
+		case ShipType.BATTLESHIP:
+			placingShips[1].style.display='none';
+		  break;
+		case ShipType.CRUISER:
+			placingShips[2].style.display='none';
+		  break;
+		case ShipType.DESTROYER:
+			placingShips[3].style.display='none';
+		  break;
+		case ShipType.SUBMARINE:
+			placingShips[4].style.display='none';
+		  break;
+		default:
+		  console.log('internal error')
+	  }
 }
 
 function displayShipInPositions(positions) {
@@ -487,7 +489,8 @@ function disconnect() {
 function reciveShipPlacementResponse(shipPlacementResponse) {
 	console.log(shipPlacementResponse);
     if (shipPlacementResponse.success) {
-        displayShipInPositions(shipPlacementResponse.positions);
+		displayShipInPositions(shipPlacementResponse.positions);
+		hideShipPlacementForShip(shipPlacementResponse.shipType);
     } else if (!gameHasStarted) {
 		shipPlacementFailure(shipPlacementResponse.shipType);
 	}
@@ -575,9 +578,7 @@ async function setupYourBoardFromServer() {
 
 function setupShipsFromServer() {
     sendRequest(null, "/gamestate/ships/"+gameId, "GET", function(shipPlacementResponses) {
-        shipPlacementResponses.forEach(function(shipPlacementResponse) {
-            displayShipInPositions(shipPlacementResponse.positions);
-        });
+        shipPlacementResponses.forEach(reciveShipPlacementResponse);
     });
 }
 
