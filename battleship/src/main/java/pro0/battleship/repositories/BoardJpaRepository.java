@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import pro0.battleship.models.Board;
-import pro0.battleship.models.BoardRow;
 
 public interface BoardJpaRepository extends JpaRepository<Board, Integer> {
 	

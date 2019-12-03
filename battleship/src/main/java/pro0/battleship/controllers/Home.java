@@ -2,8 +2,6 @@ package pro0.battleship.controllers;
 
 import java.security.Principal;
 
-import javax.servlet.http.HttpServlet;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

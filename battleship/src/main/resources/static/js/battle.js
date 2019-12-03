@@ -2,16 +2,16 @@ var currentPlayer = document.getElementById('currentPlayerTurn');
 var opponentShipsLife = [
 		oaircraft = document.getElementById('oaircraft'),
 		obattleship = document.getElementById('obattleship'),
+		osubmarine = document.getElementById('osubmarine'),
 		ocruiser = document.getElementById('ocruiser'),
-		odestroyer = document.getElementById('odestroyer'),
-		osubmarine = document.getElementById('osubmarine')
+		odestroyer = document.getElementById('odestroyer')
 ]
 var userShipsLife = [
 		paircraft = document.getElementById('paircraft'),
 		pbattleship = document.getElementById('pbattleship'),
+		psubmarine = document.getElementById('psubmarine'),
 		pcruiser = document.getElementById('pcruiser'),
-		pdestroyer = document.getElementById('pdestroyer'),
-		psubmarine = document.getElementById('psubmarine')
+		pdestroyer = document.getElementById('pdestroyer')
 ]
 var placingShips = [
 	placingAircraft = document.getElementById('placingAircraft'),
@@ -32,7 +32,6 @@ var placementAmount = 5;
 var rotated = false;
 var currentShipType;
 
-console.log(opponentBoard);
 opponentBoard.style.display = "none";
 wonGame.style.display = "none";
 lostGame.style.display = "none";
@@ -59,19 +58,23 @@ function resetPlacementColor() {
 }
 
 function addEventListenersToPlacementNames() {
+	horizontalButton = document.getElementById('horizontal');
+	verticalButton = document.getElementById('vertical');
+	horizontalButton.style.color = 'red';
 	placingAircraft.addEventListener("click", event => {resetPlacementColor();placementAmount = 5;currentShipType = ShipType.AIRCRAFT_CARRIER;placingAircraft.style.color = 'red'});
 	placingBattleship.addEventListener("click", event => {resetPlacementColor();placementAmount = 4;currentShipType = ShipType.BATTLESHIP;placingBattleship.style.color = 'red'});
 	placingCruiser.addEventListener("click", event => {resetPlacementColor();placementAmount = 3;currentShipType = ShipType.CRUISER;placingCruiser.style.color = 'red'});
 	placingDestroyer.addEventListener("click", event => {resetPlacementColor();placementAmount = 2;currentShipType = ShipType.DESTROYER;placingDestroyer.style.color = 'red'});
 	placingSubmarine.addEventListener("click", event => {resetPlacementColor();placementAmount = 3;currentShipType = ShipType.SUBMARINE;placingSubmarine.style.color = 'red'});
-	document.getElementById('horizontal').addEventListener("click", event => {rotated = false;});
-	document.getElementById('vertical').addEventListener("click", event => {rotated = true;});
+	horizontalButton.addEventListener("click", event => {rotated = false;horizontalButton.style.color = 'red';verticalButton.style.color = 'black';});
+	verticalButton.addEventListener("click", event => {rotated = true;verticalButton.style.color = 'red';horizontalButton.style.color = 'black';});
+	horizontalButton.style.cursor = "pointer";
+	verticalButton.style.cursor ="pointer";
 }
 
 function playerMouseEvents() {
 	playerBoard.addEventListener("mouseover", event => {
 		var position = turnIntoBoardPosition(event);
-		
 		position.xPos = position.xPos + "";
 		var initialAscii = position.xPos.charCodeAt(0) + 49;
 		var x = String.fromCharCode(initialAscii);
@@ -82,22 +85,22 @@ function playerMouseEvents() {
 		for (let i = 0, row; row = playerBoard.rows[i]; i++) {
 		   for (let j = 0, col; col = row.cells[j]; j++) {
 			   if(col.id == targetId) {
-				   for(let k=1;k<placementAmount;k++){
-					   if(rotated){
-						   if((i+placementAmount-1) < 11) {
-							   col.style.backgroundImage="url(/images/target.gif)";
-							   playerBoard.rows[i+k].cells[j].style.backgroundImage="url(/images/target.gif)";							   
-						   }
-					   } else {						   
-						   if((j+placementAmount-1) < 11){
-							   try {
-								   col.style.backgroundImage="url(/images/target.gif)";
-								   row.cells[j+k].style.backgroundImage="url(/images/target.gif)";
-							   }
-							   catch(err) {
-//							   document.getElementById("demo").innerHTML = err.message;
-//								meh it's fine
-							   }
+				   if(col.style.backgroundImage !='url("/images/placeShip.png")'){
+					   for(let k=1;k<placementAmount;k++){
+						   if(rotated){
+								   if((i+placementAmount-1) < 11) {
+									   col.style.backgroundImage="url(/images/target.gif)";
+									   playerBoard.rows[i+k].cells[j].style.backgroundImage="url(/images/target.gif)";							   
+								   }
+						   } else {
+								   if((j+placementAmount-1) < 11){
+									   try {
+										   col.style.backgroundImage="url(/images/target.gif)";
+										   row.cells[j+k].style.backgroundImage="url(/images/target.gif)";
+									   }
+									   catch(err) {
+									   }
+								   }
 						   }
 					   }
 				   }
@@ -119,18 +122,18 @@ function playerMouseEvents() {
 			for (let i = 0, row; row = playerBoard.rows[i]; i++) {
 				for (let j = 0, col; col = row.cells[j]; j++) {
 					if(col.id == targetId) {
-						col.style.backgroundImage="url(/images/still.jpg)";
-						for(let k=1;k<placementAmount;k++){
-							try {
-								if(rotated) {
-									playerBoard.rows[i+k].cells[j].style.backgroundImage="url(/images/still.jpg)";
-								} else {							
-									row.cells[j+k].style.backgroundImage="url(/images/still.jpg)";
+						if(col.style.backgroundImage !='url("/images/placeShip.png")'){
+							col.style.backgroundImage="url(/images/still.jpg)";
+							for(let k=1;k<placementAmount;k++){
+								try {
+									if(rotated) {
+											playerBoard.rows[i+k].cells[j].style.backgroundImage="url(/images/still.jpg)";
+									} else {
+											row.cells[j+k].style.backgroundImage="url(/images/still.jpg)";
+									}
 								}
-							}
-							catch(err) {
-//								  document.getElementById("demo").innerHTML = err.message;
-//									es fine
+								catch(err) {
+								}
 							}
 						}
 					}
@@ -166,35 +169,15 @@ function playerMouseEvents() {
 //								es fine
 						}
 					}
+					
 				}
 			}  
-		}
-		
-		switch(currentShipType) {
-		  case ShipType.AIRCRAFT_CARRIER:
-			  placingShips[0].style.display='none';
-		    break;
-		  case ShipType.BATTLESHIP:
-			  placingShips[1].style.display='none';
-		    break;
-		  case ShipType.CRUISER:
-			  placingShips[2].style.display='none';
-		    break;
-		  case ShipType.DESTROYER:
-			  placingShips[3].style.display='none';
-		    break;
-		  case ShipType.SUBMARINE:
-			  placingShips[4].style.display='none';
-		    break;
-		  default:
-		    console.log('internal error')
 		}
 		placementAmount = 0;
 		var count = 0;
 		placingShips.forEach(element => {
 			if(element.style.display === 'none') {
 				count++;
-				console.log("ships placed: " + count);
 			}
 		})
 	});
@@ -367,8 +350,52 @@ function itsTheOpponentsTurn() {
 	}
 }
 var gameHasStarted = false;
-function shipPlacementFailure(ShipType) {
-	//TODO allow user to attempt to place ship again
+function shipPlacementFailure(shipType) {
+	switch(shipType) {
+	  case ShipType.AIRCRAFT_CARRIER:
+		  placingShips[0].click();
+	    break;
+	  case ShipType.BATTLESHIP:
+		  placingShips[1].click();
+	    break;
+	  case ShipType.CRUISER:
+		  placingShips[2].click();
+	    break;
+	  case ShipType.DESTROYER:
+		  placingShips[3].click();
+	    break;
+	  case ShipType.SUBMARINE:
+		  placingShips[4].click();
+	    break;
+	  default:
+	    console.log('Error while trying to display Place Ships button after failed ship placement.')
+	}
+//	
+//	playerMouseEvents();
+	
+	
+}
+
+function hideShipPlacementForShip(shipType) {
+	switch(shipType) {
+		case ShipType.AIRCRAFT_CARRIER:
+			placingShips[0].style.display='none';
+		  break;
+		case ShipType.BATTLESHIP:
+			placingShips[1].style.display='none';
+		  break;
+		case ShipType.CRUISER:
+			placingShips[2].style.display='none';
+		  break;
+		case ShipType.DESTROYER:
+			placingShips[3].style.display='none';
+		  break;
+		case ShipType.SUBMARINE:
+			placingShips[4].style.display='none';
+		  break;
+		default:
+		  console.log('internal error')
+	  }
 }
 
 function displayShipInPositions(positions) {
@@ -491,7 +518,8 @@ function disconnect() {
 function reciveShipPlacementResponse(shipPlacementResponse) {
 	console.log(shipPlacementResponse);
     if (shipPlacementResponse.success) {
-        displayShipInPositions(shipPlacementResponse.positions);
+		displayShipInPositions(shipPlacementResponse.positions);
+		hideShipPlacementForShip(shipPlacementResponse.shipType);
     } else if (!gameHasStarted) {
 		shipPlacementFailure(shipPlacementResponse.shipType);
 	}
@@ -573,9 +601,7 @@ async function setupYourBoardFromServer() {
 
 function setupShipsFromServer() {
     sendRequest(null, "/gamestate/ships/"+gameId, "GET", function(shipPlacementResponses) {
-        shipPlacementResponses.forEach(function(shipPlacementResponse) {
-            displayShipInPositions(shipPlacementResponse.positions);
-        });
+        shipPlacementResponses.forEach(reciveShipPlacementResponse);
     });
 }
 
