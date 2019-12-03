@@ -338,32 +338,32 @@ function itsYourTurn() {
 	opponentBoard.style.display = "block";
 	gameInfo.style.display = "block";
 	placer.style.display = "none";
-	var allOtiles = document.getElementsByClassName('otiles2');
 	document.getElementById("currentPlayerTurn").innerHTML = "Your Turn!";
-	for(var i = 0; i < allOtiles.length; i++) {
-		allOtiles[i].className = "otiles";
-//		allOtiles[i].classList.toggle("otiles2", false);
-//		allOtiles[i].classList.toggle("otiles", true);
-		//allOtiles[i].classList.remove('otiles2'); //give back the hover attribute basically
-		//allOtiles[i].classList.add('otiles');
+	
+	for (let i = 0, row; row = opponentBoard.rows[i]; i++) {
+		   for (let j = 0, col; col = row.cells[j]; j++) {
+			   if(col.classList.contains('otiles2')) {
+				   col.classList.remove('otiles2');
+				   col.classList.add('otiles');
+			   }
+		   }
 	}
+	
 }
 function itsTheOpponentsTurn() {
     //TODO lock board (but still let them see it)
 	opponentBoard.style.display = "block";
 	gameInfo.style.display = "block";
 	placer.style.display = "none";
-	var allOtiles = document.getElementsByClassName('otiles');
 	document.getElementById("currentPlayerTurn").innerHTML = "Not Your Turn!";
-	for(var i = 0; i < allOtiles.length; i++) {
-		//allOtiles[i].classList.toggle("otiles2", true);
-		allOtiles[i].className = "otiles2";
-		//allOtiles[i].classList.toggle("otiles2", true);
-		//console.log(allOtiles[i].classList);
-//		allOtiles[i].classList.remove('otiles', 'otiles2'); //remove the hover attribute basically
-		//console.log(allOtiles[i].classList);
-//		allOtiles[i].classList.add('otiles2');
-		console.log(allOtiles[i].classList);
+	
+	for (let i = 0, row; row = opponentBoard.rows[i]; i++) {
+		   for (let j = 0, col; col = row.cells[j]; j++) {
+			   if(col.classList.contains('otiles')) {
+				   col.classList.remove('otiles');
+				   col.classList.add('otiles2');
+			   }
+		   }
 	}
 }
 var gameHasStarted = false;

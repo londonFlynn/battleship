@@ -10,8 +10,8 @@ td {
 	color: #fff;
 }
 .otiles {
-	width: 40px;
-	height: 40px;
+	width: 50px;
+	height: 50px;
 	background-image: url(/images/still.jpg);
 	color: #fff;
 	padding: 1px;
@@ -23,8 +23,8 @@ td {
 	background-image: url(/images/target.gif);
 }
 .otiles2 {
-	width: 40px;
-	height: 40px;
+	width: 50px;
+	height: 50px;
 	background-image: url(/images/still.jpg);
 	color: #fff;
 	padding: 1px;
@@ -32,8 +32,8 @@ td {
 	opacity: 0.90;
 }
 .unharmedShip {
-	width: 40px;
-	height: 40px;
+	width: 50px;
+	height: 50px;
 	background-image: url(/images/placeShip.png);
 	color: #fff;
 	padding: 1px;
@@ -41,8 +41,8 @@ td {
 	opacity: 0.90;
 }
 .tile {
-	width: 25px;
-	height: 35px;
+	width: 35px;
+	height: 45px;
 	background-image: url(/images/still.jpg);
 	color: #fff;
 	padding: 1px;
@@ -50,8 +50,8 @@ td {
 	opacity: 0.90;
 }
 .titleTile {
-	width: 35px;
-	height: 35px;
+	width: 45px;
+	height: 45px;
 	padding: 1px;
 	margin: 5px;
 }
