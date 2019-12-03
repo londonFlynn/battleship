@@ -74,6 +74,7 @@ function addEventListenersToPlacementNames() {
 
 function playerMouseEvents() {
 	playerBoard.addEventListener("mouseover", event => {
+		if (!gameHasStarted) {
 		var position = turnIntoBoardPosition(event);
 		position.xPos = position.xPos + "";
 		var initialAscii = position.xPos.charCodeAt(0) + 49;
@@ -88,8 +89,8 @@ function playerMouseEvents() {
 				//check if current cell(col) was the one that is hovered over
 				if (col.id == targetId) {
 					//iteration for size of ship
-					if (col.style.backgroundImage != 'url("/images/placeShip.png")') {
-						col.style.backgroundImage = 'url("/images/target.gif")';
+					if (col.style.backgroundImage != 'url("/battleship/images/placeShip.png")') {
+						col.style.backgroundImage = 'url("/battleship/images/target.gif")';
 					}
 					var nextCell = null;
 					for (let k = 1; k < placementAmount; k++) {
@@ -100,14 +101,15 @@ function playerMouseEvents() {
 							nextCell = row.cells[j + k];
 						}
 						if (nextCell) {
-							if (nextCell.style.backgroundImage != 'url("/images/placeShip.png")') {
-								nextCell.style.backgroundImage = 'url("/images/target.gif")'
+							if (nextCell.style.backgroundImage != 'url("/battleship/images/placeShip.png")') {
+								nextCell.style.backgroundImage = 'url("/battleship/images/target.gif")'
 							}
 						}
 					}
 				}
 			}
 		}
+	}
 	});
 	playerBoard.addEventListener("mouseout", event => {
 		clearBoardTargeting();
@@ -120,8 +122,8 @@ function playerMouseEvents() {
 function clearBoardTargeting() {
 	for (let i = 0, row; row = playerBoard.rows[i]; i++) {
 		for (let j = 0, col; col = row.cells[j]; j++) {
-			if (col.style.backgroundImage == 'url("/images/target.gif")') {
-				col.style.backgroundImage = 'url("/images/still.jpg")';
+			if (col.style.backgroundImage == 'url("/battleship/images/target.gif")') {
+				col.style.backgroundImage = 'url("/battleship/images/still.jpg")';
 			}
 		}
 	}
@@ -179,7 +181,7 @@ function userGotHit(position) {
 	for (var i = 0, row; row = playerBoard.rows[i]; i++) {
 		for (var j = 0, col; col = row.cells[j]; j++) {
 			if (col.id == targetId) {
-				col.style.backgroundImage = "url('/images/hit.gif'";
+				col.style.backgroundImage = "url('/battleship/images/hit.gif'";
 			}
 		}
 	}
@@ -195,7 +197,7 @@ function userWasMissed(position) {
 	for (var i = 0, row; row = playerBoard.rows[i]; i++) {
 		for (var j = 0, col; col = row.cells[j]; j++) {
 			if (col.id == targetId) {
-				col.style.backgroundImage = "url('/images/miss.gif'";
+				col.style.backgroundImage = "url('/battleship/images/miss.gif'";
 			}
 		}
 	}
@@ -211,7 +213,7 @@ function userMissed(position) {
 	for (var i = 0, row; row = opponentBoard.rows[i]; i++) {
 		for (var j = 0, col; col = row.cells[j]; j++) {
 			if (col.id == targetId) {
-				col.style.backgroundImage = "url('/images/miss.gif'";
+				col.style.backgroundImage = "url('/battleship/images/miss.gif'";
 			}
 		}
 	}
@@ -227,7 +229,7 @@ function userHit(position) {
 	for (var i = 0, row; row = opponentBoard.rows[i]; i++) {
 		for (var j = 0, col; col = row.cells[j]; j++) {
 			if (col.id == targetId) {
-				col.style.backgroundImage = "url('/images/hit.gif'";
+				col.style.backgroundImage = "url('/battleship/images/hit.gif'";
 			}
 		}
 	}
@@ -354,7 +356,7 @@ function displayShipInPositions(positions) {
 		for (var i = 0, row; row = playerBoard.rows[i]; i++) {
 			for (var j = 0, col; col = row.cells[j]; j++) {
 				if (col.id == targetId) {
-					col.style.backgroundImage = "url('/images/placeShip.png'";
+					col.style.backgroundImage = "url('/battleship/images/placeShip.png'";
 				}
 			}
 		}
@@ -367,12 +369,12 @@ function sendShipPlacementRequest(position, direction, shipType) {
 		"direction": direction,
 		"shipType": shipType
 	}
-	var url = "/shipPlacement/" + gameId;
+	var url = "/battleship/shipPlacement/" + gameId;
 	sendRequest(shipPlacementRequest, url, "POST", reciveShipPlacementResponse);
 }
 
 function sendTargetCellRequest(position) {
-	stompClient.send("/fromjs/targetCell/" + gameId, {}, JSON.stringify({ "position": position }));
+	stompClient.send("/battleship/fromjs/targetCell/" + gameId, {}, JSON.stringify({ "position": position }));
 }
 
 class BoardPosition {
@@ -435,16 +437,16 @@ function connect(id) {
 	stompClient.connect({}, function (frame) {
 		setConnected(true);
 		console.log('Connected: ' + frame);
-		stompClient.subscribe('/tojs/attackResult/' + id, function (attackResult) {
+		stompClient.subscribe('/battleship/tojs/attackResult/' + id, function (attackResult) {
 			reciveAttackResult(JSON.parse(attackResult.body));
 		});
-		stompClient.subscribe('/tojs/sunkShip/' + id, function (shipSunkNotification) {
+		stompClient.subscribe('/battleship/tojs/sunkShip/' + id, function (shipSunkNotification) {
 			reciveShipSunkNotificaiton(JSON.parse(shipSunkNotification.body));
 		});
-		stompClient.subscribe('/tojs/gameOver/' + id, function (gameOverNotification) {
+		stompClient.subscribe('/battleship/tojs/gameOver/' + id, function (gameOverNotification) {
 			reciveGameOverNotification(JSON.parse(gameOverNotification.body));
 		});
-		stompClient.subscribe('/tojs/turnChange/' + id, function (turnChangeNotification) {
+		stompClient.subscribe('/battleship/tojs/turnChange/' + id, function (turnChangeNotification) {
 			reciveTurnChangeNotification(JSON.parse(turnChangeNotification.body));
 		});
 		setupGameFromServer();
@@ -530,7 +532,7 @@ function setupGameFromServer() {
 }
 
 async function setupCellsFromServer() {
-	sendRequest(null, "/gamestate/attacks/" + gameId, "GET", function (attackResults) {
+	sendRequest(null, "/battleship/gamestate/attacks/" + gameId, "GET", function (attackResults) {
 		attackResults.forEach(reciveAttackResult);
 	});
 }
@@ -544,20 +546,20 @@ async function setupYourBoardFromServer() {
 }
 
 function setupShipsFromServer() {
-	sendRequest(null, "/gamestate/ships/" + gameId, "GET", function (shipPlacementResponses) {
+	sendRequest(null, "/battleship/gamestate/ships/" + gameId, "GET", function (shipPlacementResponses) {
 		shipPlacementResponses.forEach(reciveShipPlacementResponse);
 	});
 }
 
 function setupDestroyedShipsFromServer() {
-	sendRequest(null, "/gamestate/destroyed/" + gameId, "GET", function (shipSunkNotifications) {
+	sendRequest(null, "/battleship/gamestate/destroyed/" + gameId, "GET", function (shipSunkNotifications) {
 		shipSunkNotifications.forEach(reciveShipSunkNotificaiton);
 	});
 }
 
 
 async function setupBoardRowFromServer(board, row, opponent) {
-	await sendRequest(null, "/gamestate/row/" + gameId + "/" + row + "/" + opponent, "GET", function (boardRow) {
+	await sendRequest(null, "/battleship/gamestate/row/" + gameId + "/" + row + "/" + opponent, "GET", function (boardRow) {
 		board.rows.push(boardRow);
 	});
 }
@@ -569,10 +571,10 @@ function reciveGameStartedNotification(gameStartedNotification) {
 }
 
 function setupGameHasStartedFromServer() {
-	sendRequest(null, "/gamestate/started/" + gameId, "GET", reciveGameStartedNotification);
+	sendRequest(null, "/battleship/gamestate/started/" + gameId, "GET", reciveGameStartedNotification);
 }
 function setupGameHasEndedFromServer() {
-	sendRequest(null, "/gamestate/over/" + gameId, "GET", reciveGameOverNotification);
+	sendRequest(null, "/battleship/gamestate/over/" + gameId, "GET", reciveGameOverNotification);
 }
 
 function setupOpponentBoardFromServer() {

@@ -14,7 +14,7 @@
 <meta charset="ISO-8859-1">
 <style>
 body{
-	background: url("/images/pier.jpg") no-repeat center center fixed;
+	background: url("/battleship/images/pier.jpg") no-repeat center center fixed;
 	background-size: cover;
 }
 
@@ -126,16 +126,16 @@ a:hover {
     <p>Loses: <%=lost%></p>
 </div>
 <div class="signpost">
-	<img src="/images/signpost4.png">
+	<img src="/battleship/images/signpost4.png">
 	
 	<div class="left">
-		<p class="top"><a href="/savedgames">Saved Games</a></p>
-	    <p class="bottom"><a href="/DEPLOY">DEPLOY</a></p>
+		<p class="top"><a href="/battleship/savedgames">Saved Games</a></p>
+	    <p class="bottom"><a href="/battleship/DEPLOY">DEPLOY</a></p>
 	</div>
 	
 	<div class="right">
-		<p class="top"><a href="/">Home</a></p>
-	    <p class="bottom"><a href="/logout">Logout</a></p>
+		<p class="top"><a href="/battleship/">Home</a></p>
+	    <p class="bottom"><a href="/battleship/logout">Logout</a></p>
 	</div>
 </div>
 

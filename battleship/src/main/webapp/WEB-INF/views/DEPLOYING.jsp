@@ -11,7 +11,7 @@
 <style>
 body {
 	height: 100%;
-	background-image: url(../images/loading.gif);
+	background-image: url(/battleship/images/loading.gif);
 	background-size: cover;
 	background-repeat: no-repeat;
 }
@@ -35,6 +35,6 @@ h1 {
 	<h1>YOU ARE AT THE MERCY OF THE HIGH SEAS!!!</h1>
 </div>
 
-<script src="/js/DEPLOYING.js"></script>
+<script src="/battleship/js/DEPLOYING.js"></script>
 </body>
 </html>

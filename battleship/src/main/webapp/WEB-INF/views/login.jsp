@@ -64,9 +64,9 @@ a:hover {
 	<!-- button >Home</button> -->
 
 	<div class="split left">
-	<p><a href="/">Battleship</a></p>
+	<p><a href="/battleship/">Battleship</a></p>
 		<div class="centered">
-			<form method="POST" action="/login">
+			<form method="POST" action="/battleship/login">
 				<h1>Login</h1>
 				<h2>Username</h2>
 				<input style="border-color: black;" type="text" name="username" />
@@ -85,7 +85,7 @@ a:hover {
 
 	<div class="split right">
 		<div class="centered">
-			<form method="POST" action="/login/signup">
+			<form method="POST" action="/battleship/login/signup">
 				<h1>Create Account</h1>
 				<h2>Username</h2>
 				<input style="border-color: black;" type="text" name="username" />

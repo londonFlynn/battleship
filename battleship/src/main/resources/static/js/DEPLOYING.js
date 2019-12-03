@@ -10,10 +10,10 @@ function connect(username) {
 	 stompClient = Stomp.over(socket); //Stomp to find queues for the sockets
 	 stompClient.connect({}, function (frame) {
 		 console.log("connected: " + frame);
-		 stompClient.subscribe('/tojs/DEPLOY/' + username, function (myUsername) {
+		 stompClient.subscribe('/battleship/tojs/DEPLOY/' + username, function (myUsername) {
 			 if(myUsername.body) {
 				 console.log("Received something: " + myUsername.body);
-				 window.location.href = "/battle/" + gameId;
+				 window.location.href = "/battleship/battle/" + gameId;
 			 }
 		 });
 	 });

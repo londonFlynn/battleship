@@ -77,7 +77,7 @@ public class ShipPlacementServlet {
 		RestTemplate restTemplate = new RestTemplate();
 		RequestEntity req = null;
 		try {
-			req = new RequestEntity(HttpMethod.GET, new URI("http://localhost:8080/betweenjs/start/"+Integer.toString(gameId)));
+			req = new RequestEntity(HttpMethod.GET, new URI("http://localhost:8080/battleship/betweenjs/start/"+Integer.toString(gameId)));
 			req.toString();
 		} catch (URISyntaxException urise) {
 			urise.printStackTrace();

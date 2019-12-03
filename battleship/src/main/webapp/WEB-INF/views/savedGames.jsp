@@ -41,7 +41,7 @@ body {
 <title>Battleship! - Saved Games</title>
 </head>
 <body>
-<a id='dock' href='/dock'>Dock</a>
+<a id='dock' href='/battleship/dock'>Dock</a>
 <h1>Saved Games</h1>
 
 	<% if (allGames != null) { 
@@ -52,7 +52,7 @@ body {
 <div class="savedgame">
   <p>
   	<span>
-  		<a href=<%="/savedgames/" + game.getId() %>>You vs <%=game.getOtherUser(username).getUsername() %></a>
+  		<a href=<%="/battleship/savedgames/" + game.getId() %>>You vs <%=game.getOtherUser(username).getUsername() %></a>
   	</span>
   </p>
   <p></p>

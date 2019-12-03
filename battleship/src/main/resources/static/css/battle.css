@@ -12,7 +12,7 @@ td {
 .otiles {
 	width: 50px;
 	height: 50px;
-	background-image: url(/images/still.jpg);
+	background-image: url(/battleship/images/still.jpg);
 	color: #fff;
 	padding: 1px;
 	margin: 5px;
@@ -20,12 +20,12 @@ td {
 }
 .otiles:hover{
 	opacity: 0.5;
-	background-image: url(/images/target.gif);
+	background-image: url(/battleship/images/target.gif);
 }
 .otiles2 {
 	width: 50px;
 	height: 50px;
-	background-image: url(/images/still.jpg);
+	background-image: url(/battleship/images/still.jpg);
 	color: #fff;
 	padding: 1px;
 	margin: 5px;
@@ -34,7 +34,7 @@ td {
 .unharmedShip {
 	width: 50px;
 	height: 50px;
-	background-image: url(/images/placeShip.png);
+	background-image: url(/battleship/images/placeShip.png);
 	color: #fff;
 	padding: 1px;
 	margin: 5px;
@@ -43,7 +43,7 @@ td {
 .tile {
 	width: 35px;
 	height: 45px;
-	background-image: url(/images/still.jpg);
+	background-image: url(/battleship/images/still.jpg);
 	color: #fff;
 	padding: 1px;
 	margin: 5px;

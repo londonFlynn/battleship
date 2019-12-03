@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<link href='/css/battle.css' rel='stylesheet' type="text/css" />
+<link href='/battleship/css/battle.css' rel='stylesheet' type="text/css" />
 <script src="/webjars/jquery/jquery.min.js"></script>
 <script src="/webjars/sockjs-client/sockjs.min.js"></script>
 <script src="/webjars/stomp-websocket/stomp.min.js"></script>
@@ -126,7 +126,7 @@
 			<h2>Player <%=username %> is the loser</h2>
 		</div>
 	</div>
-	<script src='/js/battle.js'></script>
+	<script src='/battleship/js/battle.js'></script>
 </body>
 </html>
 

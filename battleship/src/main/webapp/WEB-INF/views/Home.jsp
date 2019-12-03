@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link href='/css/Home.css' rel='stylesheet' type="text/css" />
+<link href='/battleship/css/Home.css' rel='stylesheet' type="text/css" />
 <meta charset="ISO-8859-1">
 <title>Battleship!</title>
 </head>
@@ -15,7 +15,7 @@
       <a id='homelink' href='/'>Battleship</a>
       <a id='login'
 	      <% if(!loggedIn) { %>
-	      	href='/login'> Login
+	      	href='/battleship/login'> Login
 	      	
 	      <% } else { %>
 	      	href='/logout'> Log out
@@ -33,7 +33,7 @@
       	<%if(!loggedIn) { %>
           <h2 style='text-align: center'>Two Player Gameplay</h2>
           <%} else { %>
-          <h2 style='text-align: center'><a href='/DEPLOY'>Two Player Gameplay</a></h2>
+          <h2 style='text-align: center'><a href='/battleship/DEPLOY'>Two Player Gameplay</a></h2>
           <%} %>
           <ul>
               <li><p>Connect with random players</p></li>
@@ -45,7 +45,7 @@
       	<%if(!loggedIn) { %>
           <h2 style='text-align: center'>Visit the Dock</h2>
           <%} else { %>
-          <h2 style='text-align: center'><a href='/dock'>Visit the Dock</a></h2>
+          <h2 style='text-align: center'><a href='/battleship/dock'>Visit the Dock</a></h2>
           <%} %>
           <ul>
               <li><p>See your battle stats</p></li>

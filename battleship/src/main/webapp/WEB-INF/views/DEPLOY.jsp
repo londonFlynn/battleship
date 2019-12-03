@@ -56,7 +56,7 @@ img {
 <body>
 
 <div class="split left">
-	<a href="/dock">Dock</a>
+	<a href="/battleship/dock">Dock</a>
   <div class="centered">
     <h2>Search</h2>
     <h2>for</h2>
@@ -73,8 +73,8 @@ img {
 <div class="split right">
   <div class="centered">
     <h2>Create</h2>
-    <a href="/DEPLOY/DEPLOYING">
-    	<img src="/shipWheel.png" id="createBattle">
+    <a href="/battleship/DEPLOY/DEPLOYING">
+    	<img src="/battleship/shipWheel.png" id="createBattle">
     </a>
     <h2>Battle</h2>
   </div>

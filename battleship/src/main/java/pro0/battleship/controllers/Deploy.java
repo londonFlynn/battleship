@@ -73,7 +73,7 @@ public class Deploy {
 				RestTemplate restTemplate = new RestTemplate();
 				RequestEntity req = null;
 				try {
-					req = new RequestEntity(HttpMethod.GET, new URI("http://localhost:8080/betweenjs/DEPLOY/" + scouredOpponent.getUsername()));
+					req = new RequestEntity(HttpMethod.GET, new URI("http://localhost:8080/battleship/betweenjs/DEPLOY/" + scouredOpponent.getUsername()));
 				} catch (URISyntaxException urise) {
 					urise.printStackTrace();
 				}
