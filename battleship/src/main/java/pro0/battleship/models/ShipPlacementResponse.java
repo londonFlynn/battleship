@@ -2,8 +2,6 @@ package pro0.battleship.models;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-
 import pro0.battleship.enums.ShipType;
 
 
