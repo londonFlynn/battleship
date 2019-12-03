@@ -86,24 +86,21 @@ function playerMouseEvents() {
 		   for (let j = 0, col; col = row.cells[j]; j++) {
 			   if(col.id == targetId) {
 				   if(col.style.backgroundImage !='url("/images/placeShip.png")'){
-					   
 					   for(let k=1;k<placementAmount;k++){
 						   if(rotated){
-							   if((i+placementAmount-1) < 11) {
-								   col.style.backgroundImage="url(/images/target.gif)";
-								   playerBoard.rows[i+k].cells[j].style.backgroundImage="url(/images/target.gif)";							   
-							   }
-						   } else {						   
-							   if((j+placementAmount-1) < 11){
-								   try {
+								   if((i+placementAmount-1) < 11) {
 									   col.style.backgroundImage="url(/images/target.gif)";
-									   row.cells[j+k].style.backgroundImage="url(/images/target.gif)";
+									   playerBoard.rows[i+k].cells[j].style.backgroundImage="url(/images/target.gif)";							   
 								   }
-								   catch(err) {
-//							   document.getElementById("demo").innerHTML = err.message;
-//								meh it's fine
+						   } else {
+								   if((j+placementAmount-1) < 11){
+									   try {
+										   col.style.backgroundImage="url(/images/target.gif)";
+										   row.cells[j+k].style.backgroundImage="url(/images/target.gif)";
+									   }
+									   catch(err) {
+									   }
 								   }
-							   }
 						   }
 					   }
 				   }
@@ -130,9 +127,9 @@ function playerMouseEvents() {
 							for(let k=1;k<placementAmount;k++){
 								try {
 									if(rotated) {
-										playerBoard.rows[i+k].cells[j].style.backgroundImage="url(/images/still.jpg)";
-									} else {							
-										row.cells[j+k].style.backgroundImage="url(/images/still.jpg)";
+											playerBoard.rows[i+k].cells[j].style.backgroundImage="url(/images/still.jpg)";
+									} else {
+											row.cells[j+k].style.backgroundImage="url(/images/still.jpg)";
 									}
 								}
 								catch(err) {
