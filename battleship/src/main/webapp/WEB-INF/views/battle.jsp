@@ -116,11 +116,11 @@
 				<div id='psubmarine' class='ships'><span class="tooltiptext">Submarine</span></div>
 			</div>
 		</div>
-		<div id='winner'>
+		<div id='winner' style="color: white;">
 			<h1>You won the battle!</h1>
 			<h2>Player <%=username %> is the winner</h2>
 		</div>
-		<div id='loser'>
+		<div id='loser' style="color: white;">
 			<h1>You lost the battle...</h1>
 			<h2>Player <%=username %> is the loser</h2>
 		</div>
