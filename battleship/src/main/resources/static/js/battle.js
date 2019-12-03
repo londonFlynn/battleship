@@ -88,14 +88,11 @@ function playerMouseEvents() {
 				   if(col.style.backgroundImage !='url("/images/placeShip.png")'){
 					   for(let k=1;k<placementAmount;k++){
 						   if(rotated){
-							   if(playerBoard.rows[i+k+1].cells[j].style.background !='url("/images/placeShip.png")') {								   
 								   if((i+placementAmount-1) < 11) {
 									   col.style.backgroundImage="url(/images/target.gif)";
 									   playerBoard.rows[i+k].cells[j].style.backgroundImage="url(/images/target.gif)";							   
 								   }
-							   }
 						   } else {
-							   if(row.cells[j+k+1].style.backgroundImage!='url("/images/placeShip.png")') {								   
 								   if((j+placementAmount-1) < 11){
 									   try {
 										   col.style.backgroundImage="url(/images/target.gif)";
@@ -104,7 +101,6 @@ function playerMouseEvents() {
 									   catch(err) {
 									   }
 								   }
-							   }
 						   }
 					   }
 				   }
@@ -131,13 +127,9 @@ function playerMouseEvents() {
 							for(let k=1;k<placementAmount;k++){
 								try {
 									if(rotated) {
-										if(playerBoard.rows[i+k+1].cells[j].style.backgroundImage!='url("/images/placeShip.png")') {											
 											playerBoard.rows[i+k].cells[j].style.backgroundImage="url(/images/still.jpg)";
-										}
 									} else {
-										if(row.cells[j+k+1].style.backgroundImage!='url("/images/placeShip.png")') {
 											row.cells[j+k].style.backgroundImage="url(/images/still.jpg)";
-										}
 									}
 								}
 								catch(err) {
