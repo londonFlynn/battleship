@@ -537,12 +537,18 @@ function reciveTurnChangeNotification(turnChangeNotification) {
     }
 }
 
+function reciveGameStartedNotification(gameStartedNotification) {
+	if (gameStartedNotification.started) {
+		reciveTurnChangeNotification(gameStartedNotification.turn);
+	}
+}
+
 function setupGameFromServer() {
     // setupYourBoardFromServer();
     // setupOpponentBoardFromServer();
     setupCellsFromServer();
     setupShipsFromServer();
-    setupDestroyedShipsFromServer();
+	setupDestroyedShipsFromServer();
     setupGameHasStartedFromServer();
 }
 
