@@ -346,25 +346,27 @@ var gameHasStarted = false;
 function shipPlacementFailure(shipType) {
 	switch(shipType) {
 	  case ShipType.AIRCRAFT_CARRIER:
-		  placingShips[0].style.display='block';
+		  placingShips[0].click();
 	    break;
 	  case ShipType.BATTLESHIP:
-		  placingShips[1].style.display='block';
+		  placingShips[1].click();
 	    break;
 	  case ShipType.CRUISER:
-		  placingShips[2].style.display='block';
+		  placingShips[2].click();
 	    break;
 	  case ShipType.DESTROYER:
-		  placingShips[3].style.display='block';
+		  placingShips[3].click();
 	    break;
 	  case ShipType.SUBMARINE:
-		  placingShips[4].style.display='block';
+		  placingShips[4].click();
 	    break;
 	  default:
 	    console.log('Error while trying to display Place Ships button after failed ship placement.')
 	}
+//	
+//	playerMouseEvents();
 	
-	playerMouseEvents();
+	
 }
 
 function hideShipPlacementForShip(shipType) {
