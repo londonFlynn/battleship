@@ -74,9 +74,7 @@ public class GameplayServlet {
 						userJpaRepository.save(user);
 						game.getOtherUser(user).loseGame();
 						userJpaRepository.save(game.getOtherUser(user));
-						game.setActive(false);
-						game.setFirstUserHasJoined(false);
-						gameJpaRepository.save(game);
+						gameJpaRepository.delete(game);
 					}
 				}
 				result =  new AttackResult(game.getOtherUser(username).getUsername(), request.getPosition(), hit);
