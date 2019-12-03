@@ -71,6 +71,9 @@ public class GameplayServlet {
 					}
 					if (gc.gameIsWon(user)) {
 						sendGameOverNotification(gameId, username);
+						game.setActive(false);
+						game.setFirstUserHasJoined(false);
+						gameJpaRepository.save(game);
 					}
 				}
 				result =  new AttackResult(game.getOtherUser(username).getUsername(), request.getPosition(), hit);
