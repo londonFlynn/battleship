@@ -16,6 +16,11 @@ body {
 	background-repeat: no-repeat;
 }
 
+h1 {
+	color: white;
+	text-align: center;
+}
+
 </style>
 <meta charset="ISO-8859-1">
 <script src="/webjars/jquery/jquery.min.js"></script>
@@ -26,6 +31,9 @@ body {
 <body>
 <div id="username" style="display: none"><%=username%></div>
 <div id="gameId" style="display: none"><%=gameId%></div>
+<div>
+	<h1>YOU ARE AT THE MERCY OF THE HIGH SEAS!!!</h1>
+</div>
 
 <script src="/js/DEPLOYING.js"></script>
 </body>
