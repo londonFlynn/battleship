@@ -82,108 +82,75 @@ function playerMouseEvents() {
 
 		var targetId = x + "" + y;
 
+		//iterate thru entire table
 		for (let i = 0, row; row = playerBoard.rows[i]; i++) {
 			for (let j = 0, col; col = row.cells[j]; j++) {
+				//check if current cell(col) was the one that is hovered over
 				if (col.id == targetId) {
-					if (col.style.backgroundImage != 'url("/images/placeShip.png")') {
+					//when hovered cell does not have a ship as a background image
+					// if (col.style.backgroundImage != 'url("/images/placeShip.png")') {
+						//iteration for size of ship
+						if (col.style.backgroundImage == 'url("/images/still.jpg")') {
+							col.style.backgroundImage = 'url("/images/target.gif")';
+						}
+						var nextCell = null;
 						for (let k = 1; k < placementAmount; k++) {
-							if (rotated) {
-								if ((i + placementAmount - 1) < 11 && playerBoard.rows[i + k].cells[j].style.backgroundImage != 'url("/images/placeShip.png")') {
-
-									col.style.backgroundImage = "url(/images/target.gif)";
-									playerBoard.rows[i + k].cells[j].style.backgroundImage = "url(/images/target.gif)";
-								}
-							} else {
-								if ((j + placementAmount - 1) < 11) {
-									try {
-										col.style.backgroundImage = "url(/images/target.gif)";
-										row.cells[j + k].style.backgroundImage = "url(/images/target.gif)";
-									}
-									catch (err) {
-									}
+							nextCell = null;
+							if (rotated && (i + placementAmount - 1) < 11) {
+								nextCell = playerBoard.rows[i + k].cells[j];
+							} else if ((j + placementAmount - 1) < 11) {
+								nextCell = row.cells[j + k];
+							}
+							if (nextCell) {
+								if (nextCell.style.backgroundImage == 'url("/images/still.jpg")') {
+									nextCell.style.backgroundImage = 'url("/images/target.gif")'
 								}
 							}
-						}
-					}
-				}
-			}
-		}
-	});
-	playerBoard.addEventListener("mouseout", event => {
-		var position = turnIntoBoardPosition(event);
-
-		if (position.xPos !== 15) {
-			position.xPos = position.xPos + "";
-			var initialAscii = position.xPos.charCodeAt(0) + 49;
-			var x = String.fromCharCode(initialAscii);
-			var y = position.yPos + 1;
-
-			var targetId = x + "" + y;
-
-			for (let i = 0, row; row = playerBoard.rows[i]; i++) {
-				for (let j = 0, col; col = row.cells[j]; j++) {
-					// if (col.id == targetId) {
-						if (col.style.backgroundImage == "url(/images/target.gif)") {
-							col.style.backgroundImage = "url(/images/still.jpg)";
-						// 	for (let k = 1; k < placementAmount; k++) {
-						// 		if (playerBoard.rows[i + k].cells[j].style.backgroundImage != 'url("/images/placeShip.png")') {
-						// 			try {
-						// 				if (rotated) {
-						// 					playerBoard.rows[i + k].cells[j].style.backgroundImage = "url(/images/still.jpg)";
-						// 				} else {
-						// 					row.cells[j + k].style.backgroundImage = "url(/images/still.jpg)";
-						// 				}
-						// 			}
-						// 			catch (err) {
-						// 			}
-						// 		}
-						// 	}
+							//vertical
+							// if (rotated) {
+							// 	//check so changed images won't be off the board
+							// 	if ((i + placementAmount - 1) < 11) {
+							// 		if (playerBoard.rows[i + k].cells[j].style.backgroundImage == 'url("/images/still.jpg")') {
+							// 		//following cells based on ship size
+							// 		playerBoard.rows[i + k].cells[j].style.backgroundImage = 'url("/images/target.gif")';
+							// 		}
+							// 	}
+							// }
+							// //horizontal
+							// else {
+							// 	//check so changed images won't be off the board
+							// 	if ((j + placementAmount - 1) < 11) {
+							// 		try {
+							// 			if (row.cells[j + k].style.backgroundImage == 'url("/images/still.jpg")')
+							// 			//following cells based on ship size
+							// 			row.cells[j + k].style.backgroundImage = "url(/images/target.gif)";
+							// 		}
+							// 		catch (err) {
+							// 		}
+							// 	}
+							// }
 						}
 					// }
 				}
 			}
 		}
 	});
+	playerBoard.addEventListener("mouseout", event => {
+		clearBoardTargeting();
+	});
 	playerBoard.addEventListener("click", event => {
 		sendShipPlacementRequest(turnIntoBoardPosition(event), rotated ? Direction.SOUTH : Direction.EAST, currentShipType);
-
-		var position = turnIntoBoardPosition(event);
-		position.xPos = position.xPos + "";
-		var initialAscii = position.xPos.charCodeAt(0) + 49;
-		var x = String.fromCharCode(initialAscii);
-		var y = position.yPos + 1;
-
-		var targetId = x + "" + y;
-
-		for (let i = 0, row; row = playerBoard.rows[i]; i++) {
-			for (let j = 0, col; col = row.cells[j]; j++) {
-				if (col.id == targetId) {
-					col.style.backgroundImage = "url(/images/still.jpg)";
-					for (let k = 1; k < placementAmount; k++) {
-						try {
-							if (rotated) {
-								playerBoard.rows[i + k].cells[j].style.backgroundImage = "url(/images/still.jpg)";
-							} else {
-								row.cells[j + k].style.backgroundImage = "url(/images/still.jpg)";
-							}
-						}
-						catch (err) {
-							//							  document.getElementById("demo").innerHTML = err.message;
-							//								es fine
-						}
-					}
-
-				}
+		clearBoardTargeting();
+	});
+}
+function clearBoardTargeting() {
+	for (let i = 0, row; row = playerBoard.rows[i]; i++) {
+		for (let j = 0, col; col = row.cells[j]; j++) {
+			if (col.style.backgroundImage == 'url("/images/target.gif")') {
+				col.style.backgroundImage = 'url("/images/still.jpg")';
 			}
 		}
-		placementAmount = 0;
-		var count = 0;
-		placingShips.forEach(element => {
-			if (element.style.display === 'none') {
-				count++;
-			}
-		})
-	});
+	}
 }
 
 function turnIntoBoardPosition(event) {
@@ -619,6 +586,12 @@ async function setupBoardRowFromServer(board, row, opponent) {
 	await sendRequest(null, "/gamestate/row/" + gameId + "/" + row + "/" + opponent, "GET", function (boardRow) {
 		board.rows.push(boardRow);
 	});
+}
+
+function reciveGameStartedNotification(gameStartedNotification) {
+	if (gameStartedNotification.started) {
+		reciveTurnChangeNotification(gameStartedNotification.turn);
+	}
 }
 
 function setupGameHasStartedFromServer() {
