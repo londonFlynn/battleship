@@ -74,7 +74,7 @@ function addEventListenersToPlacementNames() {
 
 function playerMouseEvents() {
 	playerBoard.addEventListener("mouseover", event => {
-		if (gameHasStarted) {
+		if (!gameHasStarted) {
 			var position = turnIntoBoardPosition(event);
 			position.xPos = position.xPos + "";
 			var initialAscii = position.xPos.charCodeAt(0) + 49;
